@@ -10,7 +10,9 @@ ENV/
 env/
 
 # Data and Logs
-data/
+data/*
+!data/processed/
+data/processed/*
 !data/processed/player_id_map.json
 logs/
 *.log

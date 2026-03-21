@@ -1,0 +1,3369 @@
+{
+    "247454": {
+        "fpl_id": "17",
+        "fpl_name": "Ødegaard",
+        "fpl_full_name": "Martin Ødegaard",
+        "whoscored_name": "Martin Ødegaard",
+        "team": "Arsenal"
+    },
+    "276366": {
+        "fpl_id": "1",
+        "fpl_name": "Raya",
+        "fpl_full_name": "David Raya Martín",
+        "whoscored_name": "David Raya",
+        "team": "Arsenal"
+    },
+    "408946": {
+        "fpl_id": "44",
+        "fpl_name": "Bogarde",
+        "fpl_full_name": "Lamare Bogarde",
+        "whoscored_name": "Lamare Bogarde",
+        "team": "Aston Villa"
+    },
+    "362824": {
+        "fpl_id": "47",
+        "fpl_name": "Rogers",
+        "fpl_full_name": "Morgan Rogers",
+        "whoscored_name": "Morgan Rogers",
+        "team": "Aston Villa"
+    },
+    "404832": {
+        "fpl_id": "725",
+        "fpl_name": "Hincapie",
+        "fpl_full_name": "Piero Hincapié",
+        "whoscored_name": "Piero Hincapié",
+        "team": "Arsenal"
+    },
+    "260592": {
+        "fpl_id": "50",
+        "fpl_name": "Buendía",
+        "fpl_full_name": "Emiliano Buendía Stati",
+        "whoscored_name": "Emiliano Buendía",
+        "team": "Aston Villa"
+    },
+    "346300": {
+        "fpl_id": "456",
+        "fpl_name": "Sancho",
+        "fpl_full_name": "Jadon Sancho",
+        "whoscored_name": "Jadon Sancho",
+        "team": "Aston Villa"
+    },
+    "388650": {
+        "fpl_id": "8",
+        "fpl_name": "J.Timber",
+        "fpl_full_name": "Jurriën Timber",
+        "whoscored_name": "Jurriën Timber",
+        "team": "Arsenal"
+    },
+    "301440": {
+        "fpl_id": "38",
+        "fpl_name": "Konsa",
+        "fpl_full_name": "Ezri Konsa Ngoyo",
+        "whoscored_name": "Ezri Konsa",
+        "team": "Aston Villa"
+    },
+    "102248": {
+        "fpl_id": "32",
+        "fpl_name": "Martinez",
+        "fpl_full_name": "Emiliano Martínez Romero",
+        "whoscored_name": "Emiliano Martínez",
+        "team": "Aston Villa"
+    },
+    "100008": {
+        "fpl_id": "719",
+        "fpl_name": "Lindelöf",
+        "fpl_full_name": "Victor Lindelöf",
+        "whoscored_name": "Victor Lindelöf",
+        "team": "Aston Villa"
+    },
+    "89925": {
+        "fpl_id": "37",
+        "fpl_name": "Digne",
+        "fpl_full_name": "Lucas Digne",
+        "whoscored_name": "Lucas Digne",
+        "team": "Aston Villa"
+    },
+    "136345": {
+        "fpl_id": "48",
+        "fpl_name": "Tielemans",
+        "fpl_full_name": "Youri Tielemans",
+        "whoscored_name": "Youri Tielemans",
+        "team": "Aston Villa"
+    },
+    "238916": {
+        "fpl_id": "22",
+        "fpl_name": "Merino",
+        "fpl_full_name": "Mikel Merino Zazón",
+        "whoscored_name": "Mikel Merino",
+        "team": "Arsenal"
+    },
+    "367185": {
+        "fpl_id": "16",
+        "fpl_name": "Saka",
+        "fpl_full_name": "Bukayo Saka",
+        "whoscored_name": "Bukayo Saka",
+        "team": "Arsenal"
+    },
+    "113994": {
+        "fpl_id": "20",
+        "fpl_name": "Trossard",
+        "fpl_full_name": "Leandro Trossard",
+        "whoscored_name": "Leandro Trossard",
+        "team": "Arsenal"
+    },
+    "372424": {
+        "fpl_id": "26",
+        "fpl_name": "Zubimendi",
+        "fpl_full_name": "Martín Zubimendi Ibáñez",
+        "whoscored_name": "Martín Zubimendi",
+        "team": "Arsenal"
+    },
+    "361822": {
+        "fpl_id": "6",
+        "fpl_name": "Saliba",
+        "fpl_full_name": "William Saliba",
+        "whoscored_name": "William Saliba",
+        "team": "Arsenal"
+    },
+    "148503": {
+        "fpl_id": "64",
+        "fpl_name": "Watkins",
+        "fpl_full_name": "Ollie Watkins",
+        "whoscored_name": "Ollie Watkins",
+        "team": "Aston Villa"
+    },
+    "400815": {
+        "fpl_id": "59",
+        "fpl_name": "Onana",
+        "fpl_full_name": "Amadou Onana",
+        "whoscored_name": "Amadou Onana",
+        "team": "Aston Villa"
+    },
+    "362815": {
+        "fpl_id": "666",
+        "fpl_name": "Gyökeres",
+        "fpl_full_name": "Viktor Gyökeres",
+        "whoscored_name": "Viktor Gyökeres",
+        "team": "Arsenal"
+    },
+    "318449": {
+        "fpl_id": "54",
+        "fpl_name": "McGinn",
+        "fpl_full_name": "John McGinn",
+        "whoscored_name": "John McGinn",
+        "team": "Aston Villa"
+    },
+    "351354": {
+        "fpl_id": "53",
+        "fpl_name": "Malen",
+        "fpl_full_name": "Donyell Malen",
+        "whoscored_name": "Donyell Malen",
+        "team": "Aston Villa"
+    },
+    "469329": {
+        "fpl_id": "42",
+        "fpl_name": "A.García",
+        "fpl_full_name": "Andrés García",
+        "whoscored_name": "Andrés García",
+        "team": "Aston Villa"
+    },
+    "101856": {
+        "fpl_id": "24",
+        "fpl_name": "Nørgaard",
+        "fpl_full_name": "Christian Nørgaard",
+        "whoscored_name": "Christian Nørgaard",
+        "team": "Arsenal"
+    },
+    "467918": {
+        "fpl_id": "10",
+        "fpl_name": "Lewis-Skelly",
+        "fpl_full_name": "Myles Lewis-Skelly",
+        "whoscored_name": "Myles Lewis-Skelly",
+        "team": "Arsenal"
+    },
+    "576066": {
+        "fpl_id": "754",
+        "fpl_name": "George Hemmings",
+        "fpl_full_name": "George Hemmings",
+        "whoscored_name": "George Hemmings",
+        "team": "Aston Villa"
+    },
+    "540468": {
+        "fpl_id": "62",
+        "fpl_name": "Jimoh-Aloba",
+        "fpl_full_name": "Jamaldeen Jimoh-Aloba",
+        "whoscored_name": "Jamaldeen Jimoh-Aloba",
+        "team": "Aston Villa"
+    },
+    "322036": {
+        "fpl_id": "11",
+        "fpl_name": "White",
+        "fpl_full_name": "Benjamin White",
+        "whoscored_name": "Ben White",
+        "team": "Arsenal"
+    },
+    "389935": {
+        "fpl_id": "18",
+        "fpl_name": "Madueke",
+        "fpl_full_name": "Noni Madueke",
+        "whoscored_name": "Noni Madueke",
+        "team": "Arsenal"
+    },
+    "342563": {
+        "fpl_id": "494",
+        "fpl_name": "Willock",
+        "fpl_full_name": "Joe Willock",
+        "whoscored_name": "Joe Willock",
+        "team": "Newcastle"
+    },
+    "393355": {
+        "fpl_id": "684",
+        "fpl_name": "Thiaw",
+        "fpl_full_name": "Malick Thiaw",
+        "whoscored_name": "Malick Thiaw",
+        "team": "Newcastle"
+    },
+    "83078": {
+        "fpl_id": "478",
+        "fpl_name": "Trippier",
+        "fpl_full_name": "Kieran Trippier",
+        "whoscored_name": "Kieran Trippier",
+        "team": "Newcastle"
+    },
+    "424273": {
+        "fpl_id": "371",
+        "fpl_name": "Kerkez",
+        "fpl_full_name": "Milos Kerkez",
+        "whoscored_name": "Milos Kerkez",
+        "team": "Liverpool"
+    },
+    "413211": {
+        "fpl_id": "486",
+        "fpl_name": "Elanga",
+        "fpl_full_name": "Anthony Elanga",
+        "whoscored_name": "Anthony Elanga",
+        "team": "Newcastle"
+    },
+    "403784": {
+        "fpl_id": "661",
+        "fpl_name": "Ekitiké",
+        "fpl_full_name": "Hugo Ekitiké",
+        "whoscored_name": "Hugo Ekitiké",
+        "team": "Liverpool"
+    },
+    "394786": {
+        "fpl_id": "382",
+        "fpl_name": "Wirtz",
+        "fpl_full_name": "Florian Wirtz",
+        "whoscored_name": "Florian Wirtz",
+        "team": "Liverpool"
+    },
+    "343501": {
+        "fpl_id": "491",
+        "fpl_name": "Tonali",
+        "fpl_full_name": "Sandro Tonali",
+        "whoscored_name": "Sandro Tonali",
+        "team": "Newcastle"
+    },
+    "430294": {
+        "fpl_id": "473",
+        "fpl_name": "Hall",
+        "fpl_full_name": "Lewis Hall",
+        "whoscored_name": "Lewis Hall",
+        "team": "Newcastle"
+    },
+    "331382": {
+        "fpl_id": "487",
+        "fpl_name": "Barnes",
+        "fpl_full_name": "Harvey Barnes",
+        "whoscored_name": "Harvey Barnes",
+        "team": "Newcastle"
+    },
+    "369875": {
+        "fpl_id": "387",
+        "fpl_name": "Szoboszlai",
+        "fpl_full_name": "Dominik Szoboszlai",
+        "whoscored_name": "Dominik Szoboszlai",
+        "team": "Liverpool"
+    },
+    "352825": {
+        "fpl_id": "384",
+        "fpl_name": "Gakpo",
+        "fpl_full_name": "Cody Gakpo",
+        "whoscored_name": "Cody Gakpo",
+        "team": "Liverpool"
+    },
+    "105720": {
+        "fpl_id": "469",
+        "fpl_name": "Pope",
+        "fpl_full_name": "Nick Pope",
+        "whoscored_name": "Nick Pope",
+        "team": "Newcastle"
+    },
+    "349669": {
+        "fpl_id": "485",
+        "fpl_name": "Gordon",
+        "fpl_full_name": "Anthony Gordon",
+        "whoscored_name": "Anthony Gordon",
+        "team": "Newcastle"
+    },
+    "95408": {
+        "fpl_id": "373",
+        "fpl_name": "Virgil",
+        "fpl_full_name": "Virgil van Dijk",
+        "whoscored_name": "Virgil van Dijk",
+        "team": "Liverpool"
+    },
+    "82277": {
+        "fpl_id": "476",
+        "fpl_name": "Burn",
+        "fpl_full_name": "Dan Burn",
+        "whoscored_name": "Dan Burn",
+        "team": "Newcastle"
+    },
+    "345957": {
+        "fpl_id": "374",
+        "fpl_name": "Konaté",
+        "fpl_full_name": "Ibrahima Konaté",
+        "whoscored_name": "Ibrahima Konaté",
+        "team": "Liverpool"
+    },
+    "345319": {
+        "fpl_id": "386",
+        "fpl_name": "Mac Allister",
+        "fpl_full_name": "Alexis Mac Allister",
+        "whoscored_name": "Alexis Mac Allister",
+        "team": "Liverpool"
+    },
+    "363884": {
+        "fpl_id": "390",
+        "fpl_name": "Gravenberch",
+        "fpl_full_name": "Ryan Gravenberch",
+        "whoscored_name": "Ryan Gravenberch",
+        "team": "Liverpool"
+    },
+    "114147": {
+        "fpl_id": "366",
+        "fpl_name": "A.Becker",
+        "fpl_full_name": "Alisson Becker",
+        "whoscored_name": "Alisson Becker",
+        "team": "Liverpool"
+    },
+    "108226": {
+        "fpl_id": "381",
+        "fpl_name": "M.Salah",
+        "fpl_full_name": "Mohamed Salah",
+        "whoscored_name": "Mohamed Salah",
+        "team": "Liverpool"
+    },
+    "369813": {
+        "fpl_id": "52",
+        "fpl_name": "J.Ramsey",
+        "fpl_full_name": "Jacob Ramsey",
+        "whoscored_name": "Jacob Ramsey",
+        "team": "Newcastle"
+    },
+    "296240": {
+        "fpl_id": "135",
+        "fpl_name": "Wissa",
+        "fpl_full_name": "Yoane Wissa",
+        "whoscored_name": "Yoane Wissa",
+        "team": "Newcastle"
+    },
+    "386606": {
+        "fpl_id": "714",
+        "fpl_name": "Woltemade",
+        "fpl_full_name": "Nick Woltemade",
+        "whoscored_name": "Nick Woltemade",
+        "team": "Newcastle"
+    },
+    "141486": {
+        "fpl_id": "489",
+        "fpl_name": "J.Murphy",
+        "fpl_full_name": "Jacob Murphy",
+        "whoscored_name": "Jacob Murphy",
+        "team": "Newcastle"
+    },
+    "416209": {
+        "fpl_id": "500",
+        "fpl_name": "Osula",
+        "fpl_full_name": "William Osula",
+        "whoscored_name": "William Osula",
+        "team": "Newcastle"
+    },
+    "322971": {
+        "fpl_id": "385",
+        "fpl_name": "Chiesa",
+        "fpl_full_name": "Federico Chiesa",
+        "whoscored_name": "Federico Chiesa",
+        "team": "Liverpool"
+    },
+    "355354": {
+        "fpl_id": "388",
+        "fpl_name": "C.Jones",
+        "fpl_full_name": "Curtis Jones",
+        "whoscored_name": "Curtis Jones",
+        "team": "Liverpool"
+    },
+    "86829": {
+        "fpl_id": "392",
+        "fpl_name": "Endo",
+        "fpl_full_name": "Endo Wataru",
+        "whoscored_name": "Wataru Endo",
+        "team": "Liverpool"
+    },
+    "492690": {
+        "fpl_id": "481",
+        "fpl_name": "A.Murphy",
+        "fpl_full_name": "Alex Murphy",
+        "whoscored_name": "Alex Murphy",
+        "team": "Newcastle"
+    },
+    "71824": {
+        "fpl_id": "783",
+        "fpl_name": "Groß",
+        "fpl_full_name": "Pascal Groß",
+        "whoscored_name": "Pascal Groß",
+        "team": "Brighton"
+    },
+    "400138": {
+        "fpl_id": "139",
+        "fpl_name": "Verbruggen",
+        "fpl_full_name": "Bart Verbruggen",
+        "whoscored_name": "Bart Verbruggen",
+        "team": "Brighton"
+    },
+    "86441": {
+        "fpl_id": "146",
+        "fpl_name": "Dunk",
+        "fpl_full_name": "Lewis Dunk",
+        "whoscored_name": "Lewis Dunk",
+        "team": "Brighton"
+    },
+    "365402": {
+        "fpl_id": "151",
+        "fpl_name": "Van Hecke",
+        "fpl_full_name": "Jan Paul van Hecke",
+        "whoscored_name": "Jan Paul van Hecke",
+        "team": "Brighton"
+    },
+    "107941": {
+        "fpl_id": "295",
+        "fpl_name": "Keane",
+        "fpl_full_name": "Michael Keane",
+        "whoscored_name": "Michael Keane",
+        "team": "Everton"
+    },
+    "80464": {
+        "fpl_id": "302",
+        "fpl_name": "Gana",
+        "fpl_full_name": "Idrissa Gana Gueye",
+        "whoscored_name": "Idrissa Gueye",
+        "team": "Everton"
+    },
+    "436048": {
+        "fpl_id": "167",
+        "fpl_name": "Baleba",
+        "fpl_full_name": "Carlos Baleba",
+        "whoscored_name": "Carlos Baleba",
+        "team": "Brighton"
+    },
+    "362433": {
+        "fpl_id": "158",
+        "fpl_name": "Georginio",
+        "fpl_full_name": "Georginio Rutter",
+        "whoscored_name": "Georginio Rutter",
+        "team": "Brighton"
+    },
+    "366116": {
+        "fpl_id": "299",
+        "fpl_name": "Ndiaye",
+        "fpl_full_name": "Iliman Ndiaye",
+        "whoscored_name": "Iliman Ndiaye",
+        "team": "Everton"
+    },
+    "537713": {
+        "fpl_id": "310",
+        "fpl_name": "Barry",
+        "fpl_full_name": "Thierno Barry",
+        "whoscored_name": "Thierno Barry",
+        "team": "Everton"
+    },
+    "392647": {
+        "fpl_id": "145",
+        "fpl_name": "De Cuyper",
+        "fpl_full_name": "Maxim De Cuyper",
+        "whoscored_name": "Maxim De Cuyper",
+        "team": "Brighton"
+    },
+    "425142": {
+        "fpl_id": "157",
+        "fpl_name": "Mitoma",
+        "fpl_full_name": "Mitoma Kaoru",
+        "whoscored_name": "Kaoru Mitoma",
+        "team": "Brighton"
+    },
+    "470690": {
+        "fpl_id": "166",
+        "fpl_name": "Ayari",
+        "fpl_full_name": "Yasin Ayari",
+        "whoscored_name": "Yasin Ayari",
+        "team": "Brighton"
+    },
+    "424495": {
+        "fpl_id": "293",
+        "fpl_name": "O'Brien",
+        "fpl_full_name": "Jake O'Brien",
+        "whoscored_name": "Jake O'Brien",
+        "team": "Everton"
+    },
+    "39308": {
+        "fpl_id": "178",
+        "fpl_name": "Welbeck",
+        "fpl_full_name": "Danny Welbeck",
+        "whoscored_name": "Danny Welbeck",
+        "team": "Brighton"
+    },
+    "110189": {
+        "fpl_id": "287",
+        "fpl_name": "Pickford",
+        "fpl_full_name": "Jordan Pickford",
+        "whoscored_name": "Jordan Pickford",
+        "team": "Everton"
+    },
+    "131464": {
+        "fpl_id": "291",
+        "fpl_name": "Tarkowski",
+        "fpl_full_name": "James Tarkowski",
+        "whoscored_name": "James Tarkowski",
+        "team": "Everton"
+    },
+    "381045": {
+        "fpl_id": "290",
+        "fpl_name": "Branthwaite",
+        "fpl_full_name": "Jarrad Branthwaite",
+        "whoscored_name": "Jarrad Branthwaite",
+        "team": "Everton"
+    },
+    "391256": {
+        "fpl_id": "242",
+        "fpl_name": "Dewsbury-Hall",
+        "fpl_full_name": "Kiernan Dewsbury-Hall",
+        "whoscored_name": "Kiernan Dewsbury-Hall",
+        "team": "Everton"
+    },
+    "535879": {
+        "fpl_id": "305",
+        "fpl_name": "Armstrong",
+        "fpl_full_name": "Harrison Armstrong",
+        "whoscored_name": "Harrison Armstrong",
+        "team": "Everton"
+    },
+    "367781": {
+        "fpl_id": "303",
+        "fpl_name": "Garner",
+        "fpl_full_name": "James Garner",
+        "whoscored_name": "James Garner",
+        "team": "Everton"
+    },
+    "484175": {
+        "fpl_id": "160",
+        "fpl_name": "Minteh",
+        "fpl_full_name": "Yankuba Minteh",
+        "whoscored_name": "Yankuba Minteh",
+        "team": "Brighton"
+    },
+    "533923": {
+        "fpl_id": "181",
+        "fpl_name": "Kostoulas",
+        "fpl_full_name": "Charalampos Kostoulas",
+        "whoscored_name": "Charalampos Kostoulas",
+        "team": "Brighton"
+    },
+    "110290": {
+        "fpl_id": "152",
+        "fpl_name": "Veltman",
+        "fpl_full_name": "Joël Veltman",
+        "whoscored_name": "Joël Veltman",
+        "team": "Brighton"
+    },
+    "416208": {
+        "fpl_id": "304",
+        "fpl_name": "Iroegbunam",
+        "fpl_full_name": "Tim Iroegbunam",
+        "whoscored_name": "Tim Iroegbunam",
+        "team": "Everton"
+    },
+    "438067": {
+        "fpl_id": "707",
+        "fpl_name": "Dibling",
+        "fpl_full_name": "Tyler Dibling",
+        "whoscored_name": "Tyler Dibling",
+        "team": "Everton"
+    },
+    "396975": {
+        "fpl_id": "296",
+        "fpl_name": "Patterson",
+        "fpl_full_name": "Nathan Patterson",
+        "whoscored_name": "Nathan Patterson",
+        "team": "Everton"
+    },
+    "380546": {
+        "fpl_id": "311",
+        "fpl_name": "Beto",
+        "fpl_full_name": "Norberto Bercique Gomes Betuncal",
+        "whoscored_name": "Beto",
+        "team": "Everton"
+    },
+    "4511": {
+        "fpl_id": "170",
+        "fpl_name": "Milner",
+        "fpl_full_name": "James Milner",
+        "whoscored_name": "James Milner",
+        "team": "Brighton"
+    },
+    "402596": {
+        "fpl_id": "517",
+        "fpl_name": "Anderson",
+        "fpl_full_name": "Elliot Anderson",
+        "whoscored_name": "Elliot Anderson",
+        "team": "Nottingham Forest"
+    },
+    "78386": {
+        "fpl_id": "502",
+        "fpl_name": "Sels",
+        "fpl_full_name": "Matz Sels",
+        "whoscored_name": "Matz Sels",
+        "team": "Nottingham Forest"
+    },
+    "328075": {
+        "fpl_id": "521",
+        "fpl_name": "Sangaré",
+        "fpl_full_name": "Ibrahim Sangaré",
+        "whoscored_name": "Ibrahim Sangaré",
+        "team": "Nottingham Forest"
+    },
+    "386969": {
+        "fpl_id": "508",
+        "fpl_name": "N.Williams",
+        "fpl_full_name": "Neco Williams",
+        "whoscored_name": "Neco Williams",
+        "team": "Nottingham Forest"
+    },
+    "350088": {
+        "fpl_id": "516",
+        "fpl_name": "Hudson-Odoi",
+        "fpl_full_name": "Callum Hudson-Odoi",
+        "whoscored_name": "Callum Hudson-Odoi",
+        "team": "Nottingham Forest"
+    },
+    "445424": {
+        "fpl_id": "506",
+        "fpl_name": "Murillo",
+        "fpl_full_name": "Murillo Costa dos Santos",
+        "whoscored_name": "Murillo",
+        "team": "Nottingham Forest"
+    },
+    "332867": {
+        "fpl_id": "515",
+        "fpl_name": "Gibbs-White",
+        "fpl_full_name": "Morgan Gibbs-White",
+        "whoscored_name": "Morgan Gibbs-White",
+        "team": "Nottingham Forest"
+    },
+    "315543": {
+        "fpl_id": "507",
+        "fpl_name": "Aina",
+        "fpl_full_name": "Ola Aina",
+        "whoscored_name": "Ola Aina",
+        "team": "Nottingham Forest"
+    },
+    "351127": {
+        "fpl_id": "606",
+        "fpl_name": "Mavropanos",
+        "fpl_full_name": "Konstantinos Mavropanos",
+        "whoscored_name": "Konstantinos Mavropanos",
+        "team": "West Ham"
+    },
+    "322596": {
+        "fpl_id": "624",
+        "fpl_name": "Bowen",
+        "fpl_full_name": "Jarrod Bowen",
+        "whoscored_name": "Jarrod Bowen",
+        "team": "West Ham"
+    },
+    "479288": {
+        "fpl_id": "603",
+        "fpl_name": "Diouf",
+        "fpl_full_name": "El Hadji Malick Diouf",
+        "whoscored_name": "El Hadji Malick Diouf",
+        "team": "West Ham"
+    },
+    "104058": {
+        "fpl_id": "625",
+        "fpl_name": "Füllkrug",
+        "fpl_full_name": "Niclas Füllkrug",
+        "whoscored_name": "Niclas Füllkrug",
+        "team": "West Ham"
+    },
+    "398414": {
+        "fpl_id": "669",
+        "fpl_name": "Ndoye",
+        "fpl_full_name": "Dan Ndoye",
+        "whoscored_name": "Dan Ndoye",
+        "team": "Nottingham Forest"
+    },
+    "409426": {
+        "fpl_id": "679",
+        "fpl_name": "Hermansen",
+        "fpl_full_name": "Mads Hermansen",
+        "whoscored_name": "Mads Hermansen",
+        "team": "West Ham"
+    },
+    "73380": {
+        "fpl_id": "525",
+        "fpl_name": "Wood",
+        "fpl_full_name": "Chris Wood",
+        "whoscored_name": "Chris Wood",
+        "team": "Nottingham Forest"
+    },
+    "368310": {
+        "fpl_id": "605",
+        "fpl_name": "Kilman",
+        "fpl_full_name": "Maximilian Kilman",
+        "whoscored_name": "Maximilian Kilman",
+        "team": "West Ham"
+    },
+    "313672": {
+        "fpl_id": "659",
+        "fpl_name": "Walker-Peters",
+        "fpl_full_name": "Kyle Walker-Peters",
+        "whoscored_name": "Kyle Walker-Peters",
+        "team": "West Ham"
+    },
+    "425576": {
+        "fpl_id": "426",
+        "fpl_name": "McAtee",
+        "fpl_full_name": "James McAtee",
+        "whoscored_name": "James McAtee",
+        "team": "Nottingham Forest"
+    },
+    "134115": {
+        "fpl_id": "671",
+        "fpl_name": "Wilson",
+        "fpl_full_name": "Callum Wilson",
+        "whoscored_name": "Callum Wilson",
+        "team": "West Ham"
+    },
+    "397497": {
+        "fpl_id": "526",
+        "fpl_name": "Igor Jesus",
+        "fpl_full_name": "Igor Jesus Maciel da Cruz",
+        "whoscored_name": "Igor Jesus",
+        "team": "Nottingham Forest"
+    },
+    "451945": {
+        "fpl_id": "621",
+        "fpl_name": "Irving",
+        "fpl_full_name": "Andy Irving",
+        "whoscored_name": "Andy Irving",
+        "team": "West Ham"
+    },
+    "382564": {
+        "fpl_id": "615",
+        "fpl_name": "Summerville",
+        "fpl_full_name": "Crysencio Summerville",
+        "whoscored_name": "Crysencio Summerville",
+        "team": "West Ham"
+    },
+    "384005": {
+        "fpl_id": "696",
+        "fpl_name": "Kalimuendo",
+        "fpl_full_name": "Arnaud Kalimuendo",
+        "whoscored_name": "Arnaud Kalimuendo",
+        "team": "Nottingham Forest"
+    },
+    "430908": {
+        "fpl_id": "693",
+        "fpl_name": "Hutchinson",
+        "fpl_full_name": "Omari Hutchinson",
+        "whoscored_name": "Omari Hutchinson",
+        "team": "Nottingham Forest"
+    },
+    "332325": {
+        "fpl_id": "21",
+        "fpl_name": "Rice",
+        "fpl_full_name": "Declan Rice",
+        "whoscored_name": "Declan Rice",
+        "team": "Arsenal"
+    },
+    "386519": {
+        "fpl_id": "7",
+        "fpl_name": "Calafiori",
+        "fpl_full_name": "Riccardo Calafiori",
+        "whoscored_name": "Riccardo Calafiori",
+        "team": "Arsenal"
+    },
+    "425591": {
+        "fpl_id": "662",
+        "fpl_name": "Mosquera",
+        "fpl_full_name": "Cristhian Mosquera",
+        "whoscored_name": "Cristhian Mosquera",
+        "team": "Arsenal"
+    },
+    "380706": {
+        "fpl_id": "19",
+        "fpl_name": "Martinelli",
+        "fpl_full_name": "Gabriel Martinelli Silva",
+        "whoscored_name": "Gabriel Martinelli",
+        "team": "Arsenal"
+    },
+    "332403": {
+        "fpl_id": "266",
+        "fpl_name": "Eze",
+        "fpl_full_name": "Eberechi Eze",
+        "whoscored_name": "Eberechi Eze",
+        "team": "Arsenal"
+    },
+    "136451": {
+        "fpl_id": "376",
+        "fpl_name": "Gomez",
+        "fpl_full_name": "Joe Gomez",
+        "whoscored_name": "Joe Gomez",
+        "team": "Liverpool"
+    },
+    "571994": {
+        "fpl_id": "700",
+        "fpl_name": "Dowman",
+        "fpl_full_name": "Max Dowman",
+        "whoscored_name": "Max Dowman",
+        "team": "Arsenal"
+    },
+    "344166": {
+        "fpl_id": "271",
+        "fpl_name": "Kamada",
+        "fpl_full_name": "Daichi Kamada",
+        "whoscored_name": "Daichi Kamada",
+        "team": "Crystal Palace"
+    },
+    "430774": {
+        "fpl_id": "273",
+        "fpl_name": "Wharton",
+        "fpl_full_name": "Adam Wharton",
+        "whoscored_name": "Adam Wharton",
+        "team": "Crystal Palace"
+    },
+    "384134": {
+        "fpl_id": "39",
+        "fpl_name": "Maatsen",
+        "fpl_full_name": "Ian Maatsen",
+        "whoscored_name": "Ian Maatsen",
+        "team": "Aston Villa"
+    },
+    "395401": {
+        "fpl_id": "261",
+        "fpl_name": "Richards",
+        "fpl_full_name": "Chris Richards",
+        "whoscored_name": "Chris Richards",
+        "team": "Crystal Palace"
+    },
+    "400496": {
+        "fpl_id": "256",
+        "fpl_name": "Muñoz",
+        "fpl_full_name": "Daniel Muñoz Mejía",
+        "whoscored_name": "Daniel Muñoz",
+        "team": "Crystal Palace"
+    },
+    "304008": {
+        "fpl_id": "253",
+        "fpl_name": "Henderson",
+        "fpl_full_name": "Dean Henderson",
+        "whoscored_name": "Dean Henderson",
+        "team": "Crystal Palace"
+    },
+    "322670": {
+        "fpl_id": "267",
+        "fpl_name": "Sarr",
+        "fpl_full_name": "Ismaïla Sarr",
+        "whoscored_name": "Ismaïla Sarr",
+        "team": "Crystal Palace"
+    },
+    "108638": {
+        "fpl_id": "270",
+        "fpl_name": "Hughes",
+        "fpl_full_name": "Will Hughes",
+        "whoscored_name": "Will Hughes",
+        "team": "Crystal Palace"
+    },
+    "401130": {
+        "fpl_id": "257",
+        "fpl_name": "Lacroix",
+        "fpl_full_name": "Maxence Lacroix",
+        "whoscored_name": "Maxence Lacroix",
+        "team": "Crystal Palace"
+    },
+    "328096": {
+        "fpl_id": "283",
+        "fpl_name": "Mateta",
+        "fpl_full_name": "Jean-Philippe Mateta",
+        "whoscored_name": "Jean-Philippe Mateta",
+        "team": "Crystal Palace"
+    },
+    "83824": {
+        "fpl_id": "33",
+        "fpl_name": "M.Bizot",
+        "fpl_full_name": "Marco Bizot",
+        "whoscored_name": "Marco Bizot",
+        "team": "Aston Villa"
+    },
+    "123167": {
+        "fpl_id": "40",
+        "fpl_name": "Mings",
+        "fpl_full_name": "Tyrone Mings",
+        "whoscored_name": "Tyrone Mings",
+        "team": "Aston Villa"
+    },
+    "322043": {
+        "fpl_id": "36",
+        "fpl_name": "Cash",
+        "fpl_full_name": "Matty Cash",
+        "whoscored_name": "Matty Cash",
+        "team": "Aston Villa"
+    },
+    "389579": {
+        "fpl_id": "258",
+        "fpl_name": "Mitchell",
+        "fpl_full_name": "Tyrick Mitchell",
+        "whoscored_name": "Tyrick Mitchell",
+        "team": "Crystal Palace"
+    },
+    "133464": {
+        "fpl_id": "272",
+        "fpl_name": "Lerma",
+        "fpl_full_name": "Jefferson Lerma Solís",
+        "whoscored_name": "Jefferson Lerma",
+        "team": "Crystal Palace"
+    },
+    "403865": {
+        "fpl_id": "712",
+        "fpl_name": "Yeremy",
+        "fpl_full_name": "Yéremy Pino Santos",
+        "whoscored_name": "Yéremy Pino",
+        "team": "Crystal Palace"
+    },
+    "550064": {
+        "fpl_id": "702",
+        "fpl_name": "Burrowes",
+        "fpl_full_name": "Bradley Burrowes",
+        "whoscored_name": "Bradley Burrowes",
+        "team": "Aston Villa"
+    },
+    "344259": {
+        "fpl_id": "41",
+        "fpl_name": "Pau",
+        "fpl_full_name": "Pau Torres",
+        "whoscored_name": "Pau Torres",
+        "team": "Aston Villa"
+    },
+    "450950": {
+        "fpl_id": "276",
+        "fpl_name": "Devenny",
+        "fpl_full_name": "Justin Devenny",
+        "whoscored_name": "Justin Devenny",
+        "team": "Crystal Palace"
+    },
+    "69375": {
+        "fpl_id": "263",
+        "fpl_name": "Clyne",
+        "fpl_full_name": "Nathaniel Clyne",
+        "whoscored_name": "Nathaniel Clyne",
+        "team": "Crystal Palace"
+    },
+    "343382": {
+        "fpl_id": "427",
+        "fpl_name": "Reijnders",
+        "fpl_full_name": "Tijjani Reijnders",
+        "whoscored_name": "Tijjani Reijnders",
+        "team": "Man City"
+    },
+    "446133": {
+        "fpl_id": "169",
+        "fpl_name": "Gomez",
+        "fpl_full_name": "Diego Gómez Amarilla",
+        "whoscored_name": "Diego Gómez",
+        "team": "Brighton"
+    },
+    "404852": {
+        "fpl_id": "182",
+        "fpl_name": "Trafford",
+        "fpl_full_name": "James Trafford",
+        "whoscored_name": "James Trafford",
+        "team": "Man City"
+    },
+    "303139": {
+        "fpl_id": "421",
+        "fpl_name": "Rodrigo",
+        "fpl_full_name": "Rodrigo 'Rodri' Hernandez Cascante",
+        "whoscored_name": "Rodri",
+        "team": "Man City"
+    },
+    "101374": {
+        "fpl_id": "409",
+        "fpl_name": "Stones",
+        "fpl_full_name": "John Stones",
+        "whoscored_name": "John Stones",
+        "team": "Man City"
+    },
+    "493206": {
+        "fpl_id": "406",
+        "fpl_name": "Khusanov",
+        "fpl_full_name": "Abdukodir Khusanov",
+        "whoscored_name": "Abdukodir Khusanov",
+        "team": "Man City"
+    },
+    "355401": {
+        "fpl_id": "402",
+        "fpl_name": "Aït-Nouri",
+        "fpl_full_name": "Rayan Aït-Nouri",
+        "whoscored_name": "Rayan Aït-Nouri",
+        "team": "Man City"
+    },
+    "394749": {
+        "fpl_id": "413",
+        "fpl_name": "Marmoush",
+        "fpl_full_name": "Omar Marmoush",
+        "whoscored_name": "Omar Marmoush",
+        "team": "Man City"
+    },
+    "394933": {
+        "fpl_id": "407",
+        "fpl_name": "Matheus N.",
+        "fpl_full_name": "Matheus Nunes",
+        "whoscored_name": "Matheus Nunes",
+        "team": "Man City"
+    },
+    "469629": {
+        "fpl_id": "163",
+        "fpl_name": "Hinshelwood",
+        "fpl_full_name": "Jack Hinshelwood",
+        "whoscored_name": "Jack Hinshelwood",
+        "team": "Brighton"
+    },
+    "315227": {
+        "fpl_id": "430",
+        "fpl_name": "Haaland",
+        "fpl_full_name": "Erling Haaland",
+        "whoscored_name": "Erling Haaland",
+        "team": "Man City"
+    },
+    "471784": {
+        "fpl_id": "162",
+        "fpl_name": "Gruda",
+        "fpl_full_name": "Brajan Gruda",
+        "whoscored_name": "Brajan Gruda",
+        "team": "Brighton"
+    },
+    "468847": {
+        "fpl_id": "411",
+        "fpl_name": "O'Reilly",
+        "fpl_full_name": "Nico O'Reilly",
+        "whoscored_name": "Nico O'Reilly",
+        "team": "Man City"
+    },
+    "388098": {
+        "fpl_id": "418",
+        "fpl_name": "Doku",
+        "fpl_full_name": "Jérémy Doku",
+        "whoscored_name": "Jérémy Doku",
+        "team": "Man City"
+    },
+    "444791": {
+        "fpl_id": "410",
+        "fpl_name": "Lewis",
+        "fpl_full_name": "Rico Lewis",
+        "whoscored_name": "Rico Lewis",
+        "team": "Man City"
+    },
+    "429683": {
+        "fpl_id": "144",
+        "fpl_name": "Coppola",
+        "fpl_full_name": "Diego Coppola",
+        "whoscored_name": "Diego Coppola",
+        "team": "Brighton"
+    },
+    "467715": {
+        "fpl_id": "672",
+        "fpl_name": "Hato",
+        "fpl_full_name": "Jorrel Hato",
+        "whoscored_name": "Jorrel Hato",
+        "team": "Chelsea"
+    },
+    "365406": {
+        "fpl_id": "229",
+        "fpl_name": "B.Badiashile",
+        "fpl_full_name": "Benoît Badiashile Mukinayi",
+        "whoscored_name": "Benoît Badiashile",
+        "team": "Chelsea"
+    },
+    "353292": {
+        "fpl_id": "226",
+        "fpl_name": "Chalobah",
+        "fpl_full_name": "Trevoh Chalobah",
+        "whoscored_name": "Trevoh Chalobah",
+        "team": "Chelsea"
+    },
+    "403850": {
+        "fpl_id": "228",
+        "fpl_name": "Gusto",
+        "fpl_full_name": "Malo Gusto",
+        "whoscored_name": "Malo Gusto",
+        "team": "Chelsea"
+    },
+    "410175": {
+        "fpl_id": "241",
+        "fpl_name": "Caicedo",
+        "fpl_full_name": "Moisés Caicedo Corozo",
+        "whoscored_name": "Moisés Caicedo",
+        "team": "Chelsea"
+    },
+    "409654": {
+        "fpl_id": "785",
+        "fpl_name": "Pablo",
+        "fpl_full_name": "Pablo Felipe Pereira de Jesus",
+        "whoscored_name": "Pablo",
+        "team": "West Ham"
+    },
+    "361406": {
+        "fpl_id": "791",
+        "fpl_name": "Taty",
+        "fpl_full_name": "Valentín Castellanos",
+        "whoscored_name": "Valentín Castellanos",
+        "team": "West Ham"
+    },
+    "369430": {
+        "fpl_id": "237",
+        "fpl_name": "Enzo",
+        "fpl_full_name": "Enzo Fernández",
+        "whoscored_name": "Enzo Fernández",
+        "team": "Chelsea"
+    },
+    "437022": {
+        "fpl_id": "453",
+        "fpl_name": "Garnacho",
+        "fpl_full_name": "Alejandro Garnacho Ferreyra",
+        "whoscored_name": "Alejandro Garnacho",
+        "team": "Chelsea"
+    },
+    "361710": {
+        "fpl_id": "609",
+        "fpl_name": "Todibo",
+        "fpl_full_name": "Jean-Clair Todibo",
+        "whoscored_name": "Jean-Clair Todibo",
+        "team": "West Ham"
+    },
+    "395692": {
+        "fpl_id": "235",
+        "fpl_name": "Palmer",
+        "fpl_full_name": "Cole Palmer",
+        "whoscored_name": "Cole Palmer",
+        "team": "Chelsea"
+    },
+    "331924": {
+        "fpl_id": "610",
+        "fpl_name": "Wan-Bissaka",
+        "fpl_full_name": "Aaron Wan-Bissaka",
+        "whoscored_name": "Aaron Wan-Bissaka",
+        "team": "West Ham"
+    },
+    "92516": {
+        "fpl_id": "600",
+        "fpl_name": "Areola",
+        "fpl_full_name": "Alphonse Areola",
+        "whoscored_name": "Alphonse Areola",
+        "team": "West Ham"
+    },
+    "401254": {
+        "fpl_id": "250",
+        "fpl_name": "Delap",
+        "fpl_full_name": "Liam Delap",
+        "whoscored_name": "Liam Delap",
+        "team": "Chelsea"
+    },
+    "373946": {
+        "fpl_id": "230",
+        "fpl_name": "Fofana",
+        "fpl_full_name": "Wesley Fofana",
+        "whoscored_name": "Wesley Fofana",
+        "team": "Chelsea"
+    },
+    "363496": {
+        "fpl_id": "224",
+        "fpl_name": "Cucurella",
+        "fpl_full_name": "Marc Cucurella Saseta",
+        "whoscored_name": "Marc Cucurella",
+        "team": "Chelsea"
+    },
+    "373525": {
+        "fpl_id": "249",
+        "fpl_name": "João Pedro",
+        "fpl_full_name": "João Pedro Junqueira de Jesus",
+        "whoscored_name": "João Pedro",
+        "team": "Chelsea"
+    },
+    "361330": {
+        "fpl_id": "225",
+        "fpl_name": "James",
+        "fpl_full_name": "Reece James",
+        "whoscored_name": "Reece James",
+        "team": "Chelsea"
+    },
+    "140088": {
+        "fpl_id": "326",
+        "fpl_name": "Adama",
+        "fpl_full_name": "Adama Traoré Diarra",
+        "whoscored_name": "Adama Traoré",
+        "team": "West Ham"
+    },
+    "459708": {
+        "fpl_id": "608",
+        "fpl_name": "Scarles",
+        "fpl_full_name": "Ollie Scarles",
+        "whoscored_name": "Ollie Scarles",
+        "team": "West Ham"
+    },
+    "355609": {
+        "fpl_id": "343",
+        "fpl_name": "Struijk",
+        "fpl_full_name": "Pascal Struijk",
+        "whoscored_name": "Pascal Struijk",
+        "team": "Leeds"
+    },
+    "326413": {
+        "fpl_id": "30",
+        "fpl_name": "Havertz",
+        "fpl_full_name": "Kai Havertz",
+        "whoscored_name": "Kai Havertz",
+        "team": "Arsenal"
+    },
+    "382590": {
+        "fpl_id": "356",
+        "fpl_name": "Gruev",
+        "fpl_full_name": "Ilia Gruev",
+        "whoscored_name": "Ilia Gruev",
+        "team": "Leeds"
+    },
+    "371012": {
+        "fpl_id": "350",
+        "fpl_name": "Aaronson",
+        "fpl_full_name": "Brenden Aaronson",
+        "whoscored_name": "Brenden Aaronson",
+        "team": "Leeds"
+    },
+    "70483": {
+        "fpl_id": "341",
+        "fpl_name": "Darlow",
+        "fpl_full_name": "Karl Darlow",
+        "whoscored_name": "Karl Darlow",
+        "team": "Leeds"
+    },
+    "322418": {
+        "fpl_id": "354",
+        "fpl_name": "Ampadu",
+        "fpl_full_name": "Ethan Ampadu",
+        "whoscored_name": "Ethan Ampadu",
+        "team": "Leeds"
+    },
+    "302312": {
+        "fpl_id": "348",
+        "fpl_name": "Rodon",
+        "fpl_full_name": "Joe Rodon",
+        "whoscored_name": "Joe Rodon",
+        "team": "Leeds"
+    },
+    "354291": {
+        "fpl_id": "342",
+        "fpl_name": "Bogle",
+        "fpl_full_name": "Jayden Bogle",
+        "whoscored_name": "Jayden Bogle",
+        "team": "Leeds"
+    },
+    "401073": {
+        "fpl_id": "660",
+        "fpl_name": "Stach",
+        "fpl_full_name": "Anton Stach",
+        "whoscored_name": "Anton Stach",
+        "team": "Leeds"
+    },
+    "330549": {
+        "fpl_id": "347",
+        "fpl_name": "Gudmundsson",
+        "fpl_full_name": "Gabriel Gudmundsson",
+        "whoscored_name": "Gabriel Gudmundsson",
+        "team": "Leeds"
+    },
+    "301441": {
+        "fpl_id": "706",
+        "fpl_name": "Justin",
+        "fpl_full_name": "James Justin",
+        "whoscored_name": "James Justin",
+        "team": "Leeds"
+    },
+    "141469": {
+        "fpl_id": "691",
+        "fpl_name": "Calvert-Lewin",
+        "fpl_full_name": "Dominic Calvert-Lewin",
+        "whoscored_name": "Dominic Calvert-Lewin",
+        "team": "Leeds"
+    },
+    "342811": {
+        "fpl_id": "493",
+        "fpl_name": "Longstaff",
+        "fpl_full_name": "Sean Longstaff",
+        "whoscored_name": "Sean Longstaff",
+        "team": "Leeds"
+    },
+    "376090": {
+        "fpl_id": "698",
+        "fpl_name": "Okafor",
+        "fpl_full_name": "Noah Okafor",
+        "whoscored_name": "Noah Okafor",
+        "team": "Leeds"
+    },
+    "432384": {
+        "fpl_id": "168",
+        "fpl_name": "Buonanotte",
+        "fpl_full_name": "Facundo Buonanotte",
+        "whoscored_name": "Facundo Buonanotte",
+        "team": "Leeds"
+    },
+    "439636": {
+        "fpl_id": "351",
+        "fpl_name": "Gnonto",
+        "fpl_full_name": "Wilfried Gnonto",
+        "whoscored_name": "Wilfried Gnonto",
+        "team": "Leeds"
+    },
+    "369542": {
+        "fpl_id": "362",
+        "fpl_name": "Piroe",
+        "fpl_full_name": "Joël Piroe",
+        "whoscored_name": "Joël Piroe",
+        "team": "Leeds"
+    },
+    "384430": {
+        "fpl_id": "97",
+        "fpl_name": "Evanilson",
+        "fpl_full_name": "Francisco Evanilson de Lima Barbosa",
+        "whoscored_name": "Evanilson",
+        "team": "Bournemouth"
+    },
+    "136456": {
+        "fpl_id": "88",
+        "fpl_name": "Cook",
+        "fpl_full_name": "Lewis Cook",
+        "whoscored_name": "Lewis Cook",
+        "team": "Bournemouth"
+    },
+    "497295": {
+        "fpl_id": "713",
+        "fpl_name": "A.Jimenez",
+        "fpl_full_name": "Álex Jiménez Sánchez",
+        "whoscored_name": "Álex Jiménez",
+        "team": "Bournemouth"
+    },
+    "402810": {
+        "fpl_id": "631",
+        "fpl_name": "Agbadou",
+        "fpl_full_name": "Emmanuel Agbadou",
+        "whoscored_name": "Emmanuel Agbadou",
+        "team": "Wolves"
+    },
+    "554310": {
+        "fpl_id": "749",
+        "fpl_name": "Mané",
+        "fpl_full_name": "Mateus Mané",
+        "whoscored_name": "Mateus Mané",
+        "team": "Wolves"
+    },
+    "262854": {
+        "fpl_id": "642",
+        "fpl_name": "Hee Chan",
+        "fpl_full_name": "Hwang Hee-chan",
+        "whoscored_name": "Hwang Hee-Chan",
+        "team": "Wolves"
+    },
+    "402056": {
+        "fpl_id": "720",
+        "fpl_name": "Tolu",
+        "fpl_full_name": "Tolu Arokodare",
+        "whoscored_name": "Tolu Arokodare",
+        "team": "Wolves"
+    },
+    "362837": {
+        "fpl_id": "77",
+        "fpl_name": "Hill",
+        "fpl_full_name": "James Hill",
+        "whoscored_name": "James Hill",
+        "team": "Bournemouth"
+    },
+    "409730": {
+        "fpl_id": "633",
+        "fpl_name": "H.Bueno",
+        "fpl_full_name": "Hugo Bueno López",
+        "whoscored_name": "Hugo Bueno",
+        "team": "Wolves"
+    },
+    "69877": {
+        "fpl_id": "73",
+        "fpl_name": "Smith",
+        "fpl_full_name": "Adam Smith",
+        "whoscored_name": "Adam Smith",
+        "team": "Bournemouth"
+    },
+    "403693": {
+        "fpl_id": "637",
+        "fpl_name": "Toti",
+        "fpl_full_name": "Toti Gomes",
+        "whoscored_name": "João Gomes",
+        "team": "Wolves"
+    },
+    "389409": {
+        "fpl_id": "697",
+        "fpl_name": "Adli",
+        "fpl_full_name": "Amine Adli",
+        "whoscored_name": "Amine Adli",
+        "team": "Bournemouth"
+    },
+    "402823": {
+        "fpl_id": "637",
+        "fpl_name": "Toti",
+        "fpl_full_name": "Toti Gomes",
+        "whoscored_name": "Rodrigo Gomes",
+        "team": "Wolves"
+    },
+    "425060": {
+        "fpl_id": "634",
+        "fpl_name": "Mosquera",
+        "fpl_full_name": "Yerson Mosquera Valdelamar",
+        "whoscored_name": "Yerson Mosquera",
+        "team": "Wolves"
+    },
+    "122714": {
+        "fpl_id": "628",
+        "fpl_name": "José Sá",
+        "fpl_full_name": "José Malheiro de Sá",
+        "whoscored_name": "José Sá",
+        "team": "Wolves"
+    },
+    "410998": {
+        "fpl_id": "90",
+        "fpl_name": "Scott",
+        "fpl_full_name": "Alex Scott",
+        "whoscored_name": "Alex Scott",
+        "team": "Bournemouth"
+    },
+    "328330": {
+        "fpl_id": "72",
+        "fpl_name": "Senesi",
+        "fpl_full_name": "Marcos Senesi Barón",
+        "whoscored_name": "Marcos Senesi",
+        "team": "Bournemouth"
+    },
+    "397585": {
+        "fpl_id": "643",
+        "fpl_name": "André",
+        "fpl_full_name": "André Trindade da Costa Neto",
+        "whoscored_name": "André",
+        "team": "Wolves"
+    },
+    "479170": {
+        "fpl_id": "100",
+        "fpl_name": "Kroupi.Jr",
+        "fpl_full_name": "Junior Kroupi",
+        "whoscored_name": "Junior Kroupi",
+        "team": "Bournemouth"
+    },
+    "398301": {
+        "fpl_id": "74",
+        "fpl_name": "Truffert",
+        "fpl_full_name": "Adrien Truffert",
+        "whoscored_name": "Adrien Truffert",
+        "team": "Bournemouth"
+    },
+    "128882": {
+        "fpl_id": "87",
+        "fpl_name": "Christie",
+        "fpl_full_name": "Ryan Christie",
+        "whoscored_name": "Ryan Christie",
+        "team": "Bournemouth"
+    },
+    "472122": {
+        "fpl_id": "807",
+        "fpl_name": "Rayan",
+        "fpl_full_name": "Rayan Vitor Simplício Rocha",
+        "whoscored_name": "Rayan",
+        "team": "Bournemouth"
+    },
+    "320242": {
+        "fpl_id": "644",
+        "fpl_name": "Bellegarde",
+        "fpl_full_name": "Jean-Ricner Bellegarde",
+        "whoscored_name": "Jean-Ricner Bellegarde",
+        "team": "Wolves"
+    },
+    "424039": {
+        "fpl_id": "663",
+        "fpl_name": "J.Arias",
+        "fpl_full_name": "Jhon Arias",
+        "whoscored_name": "Jhon Arias",
+        "team": "Wolves"
+    },
+    "134695": {
+        "fpl_id": "98",
+        "fpl_name": "Enes Ünal",
+        "fpl_full_name": "Enes Ünal",
+        "whoscored_name": "Enes Ünal",
+        "team": "Bournemouth"
+    },
+    "476166": {
+        "fpl_id": "801",
+        "fpl_name": "Tóth.A",
+        "fpl_full_name": "Alex Tóth",
+        "whoscored_name": "Alex Tóth",
+        "team": "Bournemouth"
+    },
+    "415341": {
+        "fpl_id": "682",
+        "fpl_name": "Møller Wolfe",
+        "fpl_full_name": "David Møller Wolfe",
+        "whoscored_name": "David Møller Wolfe",
+        "team": "Wolves"
+    },
+    "532920": {
+        "fpl_id": "640",
+        "fpl_name": "Pedro Lima",
+        "fpl_full_name": "Pedro Cardoso de Lima",
+        "whoscored_name": "Pedro Lima",
+        "team": "Wolves"
+    },
+    "366875": {
+        "fpl_id": "685",
+        "fpl_name": "Diakité",
+        "fpl_full_name": "Bafodé Diakité",
+        "whoscored_name": "Bafodé Diakité",
+        "team": "Bournemouth"
+    },
+    "402184": {
+        "fpl_id": "733",
+        "fpl_name": "Lammens",
+        "fpl_full_name": "Senne Lammens",
+        "whoscored_name": "Senne Lammens",
+        "team": "Man Utd"
+    },
+    "88526": {
+        "fpl_id": "457",
+        "fpl_name": "Casemiro",
+        "fpl_full_name": "Carlos Henrique Casimiro",
+        "whoscored_name": "Casemiro",
+        "team": "Man Utd"
+    },
+    "495260": {
+        "fpl_id": "441",
+        "fpl_name": "Dorgu",
+        "fpl_full_name": "Patrick Dorgu",
+        "whoscored_name": "Patrick Dorgu",
+        "team": "Man Utd"
+    },
+    "340105": {
+        "fpl_id": "437",
+        "fpl_name": "Martinez",
+        "fpl_full_name": "Lisandro Martínez",
+        "whoscored_name": "Lisandro Martínez",
+        "team": "Man Utd"
+    },
+    "408962": {
+        "fpl_id": "459",
+        "fpl_name": "Ugarte",
+        "fpl_full_name": "Manuel Ugarte Ribeiro",
+        "whoscored_name": "Manuel Ugarte",
+        "team": "Man Utd"
+    },
+    "118244": {
+        "fpl_id": "443",
+        "fpl_name": "Shaw",
+        "fpl_full_name": "Luke Shaw",
+        "whoscored_name": "Luke Shaw",
+        "team": "Man Utd"
+    },
+    "517341": {
+        "fpl_id": "447",
+        "fpl_name": "Heaven",
+        "fpl_full_name": "Ayden Heaven",
+        "whoscored_name": "Ayden Heaven",
+        "team": "Man Utd"
+    },
+    "383956": {
+        "fpl_id": "466",
+        "fpl_name": "Zirkzee",
+        "fpl_full_name": "Joshua Zirkzee",
+        "whoscored_name": "Joshua Zirkzee",
+        "team": "Man Utd"
+    },
+    "353418": {
+        "fpl_id": "440",
+        "fpl_name": "Dalot",
+        "fpl_full_name": "Diogo Dalot Teixeira",
+        "whoscored_name": "Diogo Dalot",
+        "team": "Man Utd"
+    },
+    "408580": {
+        "fpl_id": "695",
+        "fpl_name": "Tchatchoua",
+        "fpl_full_name": "Jackson Tchatchoua",
+        "whoscored_name": "Jackson Tchatchoua",
+        "team": "Wolves"
+    },
+    "404245": {
+        "fpl_id": "709",
+        "fpl_name": "Krejčí",
+        "fpl_full_name": "Ladislav Krejcí",
+        "whoscored_name": "Ladislav Krejcí",
+        "team": "Wolves"
+    },
+    "94042": {
+        "fpl_id": "632",
+        "fpl_name": "Doherty",
+        "fpl_full_name": "Matt Doherty",
+        "whoscored_name": "Matt Doherty",
+        "team": "Wolves"
+    },
+    "424191": {
+        "fpl_id": "681",
+        "fpl_name": "Šeško",
+        "fpl_full_name": "Benjamin Sesko",
+        "whoscored_name": "Benjamin Sesko",
+        "team": "Man Utd"
+    },
+    "533128": {
+        "fpl_id": "462",
+        "fpl_name": "J.Fletcher",
+        "fpl_full_name": "Jack Fletcher",
+        "whoscored_name": "Jack Fletcher",
+        "team": "Man Utd"
+    },
+    "437299": {
+        "fpl_id": "444",
+        "fpl_name": "Yoro",
+        "fpl_full_name": "Leny Yoro",
+        "whoscored_name": "Leny Yoro",
+        "team": "Man Utd"
+    },
+    "559774": {
+        "fpl_id": "769",
+        "fpl_name": "Bendito Mantato",
+        "fpl_full_name": "Bendito Mantato",
+        "whoscored_name": "Bendito Mantato",
+        "team": "Man Utd"
+    },
+    "544982": {
+        "fpl_id": "645",
+        "fpl_name": "Fer López",
+        "fpl_full_name": "Fer López González",
+        "whoscored_name": "Fer López",
+        "team": "Wolves"
+    },
+    "369712": {
+        "fpl_id": "722",
+        "fpl_name": "Florentino",
+        "fpl_full_name": "Florentino Ibrain Morris Luís",
+        "whoscored_name": "Florentino",
+        "team": "Burnley"
+    },
+    "46092": {
+        "fpl_id": "470",
+        "fpl_name": "Dúbravka",
+        "fpl_full_name": "Martin Dúbravka",
+        "whoscored_name": "Martin Dúbravka",
+        "team": "Burnley"
+    },
+    "82726": {
+        "fpl_id": "474",
+        "fpl_name": "Schär",
+        "fpl_full_name": "Fabian Schär",
+        "whoscored_name": "Fabian Schär",
+        "team": "Newcastle"
+    },
+    "474264": {
+        "fpl_id": "497",
+        "fpl_name": "L.Miley",
+        "fpl_full_name": "Lewis Miley",
+        "whoscored_name": "Lewis Miley",
+        "team": "Newcastle"
+    },
+    "414233": {
+        "fpl_id": "191",
+        "fpl_name": "Estève",
+        "fpl_full_name": "Maxime Estève",
+        "whoscored_name": "Maxime Estève",
+        "team": "Burnley"
+    },
+    "338780": {
+        "fpl_id": "488",
+        "fpl_name": "Bruno G.",
+        "fpl_full_name": "Bruno Guimarães Rodriguez Moura",
+        "whoscored_name": "Bruno Guimarães",
+        "team": "Newcastle"
+    },
+    "69778": {
+        "fpl_id": "187",
+        "fpl_name": "Walker",
+        "fpl_full_name": "Kyle Walker",
+        "whoscored_name": "Kyle Walker",
+        "team": "Burnley"
+    },
+    "201755": {
+        "fpl_id": "490",
+        "fpl_name": "Joelinton",
+        "fpl_full_name": "Joelinton Cássio Apolinário de Lira",
+        "whoscored_name": "Joelinton",
+        "team": "Newcastle"
+    },
+    "393407": {
+        "fpl_id": "680",
+        "fpl_name": "Broja",
+        "fpl_full_name": "Armando Broja",
+        "whoscored_name": "Armando Broja",
+        "team": "Burnley"
+    },
+    "142676": {
+        "fpl_id": "209",
+        "fpl_name": "Laurent",
+        "fpl_full_name": "Josh Laurent",
+        "whoscored_name": "Josh Laurent",
+        "team": "Burnley"
+    },
+    "436501": {
+        "fpl_id": "195",
+        "fpl_name": "Lucas Pires",
+        "fpl_full_name": "Lucas Pires Silva",
+        "whoscored_name": "Lucas Pires",
+        "team": "Burnley"
+    },
+    "404616": {
+        "fpl_id": "676",
+        "fpl_name": "Ugochukwu",
+        "fpl_full_name": "Lesley Ugochukwu",
+        "whoscored_name": "Lesley Ugochukwu",
+        "team": "Burnley"
+    },
+    "399619": {
+        "fpl_id": "190",
+        "fpl_name": "Ekdal",
+        "fpl_full_name": "Hjalmar Ekdal",
+        "whoscored_name": "Hjalmar Ekdal",
+        "team": "Burnley"
+    },
+    "425118": {
+        "fpl_id": "210",
+        "fpl_name": "Tchaouna",
+        "fpl_full_name": "Loum Tchaouna",
+        "whoscored_name": "Loum Tchaouna",
+        "team": "Burnley"
+    },
+    "279177": {
+        "fpl_id": "206",
+        "fpl_name": "Edwards",
+        "fpl_full_name": "Marcus Edwards",
+        "whoscored_name": "Marcus Edwards",
+        "team": "Burnley"
+    },
+    "467968": {
+        "fpl_id": "193",
+        "fpl_name": "Humphreys",
+        "fpl_full_name": "Bashir Humphreys",
+        "whoscored_name": "Bashir Humphreys",
+        "team": "Burnley"
+    },
+    "307202": {
+        "fpl_id": "202",
+        "fpl_name": "Bruun Larsen",
+        "fpl_full_name": "Jacob Bruun Larsen",
+        "whoscored_name": "Jacob Bruun Larsen",
+        "team": "Burnley"
+    },
+    "33386": {
+        "fpl_id": "218",
+        "fpl_name": "Barnes",
+        "fpl_full_name": "Ashley Barnes",
+        "whoscored_name": "Ashley Barnes",
+        "team": "Burnley"
+    },
+    "383581": {
+        "fpl_id": "214",
+        "fpl_name": "Trésor",
+        "fpl_full_name": "Mike Trésor Ndayishimiye",
+        "whoscored_name": "Mike Trésor",
+        "team": "Burnley"
+    },
+    "105603": {
+        "fpl_id": "627",
+        "fpl_name": "Johnstone",
+        "fpl_full_name": "Sam Johnstone",
+        "whoscored_name": "Sam Johnstone",
+        "team": "Wolves"
+    },
+    "431283": {
+        "fpl_id": "637",
+        "fpl_name": "Toti",
+        "fpl_full_name": "Toti Gomes",
+        "whoscored_name": "Toti Gomes",
+        "team": "Wolves"
+    },
+    "331790": {
+        "fpl_id": "58",
+        "fpl_name": "Kamara",
+        "fpl_full_name": "Boubacar Kamara",
+        "whoscored_name": "Boubacar Kamara",
+        "team": "Aston Villa"
+    },
+    "437381": {
+        "fpl_id": "650",
+        "fpl_name": "Chirewa",
+        "fpl_full_name": "Tawanda Chirewa",
+        "whoscored_name": "Tawanda Chirewa",
+        "team": "Wolves"
+    },
+    "92547": {
+        "fpl_id": "55",
+        "fpl_name": "Barkley",
+        "fpl_full_name": "Ross Barkley",
+        "whoscored_name": "Ross Barkley",
+        "team": "Aston Villa"
+    },
+    "331579": {
+        "fpl_id": "81",
+        "fpl_name": "Kluivert",
+        "fpl_full_name": "Justin Kluivert",
+        "whoscored_name": "Justin Kluivert",
+        "team": "Bournemouth"
+    },
+    "518604": {
+        "fpl_id": "233",
+        "fpl_name": "Acheampong",
+        "fpl_full_name": "Josh Acheampong",
+        "whoscored_name": "Josh Acheampong",
+        "team": "Chelsea"
+    },
+    "510728": {
+        "fpl_id": "238",
+        "fpl_name": "Estêvão",
+        "fpl_full_name": "Estêvão Almeida de Oliveira Gonçalves",
+        "whoscored_name": "Estêvão",
+        "team": "Chelsea"
+    },
+    "295084": {
+        "fpl_id": "86",
+        "fpl_name": "Brooks",
+        "fpl_full_name": "David Brooks",
+        "whoscored_name": "David Brooks",
+        "team": "Bournemouth"
+    },
+    "344314": {
+        "fpl_id": "84",
+        "fpl_name": "Tavernier",
+        "fpl_full_name": "Marcus Tavernier",
+        "whoscored_name": "Marcus Tavernier",
+        "team": "Bournemouth"
+    },
+    "451236": {
+        "fpl_id": "246",
+        "fpl_name": "Andrey Santos",
+        "fpl_full_name": "Andrey Nascimento dos Santos",
+        "whoscored_name": "Andrey Santos",
+        "team": "Chelsea"
+    },
+    "357427": {
+        "fpl_id": "300",
+        "fpl_name": "McNeil",
+        "fpl_full_name": "Dwight McNeil",
+        "whoscored_name": "Dwight McNeil",
+        "team": "Everton"
+    },
+    "273257": {
+        "fpl_id": "12",
+        "fpl_name": "Zinchenko",
+        "fpl_full_name": "Oleksandr Zinchenko",
+        "whoscored_name": "Oleksandr Zinchenko",
+        "team": "Nottingham Forest"
+    },
+    "419945": {
+        "fpl_id": "728",
+        "fpl_name": "Röhl",
+        "fpl_full_name": "Merlin Röhl",
+        "whoscored_name": "Merlin Röhl",
+        "team": "Everton"
+    },
+    "334653": {
+        "fpl_id": "519",
+        "fpl_name": "Dominguez",
+        "fpl_full_name": "Nicolás Domínguez",
+        "whoscored_name": "Nicolás Domínguez",
+        "team": "Nottingham Forest"
+    },
+    "318689": {
+        "fpl_id": "715",
+        "fpl_name": "John",
+        "fpl_full_name": "John Victor Maciel Furtado",
+        "whoscored_name": "John Victor",
+        "team": "Nottingham Forest"
+    },
+    "345516": {
+        "fpl_id": "292",
+        "fpl_name": "Mykolenko",
+        "fpl_full_name": "Vitalii Mykolenko",
+        "whoscored_name": "Vitalii Mykolenko",
+        "team": "Everton"
+    },
+    "281049": {
+        "fpl_id": "527",
+        "fpl_name": "Awoniyi",
+        "fpl_full_name": "Taiwo Awoniyi",
+        "whoscored_name": "Taiwo Awoniyi",
+        "team": "Nottingham Forest"
+    },
+    "113069": {
+        "fpl_id": "419",
+        "fpl_name": "Grealish",
+        "fpl_full_name": "Jack Grealish",
+        "whoscored_name": "Jack Grealish",
+        "team": "Everton"
+    },
+    "402130": {
+        "fpl_id": "734",
+        "fpl_name": "Bakwa",
+        "fpl_full_name": "Dilane Bakwa",
+        "whoscored_name": "Dilane Bakwa",
+        "team": "Nottingham Forest"
+    },
+    "429534": {
+        "fpl_id": "623",
+        "fpl_name": "Potts",
+        "fpl_full_name": "Freddie Potts",
+        "whoscored_name": "Freddie Potts",
+        "team": "West Ham"
+    },
+    "443815": {
+        "fpl_id": "718",
+        "fpl_name": "S.Magassa",
+        "fpl_full_name": "Soungoutou Magassa",
+        "whoscored_name": "Soungoutou Magassa",
+        "team": "West Ham"
+    },
+    "547084": {
+        "fpl_id": "747",
+        "fpl_name": "Mayers",
+        "fpl_full_name": "Ezra Mayers",
+        "whoscored_name": "Ezra Mayers",
+        "team": "West Ham"
+    },
+    "511560": {
+        "fpl_id": "758",
+        "fpl_name": "Mohamadou Kanté",
+        "fpl_full_name": "Mohamadou Kanté",
+        "whoscored_name": "Mohamadou Kanté",
+        "team": "West Ham"
+    },
+    "299254": {
+        "fpl_id": "499",
+        "fpl_name": "Isak",
+        "fpl_full_name": "Alexander Isak",
+        "whoscored_name": "Alexander Isak",
+        "team": "Liverpool"
+    },
+    "478319": {
+        "fpl_id": "619",
+        "fpl_name": "L.Guilherme",
+        "fpl_full_name": "Luis Guilherme Lira dos Santos",
+        "whoscored_name": "Luis Guilherme",
+        "team": "West Ham"
+    },
+    "115726": {
+        "fpl_id": "372",
+        "fpl_name": "Robertson",
+        "fpl_full_name": "Andrew Robertson",
+        "whoscored_name": "Andy Robertson",
+        "team": "Liverpool"
+    },
+    "445059": {
+        "fpl_id": "173",
+        "fpl_name": "Wieffer",
+        "fpl_full_name": "Mats Wieffer",
+        "whoscored_name": "Mats Wieffer",
+        "team": "Brighton"
+    },
+    "376916": {
+        "fpl_id": "511",
+        "fpl_name": "Morato",
+        "fpl_full_name": "Felipe Rodrigues da Silva",
+        "whoscored_name": "Morato",
+        "team": "Nottingham Forest"
+    },
+    "450289": {
+        "fpl_id": "716",
+        "fpl_name": "Savona",
+        "fpl_full_name": "Nicolò Savona",
+        "whoscored_name": "Nicolò Savona",
+        "team": "Nottingham Forest"
+    },
+    "519565": {
+        "fpl_id": "180",
+        "fpl_name": "Tzimas",
+        "fpl_full_name": "Stefanos Tzimas",
+        "whoscored_name": "Stefanos Tzimas",
+        "team": "Brighton"
+    },
+    "342830": {
+        "fpl_id": "522",
+        "fpl_name": "Yates",
+        "fpl_full_name": "Ryan Yates",
+        "whoscored_name": "Ryan Yates",
+        "team": "Nottingham Forest"
+    },
+    "353377": {
+        "fpl_id": "119",
+        "fpl_name": "Mbeumo",
+        "fpl_full_name": "Bryan Mbeumo",
+        "whoscored_name": "Bryan Mbeumo",
+        "team": "Man Utd"
+    },
+    "320374": {
+        "fpl_id": "436",
+        "fpl_name": "De Ligt",
+        "fpl_full_name": "Matthijs de Ligt",
+        "whoscored_name": "Matthijs de Ligt",
+        "team": "Man Utd"
+    },
+    "343346": {
+        "fpl_id": "455",
+        "fpl_name": "Mount",
+        "fpl_full_name": "Mason Mount",
+        "whoscored_name": "Mason Mount",
+        "team": "Man Utd"
+    },
+    "386634": {
+        "fpl_id": "452",
+        "fpl_name": "Amad",
+        "fpl_full_name": "Amad Diallo",
+        "whoscored_name": "Amad Diallo",
+        "team": "Man Utd"
+    },
+    "345845": {
+        "fpl_id": "284",
+        "fpl_name": "Nketiah",
+        "fpl_full_name": "Eddie Nketiah",
+        "whoscored_name": "Eddie Nketiah",
+        "team": "Crystal Palace"
+    },
+    "349932": {
+        "fpl_id": "438",
+        "fpl_name": "Mazraoui",
+        "fpl_full_name": "Noussair Mazraoui",
+        "whoscored_name": "Noussair Mazraoui",
+        "team": "Man Utd"
+    },
+    "531674": {
+        "fpl_id": "732",
+        "fpl_name": "Uche",
+        "fpl_full_name": "Christantus Uche",
+        "whoscored_name": "Christantus Uche",
+        "team": "Crystal Palace"
+    },
+    "460260": {
+        "fpl_id": "458",
+        "fpl_name": "Mainoo",
+        "fpl_full_name": "Kobbie Mainoo",
+        "whoscored_name": "Kobbie Mainoo",
+        "team": "Man Utd"
+    },
+    "347340": {
+        "fpl_id": "365",
+        "fpl_name": "Nmecha",
+        "fpl_full_name": "Lukas Nmecha",
+        "whoscored_name": "Lukas Nmecha",
+        "team": "Leeds"
+    },
+    "307564": {
+        "fpl_id": "665",
+        "fpl_name": "Perri",
+        "fpl_full_name": "Lucas Estella Perri",
+        "whoscored_name": "Lucas Perri",
+        "team": "Leeds"
+    },
+    "379732": {
+        "fpl_id": "475",
+        "fpl_name": "Botman",
+        "fpl_full_name": "Sven Botman",
+        "whoscored_name": "Sven Botman",
+        "team": "Newcastle"
+    },
+    "302313": {
+        "fpl_id": "353",
+        "fpl_name": "James",
+        "fpl_full_name": "Daniel James",
+        "whoscored_name": "Daniel James",
+        "team": "Leeds"
+    },
+    "415174": {
+        "fpl_id": "477",
+        "fpl_name": "Livramento",
+        "fpl_full_name": "Tino Livramento",
+        "whoscored_name": "Tino Livramento",
+        "team": "Newcastle"
+    },
+    "317896": {
+        "fpl_id": "352",
+        "fpl_name": "Harrison",
+        "fpl_full_name": "Jack Harrison",
+        "whoscored_name": "Jack Harrison",
+        "team": "Leeds"
+    },
+    "444739": {
+        "fpl_id": "192",
+        "fpl_name": "Hartman",
+        "fpl_full_name": "Quilindschy Hartman",
+        "whoscored_name": "Quilindschy Hartman",
+        "team": "Burnley"
+    },
+    "273292": {
+        "fpl_id": "205",
+        "fpl_name": "Cullen",
+        "fpl_full_name": "Josh Cullen",
+        "whoscored_name": "Josh Cullen",
+        "team": "Burnley"
+    },
+    "400610": {
+        "fpl_id": "200",
+        "fpl_name": "Anthony",
+        "fpl_full_name": "Jaidon Anthony",
+        "whoscored_name": "Jaidon Anthony",
+        "team": "Burnley"
+    },
+    "371447": {
+        "fpl_id": "217",
+        "fpl_name": "Foster",
+        "fpl_full_name": "Lyle Foster",
+        "whoscored_name": "Lyle Foster",
+        "team": "Burnley"
+    },
+    "416207": {
+        "fpl_id": "207",
+        "fpl_name": "Hannibal",
+        "fpl_full_name": "Hannibal Mejbri",
+        "whoscored_name": "Hannibal Mejbri",
+        "team": "Burnley"
+    },
+    "444334": {
+        "fpl_id": "197",
+        "fpl_name": "Sonne",
+        "fpl_full_name": "Oliver Sonne",
+        "whoscored_name": "Oliver Sonne",
+        "team": "Burnley"
+    },
+    "315714": {
+        "fpl_id": "199",
+        "fpl_name": "Worrall",
+        "fpl_full_name": "Joe Worrall",
+        "whoscored_name": "Joe Worrall",
+        "team": "Burnley"
+    },
+    "401168": {
+        "fpl_id": "121",
+        "fpl_name": "Damsgaard",
+        "fpl_full_name": "Mikkel Damsgaard",
+        "whoscored_name": "Mikkel Damsgaard",
+        "team": "Brentford"
+    },
+    "322176": {
+        "fpl_id": "101",
+        "fpl_name": "Kelleher",
+        "fpl_full_name": "Caoimhín Kelleher",
+        "whoscored_name": "Caoimhín Kelleher",
+        "team": "Brentford"
+    },
+    "443784": {
+        "fpl_id": "136",
+        "fpl_name": "Thiago",
+        "fpl_full_name": "Igor Thiago Nascimento Rodrigues",
+        "whoscored_name": "Igor Thiago",
+        "team": "Brentford"
+    },
+    "89401": {
+        "fpl_id": "668",
+        "fpl_name": "Xhaka",
+        "fpl_full_name": "Granit Xhaka",
+        "whoscored_name": "Granit Xhaka",
+        "team": "Sunderland"
+    },
+    "407260": {
+        "fpl_id": "120",
+        "fpl_name": "Schade",
+        "fpl_full_name": "Kevin Schade",
+        "whoscored_name": "Kevin Schade",
+        "team": "Brentford"
+    },
+    "68659": {
+        "fpl_id": "124",
+        "fpl_name": "Henderson",
+        "fpl_full_name": "Jordan Henderson",
+        "whoscored_name": "Jordan Henderson",
+        "team": "Brentford"
+    },
+    "351705": {
+        "fpl_id": "113",
+        "fpl_name": "Van den Berg",
+        "fpl_full_name": "Sepp van den Berg",
+        "whoscored_name": "Sepp van den Berg",
+        "team": "Brentford"
+    },
+    "372724": {
+        "fpl_id": "106",
+        "fpl_name": "Collins",
+        "fpl_full_name": "Nathan Collins",
+        "whoscored_name": "Nathan Collins",
+        "team": "Brentford"
+    },
+    "422814": {
+        "fpl_id": "670",
+        "fpl_name": "Roefs",
+        "fpl_full_name": "Robin Roefs",
+        "whoscored_name": "Robin Roefs",
+        "team": "Sunderland"
+    },
+    "424514": {
+        "fpl_id": "532",
+        "fpl_name": "Hume",
+        "fpl_full_name": "Trai Hume",
+        "whoscored_name": "Trai Hume",
+        "team": "Sunderland"
+    },
+    "476110": {
+        "fpl_id": "553",
+        "fpl_name": "Talbi",
+        "fpl_full_name": "Chemsdine Talbi",
+        "whoscored_name": "Chemsdine Talbi",
+        "team": "Sunderland"
+    },
+    "422818": {
+        "fpl_id": "544",
+        "fpl_name": "Diarra",
+        "fpl_full_name": "Habib Diarra",
+        "whoscored_name": "Habib Diarra",
+        "team": "Sunderland"
+    },
+    "299077": {
+        "fpl_id": "694",
+        "fpl_name": "Mukiele",
+        "fpl_full_name": "Nordi Mukiele",
+        "whoscored_name": "Nordi Mukiele",
+        "team": "Sunderland"
+    },
+    "344639": {
+        "fpl_id": "683",
+        "fpl_name": "Alderete",
+        "fpl_full_name": "Omar Alderete",
+        "whoscored_name": "Omar Alderete",
+        "team": "Sunderland"
+    },
+    "437449": {
+        "fpl_id": "552",
+        "fpl_name": "Sadiki",
+        "fpl_full_name": "Noah Sadiki",
+        "whoscored_name": "Noah Sadiki",
+        "team": "Sunderland"
+    },
+    "422183": {
+        "fpl_id": "83",
+        "fpl_name": "O.Dango",
+        "fpl_full_name": "Dango Ouattara",
+        "whoscored_name": "Dango Ouattara",
+        "team": "Brentford"
+    },
+    "361812": {
+        "fpl_id": "541",
+        "fpl_name": "Reinildo",
+        "fpl_full_name": "Reinildo Mandava",
+        "whoscored_name": "Reinildo Mandava",
+        "team": "Sunderland"
+    },
+    "398393": {
+        "fpl_id": "547",
+        "fpl_name": "E.Le Fée",
+        "fpl_full_name": "Enzo Le Fée",
+        "whoscored_name": "Enzo Le Fée",
+        "team": "Sunderland"
+    },
+    "368512": {
+        "fpl_id": "107",
+        "fpl_name": "Lewis-Potter",
+        "fpl_full_name": "Keane Lewis-Potter",
+        "whoscored_name": "Keane Lewis-Potter",
+        "team": "Brentford"
+    },
+    "470031": {
+        "fpl_id": "110",
+        "fpl_name": "Kayode",
+        "fpl_full_name": "Michael Kayode",
+        "whoscored_name": "Michael Kayode",
+        "team": "Brentford"
+    },
+    "494670": {
+        "fpl_id": "561",
+        "fpl_name": "Mayenda",
+        "fpl_full_name": "Eliezer Mayenda Dossou",
+        "whoscored_name": "Eliezer Mayenda",
+        "team": "Sunderland"
+    },
+    "444304": {
+        "fpl_id": "129",
+        "fpl_name": "Yarmoliuk",
+        "fpl_full_name": "Yehor Yarmoliuk",
+        "whoscored_name": "Yehor Yarmoliuk",
+        "team": "Brentford"
+    },
+    "443004": {
+        "fpl_id": "543",
+        "fpl_name": "Adingra",
+        "fpl_full_name": "Simon Adingra",
+        "whoscored_name": "Simon Adingra",
+        "team": "Sunderland"
+    },
+    "363535": {
+        "fpl_id": "560",
+        "fpl_name": "Isidor",
+        "fpl_full_name": "Wilson Isidor",
+        "whoscored_name": "Wilson Isidor",
+        "team": "Sunderland"
+    },
+    "404109": {
+        "fpl_id": "128",
+        "fpl_name": "Onyeka",
+        "fpl_full_name": "Frank Onyeka",
+        "whoscored_name": "Frank Onyeka",
+        "team": "Brentford"
+    },
+    "229562": {
+        "fpl_id": "109",
+        "fpl_name": "Henry",
+        "fpl_full_name": "Rico Henry",
+        "whoscored_name": "Rico Henry",
+        "team": "Brentford"
+    },
+    "362352": {
+        "fpl_id": "568",
+        "fpl_name": "Pedro Porro",
+        "fpl_full_name": "Pedro Porro Sauceda",
+        "whoscored_name": "Pedro Porro",
+        "team": "Tottenham"
+    },
+    "400166": {
+        "fpl_id": "582",
+        "fpl_name": "Kudus",
+        "fpl_full_name": "Mohammed Kudus",
+        "whoscored_name": "Mohammed Kudus",
+        "team": "Tottenham"
+    },
+    "315275": {
+        "fpl_id": "85",
+        "fpl_name": "Adams",
+        "fpl_full_name": "Tyler Adams",
+        "whoscored_name": "Tyler Adams",
+        "team": "Bournemouth"
+    },
+    "403859": {
+        "fpl_id": "593",
+        "fpl_name": "P.M.Sarr",
+        "fpl_full_name": "Pape Matar Sarr",
+        "whoscored_name": "Pape Matar Sarr",
+        "team": "Tottenham"
+    },
+    "425229": {
+        "fpl_id": "575",
+        "fpl_name": "Van de Ven",
+        "fpl_full_name": "Micky van de Ven",
+        "whoscored_name": "Micky van de Ven",
+        "team": "Tottenham"
+    },
+    "362219": {
+        "fpl_id": "573",
+        "fpl_name": "Spence",
+        "fpl_full_name": "Djed Spence",
+        "whoscored_name": "Djed Spence",
+        "team": "Tottenham"
+    },
+    "147863": {
+        "fpl_id": "565",
+        "fpl_name": "Vicario",
+        "fpl_full_name": "Guglielmo Vicario",
+        "whoscored_name": "Guglielmo Vicario",
+        "team": "Tottenham"
+    },
+    "317804": {
+        "fpl_id": "597",
+        "fpl_name": "Richarlison",
+        "fpl_full_name": "Richarlison de Andrade",
+        "whoscored_name": "Richarlison",
+        "team": "Tottenham"
+    },
+    "303657": {
+        "fpl_id": "585",
+        "fpl_name": "Bentancur",
+        "fpl_full_name": "Rodrigo Bentancur",
+        "whoscored_name": "Rodrigo Bentancur",
+        "team": "Tottenham"
+    },
+    "323663": {
+        "fpl_id": "569",
+        "fpl_name": "Romero",
+        "fpl_full_name": "Cristian Romero",
+        "whoscored_name": "Cristian Romero",
+        "team": "Tottenham"
+    },
+    "444751": {
+        "fpl_id": "588",
+        "fpl_name": "Odobert",
+        "fpl_full_name": "Wilson Odobert",
+        "whoscored_name": "Wilson Odobert",
+        "team": "Tottenham"
+    },
+    "505295": {
+        "fpl_id": "586",
+        "fpl_name": "Bergvall",
+        "fpl_full_name": "Lucas Bergvall",
+        "whoscored_name": "Lucas Bergvall",
+        "team": "Tottenham"
+    },
+    "401044": {
+        "fpl_id": "574",
+        "fpl_name": "Udogie",
+        "fpl_full_name": "Destiny Udogie",
+        "whoscored_name": "Destiny Udogie",
+        "team": "Tottenham"
+    },
+    "422885": {
+        "fpl_id": "584",
+        "fpl_name": "Tel",
+        "fpl_full_name": "Mathys Tel",
+        "whoscored_name": "Mathys Tel",
+        "team": "Tottenham"
+    },
+    "377411": {
+        "fpl_id": "648",
+        "fpl_name": "Munetsi",
+        "fpl_full_name": "Marshall Munetsi",
+        "whoscored_name": "Marshall Munetsi",
+        "team": "Wolves"
+    },
+    "31826": {
+        "fpl_id": "294",
+        "fpl_name": "Coleman",
+        "fpl_full_name": "Séamus Coleman",
+        "whoscored_name": "Séamus Coleman",
+        "team": "Everton"
+    },
+    "396976": {
+        "fpl_id": "318",
+        "fpl_name": "Bassey",
+        "fpl_full_name": "Calvin Bassey",
+        "whoscored_name": "Calvin Bassey",
+        "team": "Fulham"
+    },
+    "136464": {
+        "fpl_id": "232",
+        "fpl_name": "Tosin",
+        "fpl_full_name": "Tosin Adarabioyo",
+        "whoscored_name": "Tosin Adarabioyo",
+        "team": "Chelsea"
+    },
+    "321020": {
+        "fpl_id": "330",
+        "fpl_name": "Berge",
+        "fpl_full_name": "Sander Berge",
+        "whoscored_name": "Sander Berge",
+        "team": "Fulham"
+    },
+    "145996": {
+        "fpl_id": "322",
+        "fpl_name": "Tete",
+        "fpl_full_name": "Kenny Tete",
+        "whoscored_name": "Kenny Tete",
+        "team": "Fulham"
+    },
+    "136824": {
+        "fpl_id": "324",
+        "fpl_name": "Iwobi",
+        "fpl_full_name": "Alex Iwobi",
+        "whoscored_name": "Alex Iwobi",
+        "team": "Fulham"
+    },
+    "322611": {
+        "fpl_id": "328",
+        "fpl_name": "Sessegnon",
+        "fpl_full_name": "Ryan Sessegnon",
+        "whoscored_name": "Ryan Sessegnon",
+        "team": "Fulham"
+    },
+    "231135": {
+        "fpl_id": "317",
+        "fpl_name": "Andersen",
+        "fpl_full_name": "Joachim Andersen",
+        "whoscored_name": "Joachim Andersen",
+        "team": "Fulham"
+    },
+    "92173": {
+        "fpl_id": "314",
+        "fpl_name": "Leno",
+        "fpl_full_name": "Bernd Leno",
+        "whoscored_name": "Bernd Leno",
+        "team": "Fulham"
+    },
+    "515865": {
+        "fpl_id": "335",
+        "fpl_name": "King",
+        "fpl_full_name": "Josh King",
+        "whoscored_name": "Josh King",
+        "team": "Fulham"
+    },
+    "141169": {
+        "fpl_id": "319",
+        "fpl_name": "Castagne",
+        "fpl_full_name": "Timothy Castagne",
+        "whoscored_name": "Timothy Castagne",
+        "team": "Fulham"
+    },
+    "403649": {
+        "fpl_id": "338",
+        "fpl_name": "Muniz",
+        "fpl_full_name": "Rodrigo Muniz Carvalho",
+        "whoscored_name": "Rodrigo Muniz",
+        "team": "Fulham"
+    },
+    "108186": {
+        "fpl_id": "337",
+        "fpl_name": "Raúl",
+        "fpl_full_name": "Raúl Jiménez Rodríguez",
+        "whoscored_name": "Raúl Jiménez",
+        "team": "Fulham"
+    },
+    "333044": {
+        "fpl_id": "329",
+        "fpl_name": "Wilson",
+        "fpl_full_name": "Harry Wilson",
+        "whoscored_name": "Harry Wilson",
+        "team": "Fulham"
+    },
+    "306581": {
+        "fpl_id": "316",
+        "fpl_name": "Robinson",
+        "fpl_full_name": "Antonee Robinson",
+        "whoscored_name": "Antonee Robinson",
+        "team": "Fulham"
+    },
+    "363686": {
+        "fpl_id": "325",
+        "fpl_name": "Smith Rowe",
+        "fpl_full_name": "Emile Smith Rowe",
+        "whoscored_name": "Emile Smith Rowe",
+        "team": "Fulham"
+    },
+    "330816": {
+        "fpl_id": "570",
+        "fpl_name": "Danso",
+        "fpl_full_name": "Kevin Danso",
+        "whoscored_name": "Kevin Danso",
+        "team": "Tottenham"
+    },
+    "429922": {
+        "fpl_id": "591",
+        "fpl_name": "Gray",
+        "fpl_full_name": "Archie Gray",
+        "whoscored_name": "Archie Gray",
+        "team": "Tottenham"
+    },
+    "333542": {
+        "fpl_id": "726",
+        "fpl_name": "Kolo Muani",
+        "fpl_full_name": "Randal Kolo Muani",
+        "whoscored_name": "Randal Kolo Muani",
+        "team": "Tottenham"
+    },
+    "363665": {
+        "fpl_id": "727",
+        "fpl_name": "Chukwueze",
+        "fpl_full_name": "Samuel Chukwueze",
+        "whoscored_name": "Samuel Chukwueze",
+        "team": "Fulham"
+    },
+    "399772": {
+        "fpl_id": "717",
+        "fpl_name": "Xavi",
+        "fpl_full_name": "Xavi Simons",
+        "whoscored_name": "Xavi Simons",
+        "team": "Tottenham"
+    },
+    "429174": {
+        "fpl_id": "731",
+        "fpl_name": "Kevin",
+        "fpl_full_name": "Kevin Santos Lopes de Macedo",
+        "whoscored_name": "Kevin",
+        "team": "Fulham"
+    },
+    "316858": {
+        "fpl_id": "674",
+        "fpl_name": "Ramsdale",
+        "fpl_full_name": "Aaron Ramsdale",
+        "whoscored_name": "Aaron Ramsdale",
+        "team": "Newcastle"
+    },
+    "299271": {
+        "fpl_id": "198",
+        "fpl_name": "Tuanzebe",
+        "fpl_full_name": "Axel Tuanzebe",
+        "whoscored_name": "Axel Tuanzebe",
+        "team": "Burnley"
+    },
+    "339674": {
+        "fpl_id": "126",
+        "fpl_name": "Jensen",
+        "fpl_full_name": "Mathias Jensen",
+        "whoscored_name": "Mathias Jensen",
+        "team": "Brentford"
+    },
+    "402367": {
+        "fpl_id": "116",
+        "fpl_name": "Hickey",
+        "fpl_full_name": "Aaron Hickey",
+        "whoscored_name": "Aaron Hickey",
+        "team": "Brentford"
+    },
+    "361694": {
+        "fpl_id": "215",
+        "fpl_name": "Flemming",
+        "fpl_full_name": "Zian Flemming",
+        "whoscored_name": "Zian Flemming",
+        "team": "Burnley"
+    },
+    "342564": {
+        "fpl_id": "27",
+        "fpl_name": "Nelson",
+        "fpl_full_name": "Reiss Nelson",
+        "whoscored_name": "Reiss Nelson",
+        "team": "Brentford"
+    },
+    "262515": {
+        "fpl_id": "736",
+        "fpl_name": "Donnarumma",
+        "fpl_full_name": "Gianluigi Donnarumma",
+        "whoscored_name": "Gianluigi Donnarumma",
+        "team": "Man City"
+    },
+    "423347": {
+        "fpl_id": "358",
+        "fpl_name": "Tanaka",
+        "fpl_full_name": "Tanaka Ao",
+        "whoscored_name": "Ao Tanaka",
+        "team": "Leeds"
+    },
+    "422939": {
+        "fpl_id": "423",
+        "fpl_name": "N.Gonzalez",
+        "fpl_full_name": "Nico González Iglesias",
+        "whoscored_name": "Nico González",
+        "team": "Man City"
+    },
+    "402664": {
+        "fpl_id": "403",
+        "fpl_name": "Gvardiol",
+        "fpl_full_name": "Joško Gvardiol",
+        "whoscored_name": "Josko Gvardiol",
+        "team": "Man City"
+    },
+    "331254": {
+        "fpl_id": "414",
+        "fpl_name": "Foden",
+        "fpl_full_name": "Phil Foden",
+        "whoscored_name": "Phil Foden",
+        "team": "Man City"
+    },
+    "360941": {
+        "fpl_id": "344",
+        "fpl_name": "Bijol",
+        "fpl_full_name": "Jaka Bijol",
+        "whoscored_name": "Jaka Bijol",
+        "team": "Leeds"
+    },
+    "386153": {
+        "fpl_id": "417",
+        "fpl_name": "Cherki",
+        "fpl_full_name": "Rayan Cherki",
+        "whoscored_name": "Rayan Cherki",
+        "team": "Man City"
+    },
+    "371761": {
+        "fpl_id": "531",
+        "fpl_name": "Ballard",
+        "fpl_full_name": "Daniel Ballard",
+        "whoscored_name": "Dan Ballard",
+        "team": "Sunderland"
+    },
+    "109807": {
+        "fpl_id": "735",
+        "fpl_name": "Traoré",
+        "fpl_full_name": "Bertrand Traoré",
+        "whoscored_name": "Bertrand Traoré",
+        "team": "Sunderland"
+    },
+    "404568": {
+        "fpl_id": "730",
+        "fpl_name": "Brobbey",
+        "fpl_full_name": "Brian Brobbey",
+        "whoscored_name": "Brian Brobbey",
+        "team": "Sunderland"
+    },
+    "450254": {
+        "fpl_id": "548",
+        "fpl_name": "Mundle",
+        "fpl_full_name": "Romaine Mundle",
+        "whoscored_name": "Romaine Mundle",
+        "team": "Sunderland"
+    },
+    "345441": {
+        "fpl_id": "724",
+        "fpl_name": "Geertruida",
+        "fpl_full_name": "Lutsharel Geertruida",
+        "whoscored_name": "Lutsharel Geertruida",
+        "team": "Sunderland"
+    },
+    "469485": {
+        "fpl_id": "269",
+        "fpl_name": "Esse",
+        "fpl_full_name": "Romain Esse",
+        "whoscored_name": "Romain Esse",
+        "team": "Crystal Palace"
+    },
+    "390876": {
+        "fpl_id": "535",
+        "fpl_name": "Cirkin",
+        "fpl_full_name": "Dennis Cirkin",
+        "whoscored_name": "Dennis Cirkin",
+        "team": "Sunderland"
+    },
+    "469645": {
+        "fpl_id": "551",
+        "fpl_name": "Rigg",
+        "fpl_full_name": "Chris Rigg",
+        "whoscored_name": "Chris Rigg",
+        "team": "Sunderland"
+    },
+    "105171": {
+        "fpl_id": "480",
+        "fpl_name": "Lascelles",
+        "fpl_full_name": "Jamaal Lascelles",
+        "whoscored_name": "Jamaal Lascelles",
+        "team": "Newcastle"
+    },
+    "363982": {
+        "fpl_id": "389",
+        "fpl_name": "Elliott",
+        "fpl_full_name": "Harvey Elliott",
+        "whoscored_name": "Harvey Elliott",
+        "team": "Aston Villa"
+    },
+    "397821": {
+        "fpl_id": "415",
+        "fpl_name": "Savinho",
+        "fpl_full_name": "Sávio Moreira de Oliveira",
+        "whoscored_name": "Savinho",
+        "team": "Man City"
+    },
+    "122945": {
+        "fpl_id": "405",
+        "fpl_name": "Aké",
+        "fpl_full_name": "Nathan Aké",
+        "whoscored_name": "Nathan Aké",
+        "team": "Man City"
+    },
+    "412313": {
+        "fpl_id": "105",
+        "fpl_name": "Valdimarsson",
+        "fpl_full_name": "Hákon Rafn Valdimarsson",
+        "whoscored_name": "Hákon Valdimarsson",
+        "team": "Brentford"
+    },
+    "321085": {
+        "fpl_id": "108",
+        "fpl_name": "Ajer",
+        "fpl_full_name": "Kristoffer Ajer",
+        "whoscored_name": "Kristoffer Ajer",
+        "team": "Brentford"
+    },
+    "471696": {
+        "fpl_id": "130",
+        "fpl_name": "Donovan",
+        "fpl_full_name": "Romelle Donovan",
+        "whoscored_name": "Romelle Donovan",
+        "team": "Brentford"
+    },
+    "300426": {
+        "fpl_id": "815",
+        "fpl_name": "Disasi",
+        "fpl_full_name": "Axel Disasi",
+        "whoscored_name": "Axel Disasi",
+        "team": "West Ham"
+    },
+    "548566": {
+        "fpl_id": "686",
+        "fpl_name": "Ngumoha",
+        "fpl_full_name": "Rio Ngumoha",
+        "whoscored_name": "Rio Ngumoha",
+        "team": "Liverpool"
+    },
+    "392644": {
+        "fpl_id": "370",
+        "fpl_name": "Frimpong",
+        "fpl_full_name": "Jeremie Frimpong",
+        "whoscored_name": "Jeremie Frimpong",
+        "team": "Liverpool"
+    },
+    "509423": {
+        "fpl_id": "396",
+        "fpl_name": "Nyoni",
+        "fpl_full_name": "Trey Nyoni",
+        "whoscored_name": "Trey Nyoni",
+        "team": "Liverpool"
+    },
+    "443064": {
+        "fpl_id": "813",
+        "fpl_name": "Angulo",
+        "fpl_full_name": "Nilson Angulo",
+        "whoscored_name": "Nilson Angulo",
+        "team": "Sunderland"
+    },
+    "470715": {
+        "fpl_id": "172",
+        "fpl_name": "Watson",
+        "fpl_full_name": "Tom Watson",
+        "whoscored_name": "Tom Watson",
+        "team": "Brighton"
+    },
+    "298689": {
+        "fpl_id": "125",
+        "fpl_name": "Janelt",
+        "fpl_full_name": "Vitaly Janelt",
+        "whoscored_name": "Vitaly Janelt",
+        "team": "Brentford"
+    },
+    "437310": {
+        "fpl_id": "80",
+        "fpl_name": "Soler",
+        "fpl_full_name": "Julio Soler Barreto",
+        "whoscored_name": "Julio Soler",
+        "team": "Bournemouth"
+    },
+    "424945": {
+        "fpl_id": "375",
+        "fpl_name": "Bradley",
+        "fpl_full_name": "Conor Bradley",
+        "whoscored_name": "Conor Bradley",
+        "team": "Liverpool"
+    },
+    "333182": {
+        "fpl_id": "321",
+        "fpl_name": "J.Cuenca",
+        "fpl_full_name": "Jorge Cuenca Barreno",
+        "whoscored_name": "Jorge Cuenca",
+        "team": "Fulham"
+    },
+    "79583": {
+        "fpl_id": "331",
+        "fpl_name": "Cairney",
+        "fpl_full_name": "Tom Cairney",
+        "whoscored_name": "Tom Cairney",
+        "team": "Fulham"
+    },
+    "491564": {
+        "fpl_id": "620",
+        "fpl_name": "Earthy",
+        "fpl_full_name": "George Earthy",
+        "whoscored_name": "George Earthy",
+        "team": "West Ham"
+    },
+    "300359": {
+        "fpl_id": "320",
+        "fpl_name": "Diop",
+        "fpl_full_name": "Issa Diop",
+        "whoscored_name": "Issa Diop",
+        "team": "Fulham"
+    },
+    "122980": {
+        "fpl_id": "678",
+        "fpl_name": "Masuaku",
+        "fpl_full_name": "Arthur Masuaku",
+        "whoscored_name": "Arthur Masuaku",
+        "team": "Sunderland"
+    },
+    "425319": {
+        "fpl_id": "244",
+        "fpl_name": "Lavia",
+        "fpl_full_name": "Roméo Lavia",
+        "whoscored_name": "Roméo Lavia",
+        "team": "Chelsea"
+    },
+    "430350": {
+        "fpl_id": "391",
+        "fpl_name": "Gannon-Doak",
+        "fpl_full_name": "Ben Gannon-Doak",
+        "whoscored_name": "Ben Gannon-Doak",
+        "team": "Bournemouth"
+    },
+    "99487": {
+        "fpl_id": "442",
+        "fpl_name": "Maguire",
+        "fpl_full_name": "Harry Maguire",
+        "whoscored_name": "Harry Maguire",
+        "team": "Man Utd"
+    },
+    "345303": {
+        "fpl_id": "448",
+        "fpl_name": "Malacia",
+        "fpl_full_name": "Tyrell Malacia",
+        "whoscored_name": "Tyrell Malacia",
+        "team": "Man Utd"
+    },
+    "455860": {
+        "fpl_id": "446",
+        "fpl_name": "Fredricson",
+        "fpl_full_name": "Tyler Fredricson",
+        "whoscored_name": "Tyler Fredricson",
+        "team": "Man Utd"
+    },
+    "136460": {
+        "fpl_id": "817",
+        "fpl_name": "Armstrong",
+        "fpl_full_name": "Adam Armstrong",
+        "whoscored_name": "Adam Armstrong",
+        "team": "Wolves"
+    },
+    "327682": {
+        "fpl_id": "49",
+        "fpl_name": "Bailey",
+        "fpl_full_name": "Leon Bailey",
+        "whoscored_name": "Leon Bailey",
+        "team": "Aston Villa"
+    },
+    "317506": {
+        "fpl_id": "808",
+        "fpl_name": "Abraham",
+        "fpl_full_name": "Tammy Abraham",
+        "whoscored_name": "Tammy Abraham",
+        "team": "Aston Villa"
+    },
+    "520919": {
+        "fpl_id": "792",
+        "fpl_name": "Alysson",
+        "fpl_full_name": "Alysson Edward Franco da Rocha dos Santos",
+        "whoscored_name": "Alysson Edward",
+        "team": "Aston Villa"
+    },
+    "338497": {
+        "fpl_id": "816",
+        "fpl_name": "Angel",
+        "fpl_full_name": "Angel Gomes",
+        "whoscored_name": "Angel Gomes",
+        "team": "Wolves"
+    },
+    "270829": {
+        "fpl_id": "259",
+        "fpl_name": "Sosa",
+        "fpl_full_name": "Borna Sosa",
+        "whoscored_name": "Borna Sosa",
+        "team": "Crystal Palace"
+    },
+    "510940": {
+        "fpl_id": "721",
+        "fpl_name": "Milosavljević",
+        "fpl_full_name": "Veljko Milosavljevic",
+        "whoscored_name": "Veljko Milosavljevic",
+        "team": "Bournemouth"
+    },
+    "368547": {
+        "fpl_id": "638",
+        "fpl_name": "Hoever",
+        "fpl_full_name": "Ki-Jana Hoever",
+        "whoscored_name": "Ki-Jana Hoever",
+        "team": "Wolves"
+    },
+    "401633": {
+        "fpl_id": "367",
+        "fpl_name": "Mamardashvili",
+        "fpl_full_name": "Giorgi Mamardashvili",
+        "whoscored_name": "Giorgi Mamardashvili",
+        "team": "Liverpool"
+    },
+    "364235": {
+        "fpl_id": "345",
+        "fpl_name": "Bornauw",
+        "fpl_full_name": "Sebastiaan Bornauw",
+        "whoscored_name": "Sebastiaan Bornauw",
+        "team": "Leeds"
+    },
+    "547830": {
+        "fpl_id": "737",
+        "fpl_name": "Kusi-Asare",
+        "fpl_full_name": "Jonah Kusi-Asare",
+        "whoscored_name": "Jonah Kusi-Asare",
+        "team": "Fulham"
+    },
+    "531676": {
+        "fpl_id": "723",
+        "fpl_name": "Canvot",
+        "fpl_full_name": "Jaydee Canvot",
+        "whoscored_name": "Jaydee Canvot",
+        "team": "Crystal Palace"
+    },
+    "454342": {
+        "fpl_id": "262",
+        "fpl_name": "Chadi Riad",
+        "fpl_full_name": "Chadi Riad Dnanou",
+        "whoscored_name": "Chadi Riad",
+        "team": "Crystal Palace"
+    },
+    "317504": {
+        "fpl_id": "285",
+        "fpl_name": "Édouard",
+        "fpl_full_name": "Odsonne Édouard",
+        "whoscored_name": "Odsonne Édouard",
+        "team": "Crystal Palace"
+    },
+    "342889": {
+        "fpl_id": "164",
+        "fpl_name": "O'Riley",
+        "fpl_full_name": "Matt O'Riley",
+        "whoscored_name": "Matt O'Riley",
+        "team": "Brighton"
+    },
+    "303096": {
+        "fpl_id": "587",
+        "fpl_name": "Bissouma",
+        "fpl_full_name": "Yves Bissouma",
+        "whoscored_name": "Yves Bissouma",
+        "team": "Tottenham"
+    },
+    "375621": {
+        "fpl_id": "796",
+        "fpl_name": "Gallagher",
+        "fpl_full_name": "Conor Gallagher",
+        "whoscored_name": "Conor Gallagher",
+        "team": "Tottenham"
+    },
+    "136459": {
+        "fpl_id": "596",
+        "fpl_name": "Solanke",
+        "fpl_full_name": "Dominic Solanke-Mitchell",
+        "whoscored_name": "Dominic Solanke",
+        "team": "Tottenham"
+    },
+    "407154": {
+        "fpl_id": "599",
+        "fpl_name": "Scarlett",
+        "fpl_full_name": "Dane Scarlett",
+        "whoscored_name": "Dane Scarlett",
+        "team": "Tottenham"
+    },
+    "260809": {
+        "fpl_id": "143",
+        "fpl_name": "Boscagli",
+        "fpl_full_name": "Olivier Boscagli",
+        "whoscored_name": "Olivier Boscagli",
+        "team": "Brighton"
+    },
+    "134373": {
+        "fpl_id": "539",
+        "fpl_name": "O'Nien",
+        "fpl_full_name": "Luke O'Nien",
+        "whoscored_name": "Luke O'Nien",
+        "team": "Sunderland"
+    },
+    "456771": {
+        "fpl_id": "25",
+        "fpl_name": "Nwaneri",
+        "fpl_full_name": "Ethan Nwaneri",
+        "whoscored_name": "Ethan Nwaneri",
+        "team": "Arsenal"
+    },
+    "118303": {
+        "fpl_id": "346",
+        "fpl_name": "Byram",
+        "fpl_full_name": "Sam Byram",
+        "whoscored_name": "Sam Byram",
+        "team": "Leeds"
+    },
+    "428694": {
+        "fpl_id": "542",
+        "fpl_name": "Seelt",
+        "fpl_full_name": "Jenson Seelt",
+        "whoscored_name": "Jenson Seelt",
+        "team": "Sunderland"
+    },
+    "136462": {
+        "fpl_id": "545",
+        "fpl_name": "Roberts",
+        "fpl_full_name": "Patrick Roberts",
+        "whoscored_name": "Patrick Roberts",
+        "team": "Sunderland"
+    },
+    "362434": {
+        "fpl_id": "607",
+        "fpl_name": "N.Aguerd",
+        "fpl_full_name": "Nayef Aguerd",
+        "whoscored_name": "Nayef Aguerd",
+        "team": "West Ham"
+    },
+    "133569": {
+        "fpl_id": "400",
+        "fpl_name": "Ortega Moreno",
+        "fpl_full_name": "Stefan Ortega Moreno",
+        "whoscored_name": "Stefan Ortega",
+        "team": "Nottingham Forest"
+    },
+    "424819": {
+        "fpl_id": "805",
+        "fpl_name": "Lucca",
+        "fpl_full_name": "Lorenzo Lucca",
+        "whoscored_name": "Lorenzo Lucca",
+        "team": "Nottingham Forest"
+    },
+    "606073": {
+        "fpl_id": "800",
+        "fpl_name": "Jocelin.T",
+        "fpl_full_name": "Djiamgone Jocelin Ta Bi",
+        "whoscored_name": "Djiamgone Jocelin Ta Bi",
+        "team": "Sunderland"
+    },
+    "563779": {
+        "fpl_id": "755",
+        "fpl_name": "Lacey",
+        "fpl_full_name": "Shea Lacey",
+        "whoscored_name": "Shea Lacey",
+        "team": "Man Utd"
+    },
+    "135724": {
+        "fpl_id": "336",
+        "fpl_name": "Reed",
+        "fpl_full_name": "Harrison Reed",
+        "whoscored_name": "Harrison Reed",
+        "team": "Fulham"
+    },
+    "399427": {
+        "fpl_id": "549",
+        "fpl_name": "Neil",
+        "fpl_full_name": "Dan Neil",
+        "whoscored_name": "Dan Neil",
+        "team": "Sunderland"
+    },
+    "467913": {
+        "fpl_id": "231",
+        "fpl_name": "M.Sarr",
+        "fpl_full_name": "Mamadou Sarr",
+        "whoscored_name": "Mamadou Sarr",
+        "team": "Chelsea"
+    },
+    "603933": {
+        "fpl_id": "762",
+        "fpl_name": "Drakes-Thomas",
+        "fpl_full_name": "Joél Drakes-Thomas",
+        "whoscored_name": "Joél Drakes-Thomas",
+        "team": "Crystal Palace"
+    },
+    "484501": {
+        "fpl_id": "626",
+        "fpl_name": "Marshall",
+        "fpl_full_name": "Callum Marshall",
+        "whoscored_name": "Callum Marshall",
+        "team": "West Ham"
+    },
+    "303876": {
+        "fpl_id": "618",
+        "fpl_name": "G.Rodriguez",
+        "fpl_full_name": "Guido Rodríguez",
+        "whoscored_name": "Guido Rodríguez",
+        "team": "West Ham"
+    },
+    "342499": {
+        "fpl_id": "111",
+        "fpl_name": "Pinnock",
+        "fpl_full_name": "Ethan Pinnock",
+        "whoscored_name": "Ethan Pinnock",
+        "team": "Brentford"
+    },
+    "576821": {
+        "fpl_id": "739",
+        "fpl_name": "Mukasa",
+        "fpl_full_name": "Divine Mukasa",
+        "whoscored_name": "Divine Mukasa",
+        "team": "Man City"
+    },
+    "404749": {
+        "fpl_id": "221",
+        "fpl_name": "Jörgensen",
+        "fpl_full_name": "Filip Jörgensen",
+        "whoscored_name": "Filip Jörgensen",
+        "team": "Chelsea"
+    },
+    "546622": {
+        "fpl_id": "651",
+        "fpl_name": "Edozie",
+        "fpl_full_name": "Tom Edozie",
+        "whoscored_name": "Tom Edozie",
+        "team": "Wolves"
+    },
+    "422921": {
+        "fpl_id": "122",
+        "fpl_name": "Milambo",
+        "fpl_full_name": "Antoni Milambo",
+        "whoscored_name": "Antoni Milambo",
+        "team": "Brentford"
+    },
+    "103837": {
+        "fpl_id": "571",
+        "fpl_name": "Davies",
+        "fpl_full_name": "Ben Davies",
+        "whoscored_name": "Ben Davies",
+        "team": "Tottenham"
+    },
+    "468845": {
+        "fpl_id": "794",
+        "fpl_name": "Alleyne",
+        "fpl_full_name": "Max Alleyne",
+        "whoscored_name": "Max Alleyne",
+        "team": "Man City"
+    },
+    "547069": {
+        "fpl_id": "96",
+        "fpl_name": "Winterburn",
+        "fpl_full_name": "Ben Winterburn",
+        "whoscored_name": "Ben Winterburn",
+        "team": "Bournemouth"
+    },
+    "558409": {
+        "fpl_id": "795",
+        "fpl_name": "Howell",
+        "fpl_full_name": "Harry Howell",
+        "whoscored_name": "Harry Howell",
+        "team": "Brighton"
+    },
+    "549079": {
+        "fpl_id": "804",
+        "fpl_name": "Souza",
+        "fpl_full_name": "João Victor de Souza Menezes",
+        "whoscored_name": "Souza",
+        "team": "Tottenham"
+    },
+    "563778": {
+        "fpl_id": "771",
+        "fpl_name": "Fletcher",
+        "fpl_full_name": "Tyler Fletcher",
+        "whoscored_name": "Tyler Fletcher",
+        "team": "Man Utd"
+    },
+    "454750": {
+        "fpl_id": "513",
+        "fpl_name": "Abbott",
+        "fpl_full_name": "Zach Abbott",
+        "whoscored_name": "Zach Abbott",
+        "team": "Nottingham Forest"
+    },
+    "394888": {
+        "fpl_id": "814",
+        "fpl_name": "Netz",
+        "fpl_full_name": "Luca Netz",
+        "whoscored_name": "Luca Netz",
+        "team": "Nottingham Forest"
+    },
+    "443545": {
+        "fpl_id": "510",
+        "fpl_name": "Jair Cunha",
+        "fpl_full_name": "Jair Paula da Cunha Filho",
+        "whoscored_name": "Jair Cunha",
+        "team": "Nottingham Forest"
+    },
+    "423730": {
+        "fpl_id": "133",
+        "fpl_name": "Peart-Harris",
+        "fpl_full_name": "Myles Peart-Harris",
+        "whoscored_name": "Myles Peart-Harris",
+        "team": "Brentford"
+    },
+    "454759": {
+        "fpl_id": "281",
+        "fpl_name": "Rodney",
+        "fpl_full_name": "Kaden Rodney",
+        "whoscored_name": "Kaden Rodney",
+        "team": "Crystal Palace"
+    },
+    "425235": {
+        "fpl_id": "812",
+        "fpl_name": "Ellborg",
+        "fpl_full_name": "Melker Ellborg",
+        "whoscored_name": "Melker Ellborg",
+        "team": "Sunderland"
+    },
+    "454337": {
+        "fpl_id": "213",
+        "fpl_name": "Banel",
+        "fpl_full_name": "Jaydon Banel",
+        "whoscored_name": "Jaydon Banel",
+        "team": "Burnley"
+    },
+    "100599": {
+        "fpl_id": "479",
+        "fpl_name": "Krafth",
+        "fpl_full_name": "Emil Krafth",
+        "whoscored_name": "Emil Krafth",
+        "team": "Newcastle"
+    },
+    "551871": {
+        "fpl_id": "175",
+        "fpl_name": "Knight",
+        "fpl_full_name": "Joe Knight",
+        "whoscored_name": "Joe Knight",
+        "team": "Brighton"
+    },
+    "591587": {
+        "fpl_id": "744",
+        "fpl_name": "Oriola",
+        "fpl_full_name": "Nehemiah Oriola",
+        "whoscored_name": "Nehemiah Oriola",
+        "team": "Brighton"
+    },
+    "122926": {
+        "fpl_id": "159",
+        "fpl_name": "March",
+        "fpl_full_name": "Solly March",
+        "whoscored_name": "Solly March",
+        "team": "Brighton"
+    },
+    "572655": {
+        "fpl_id": "745",
+        "fpl_name": "Byfield",
+        "fpl_full_name": "Jun'ai Byfield",
+        "whoscored_name": "Jun'ai Byfield",
+        "team": "Tottenham"
+    },
+    "318896": {
+        "fpl_id": "675",
+        "fpl_name": "Gunn",
+        "fpl_full_name": "Angus Gunn",
+        "whoscored_name": "Angus Gunn",
+        "team": "Nottingham Forest"
+    }
+}
