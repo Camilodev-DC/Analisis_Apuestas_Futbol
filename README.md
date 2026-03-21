@@ -28,19 +28,23 @@ Sigue estos pasos para configurar tu entorno de desarrollo:
 ## Estructura
 ```text
 .
-├── data/               # Datos (ignorado por Git)
-│   ├── raw/            # Datos originales de API
-│   └── processed/      # Datos transformados
-├── scripts/            # Scripts de experimentación y EDA
+├── data/               # Directorio de datos
+│   ├── raw/            # Datos originales (CSV/JSON) - Ignorados por Git
+│   └── processed/      # Datos transformados y player_id_map.json
+├── INForems/           # Reportes de auditoría, EDA y Diccionarios
+├── scripts/            # Scripts de descarga y mapeo de IDs
 ├── src/                # Lógica central modular
-│   ├── data_loader/    # Extracción de datos
-│   ├── processing/     # Limpieza y features
-│   ├── models/         # Entrenamiento y evaluación
-│   └── utils/          # Utilidades comunes
-├── tests/              # Pruebas con pytest
-├── main.py             # Punto de entrada principal
-└── requirements.txt    # Dependencias
+│   ├── data_loader/    # Extracción de datos desde APIs
+│   ├── processing/     # Limpieza de datos y feature engineering
+│   ├── models/         # Entrenamiento, validación y predicción
+│   └── utils/          # Funciones auxiliares
+├── tests/              # Pruebas unitarias
+├── main.py             # Pipeline principal de ejecución
+└── requirements.txt    # Librerías necesarias
 ```
+
+## Colaboración
+Si eres un nuevo colaborador, consulta la [Guía de Colaboración](INForems/guia_colaboracion.md) para configurar tu entorno y obtener los datasets pesados.
 
 ## Uso de Scripts
 - **Producción:** Ejecuta `python3 main.py` para correr el pipeline completo.
