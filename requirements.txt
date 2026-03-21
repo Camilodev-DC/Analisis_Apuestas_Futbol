@@ -1,0 +1,20 @@
+# Data Handling & API
+pandas
+requests
+requests-cache
+
+# Machine Learning
+scikit-learn
+numpy
+
+# Visualization
+matplotlib
+seaborn
+
+# Environment & Testing
+python-dotenv
+pytest
+pytest-cov
+
+# Optional: Soccer specific
+mplsoccer
