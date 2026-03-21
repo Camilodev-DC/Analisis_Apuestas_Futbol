@@ -46,10 +46,26 @@ Sigue estos pasos para configurar tu entorno de desarrollo:
 ## Colaboración
 Si eres un nuevo colaborador, consulta la [Guía de Colaboración](INForems/guia_colaboracion.md) para configurar tu entorno y obtener los datasets pesados.
 
-## Uso de Scripts
-- **Producción:** Ejecuta `python3 main.py` para correr el pipeline completo.
-- **Experimentación:** Coloca tus scripts de prueba en `scripts/` para mantener la limpieza.
-- **Tests:** Ejecuta `pytest` para correr las pruebas unitarias.
+## Guía Rápida de Datos y EDA
+
+Dado que los archivos `.csv` están en `.gitignore` por su peso, un nuevo colaborador debe seguir este orden:
+
+1. **Descargar Datos:**
+   ```bash
+   python3 scripts/download_bulk_data.py
+   ```
+   *Nota: Descargará ~444k eventos con qualifiers (tarda ~4 min).*
+
+2. **Generar Reportes EDA:**
+   ```bash
+   python3 Research/EDA/scripts_EDA/run_all_eda.py
+   ```
+   *Esto actualizará todas las gráficas en `Research/EDA/*/graficas/`.*
+
+## Novedades del Proyecto (Marzo 2026)
+- **Qualifiers en Events**: Ahora el dataset de eventos incluye la metadata completa (BigChance, Shot Type, Contact, etc.).
+- **Features Taller2**: Implementación de `distance_to_goal` y `angle_to_goal` en los reportes de eventos.
+- **Diccionario Maestro**: Localizado en `INForems/diccionario_datos.md` con el detalle de las +100 categorías de qualifiers.
 
 ---
 **Senior Data Architect & DevOps Approach**

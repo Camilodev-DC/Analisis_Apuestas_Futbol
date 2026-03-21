@@ -14,8 +14,11 @@ pip install -r requirements.txt
 
 ## 2. Obtención de Datos
 Necesitas el dataset (`events.csv`, `players.csv`, etc.). Tienes dos opciones:
-*   **A. Solicitarlos:** Pide el zip con la carpeta `data/` al dueño del repo.
-*   **B. Descargarlos (si tienes la API):** Ejecuta los scripts en la carpeta `scripts/`.
+*   **B. Descargarlos (Recomendado):** Ejecuta el script maestro:
+    ```bash
+    python3 scripts/download_bulk_data.py
+    ```
+    Este script descarga todo (players, matches, history) y reconstruye los +444k eventos con **qualifiers** incluidos.
 
 ## 3. Mapeo de Identificadores
 El archivo `data/processed/player_id_map.json` ya está incluido en el repositorio. Es vital para unir las fuentes de FPL y WhoScored. Si descargas nuevos datos, asegúrate de actualizarlo:

@@ -13,17 +13,8 @@ Este documento describe cada archivo en `data/raw/` y el detalle de cada columna
 | `players.csv` | Fantasy Premier League | 822 jugadores | 135 KB | Estadísticas acumuladas de cada jugador |
 | `player_history.csv` | Fantasy Premier League | 1,499 registros | 129 KB | Rendimiento jornada por jornada |
 | `events.csv` | WhoScored (scraping) | 444,252 eventos* | 201 MB | Cada acción en el campo con coordenadas x,y |
-| `events_test.csv` | ⚠️ Archivo temporal | ~0 útiles | 5.7 KB | Prueba fallida de descarga (ver nota abajo) |
-| `events_part.csv` | ⚠️ Archivo temporal | ~0 útiles | 152 B | Fragmento incompleto de descarga (ver nota abajo) |
 
-> **\*Nota sobre events.csv:** La API reporta 444,252 eventos totales en su metadata. El archivo descargado contiene 398,961 filas de datos útiles más eventos estructurales (PreMatch/PostGame). La diferencia se debe a que algunos registros estructurales (FormationSet, Start, End) se agrupan de manera diferente en la exportación CSV vs. la consulta individual por partido.
-
-### ⚠️ Archivos Temporales (se pueden eliminar)
-
-- **`events_test.csv`**: Fue un intento inicial de descargar eventos usando el header `Accept: text/csv`. La API no soporta ese método y devolvió JSON en lugar de CSV. Contiene solo 10 eventos en formato JSON, **no es un CSV válido**.
-- **`events_part.csv`**: Fue un intento fallido de descargar con `curl` usando `limit=50000`. El servidor devolvió un error HTTP/2 `INTERNAL_ERROR` y el archivo está prácticamente vacío (152 bytes, solo un mensaje de error).
-
-Ambos archivos son residuos de pruebas de descarga y **pueden eliminarse sin consecuencia**.
+> **\*Nota sobre events.csv:** La API reporta 444,252 eventos totales en su metadata. El archivo descargado contiene los datos útiles consolidados partido por partido.
 
 ---
 
@@ -174,7 +165,9 @@ Ambos archivos son residuos de pruebas de descarga y **pueden eliminarse sin con
 
 ## 4. `events.csv` — Eventos de Juego
 
-**Fuente:** WhoScored (web scraping) 🕸️ | **Registros:** 444,252 (API) / 398,961 (CSV)* | **Columnas:** 20
+**Fuente:** WhoScored (web scraping) 🕸️ | **Registros:** 444,252 | **Columnas:** 20
+
+> **Actualización 21/03/2026:** `events.csv` ahora se descarga partido por partido via `/matches/{id}/events`, preservando el campo `qualifiers` completo. Columnas: 19 → 20.
 
 ### Identificación del Evento
 | Columna | Tipo | Descripción |
@@ -210,7 +203,67 @@ Ambos archivos son residuos de pruebas de descarga y **pueden eliminarse sin con
 | `is_shot` | bool | Si es un tiro (6,401 totales) |
 | `is_goal` | bool | Si fue gol (714 totales, 11.2% efectividad) |
 
-### Datos Adicionales
+### Campo `qualifiers` — Metadata Rica (columna nueva ✨)
 | Columna | Tipo | Descripción |
 |---------|------|-------------|
-| `qualifiers` | JSON | Metadatos adicionales (ángulo, longitud de pase, zonas, tipo de jugada) |
+| `qualifiers` | JSON string | Array JSON con ~110 tipos de metadata por evento |
+
+Estructura de cada elemento del array:
+```json
+[{"type": {"displayName": "Zone"}, "value": "Back"},
+ {"type": {"displayName": "Angle"}, "value": "3.90"},
+ {"type": {"displayName": "Head"}, "value": "true"}]
+```
+
+#### Qualifiers clave para ML
+
+| Qualifier (Key) | Descripción Técnica | Impacto en Modelos (xG / Match) |
+|---|---|---|
+| `BigChance` | Oportunidad clara de gol (mantenimiento de posesión + cercanía). | **Crítico** para xG (coeficiente alto). |
+| `Penalty` | Tiro desde el punto de pena máxima. | Feature binaria mandatoria (xG fijo ~0.76). |
+| `Head` | El remate o pase se realizó con la cabeza. | Indica menor probabilidad de gol vs pie por naturaleza mecánica. |
+| `RightFoot` / `LeftFoot` | Pie utilizado para la ejecución. | Calibra precisión según pie dominante del jugador. |
+| `FastBreak` | Acción generada en una transición rápida/contraataque. | Indica defensa rival desorganizada (+xG). |
+| `FromCorner` | Jugada originada directamente de un tiro de esquina. | Contexto de balón parado táctico. |
+| `SetPiece` | Tiro libre o jugada ensayada de balón parado. | Feature de contexto táctico y bloque defensivo estático. |
+| `FirstTouch` | Remate o pase realizado sin control previo del balón. | Factor de dificultad técnica; reduce tiempo de reacción del portero. |
+| `Volley` | Remate de balón en el aire (volea). | Variable de técnica de disparo (alta varianza en precisión). |
+| `ThroughBall` | Pase filtrado que rompe la línea defensiva rival. | Precursor de alta probabilidad de tiro (asistencia clave). |
+| `Cross` | Centro desde las bandas al área de penal. | Origen principal de remates de cabeza y "scramble" en el área. |
+| `Assisted` | El evento fue precedido por un pase facilitador comprobado. | Atribución de xA (Expected Assists) al asistidor. |
+| `IntentionalGoalAssist` | Pase diseñado explícitamente para dejar al compañero solo frente al arco. | Feature de alta calidad creativa. |
+| `SavedOffLine` | El tiro fue salvado por un defensa sobre la misma línea de gol. | Caso de xG altísimo que no termina en gol por factor externo. |
+| `Blocked` | El tiro fue obstruido por la intervención de un oponente. | Indica presión defensiva cercana y reducción de ángulo de tiro. |
+| `Deflected` | El balón cambió de trayectoria por un desvío accidental. | Factor de aleatoriedad en el xG y el resultado. |
+| `Zone` | Zona táctica del campo (Back, Left, Right, Center, etc.). | Segmentación espacial para análisis de calor. |
+| `Angle` | Ángulo exacto del tiro respecto al centro de la portería. | **Feature geométrica** fundamental para el Modelo 1. |
+| `Length` | Distancia total del desplazamiento del balón. | Relevante para calcular peligro de pases largos vs cortos. |
+| `Longball` | Pase largo diagonal o vertical que busca profundidad. | Indicador de estilo de juego directo. |
+
+#### Features booleanas extraídas (para ML)
+```python
+q = df["qualifiers"].astype(str)
+df["is_big_chance"]  = q.str.contains("BigChance",  na=False).astype(int)
+df["is_header"]      = q.str.contains('"Head"',     na=False).astype(int)
+df["is_right_foot"]  = q.str.contains("RightFoot",  na=False).astype(int)
+df["is_left_foot"]   = q.str.contains("LeftFoot",   na=False).astype(int)
+df["is_counter"]     = q.str.contains("FastBreak",  na=False).astype(int)
+df["from_corner"]    = q.str.contains("FromCorner", na=False).astype(int)
+df["is_penalty"]     = q.str.contains('"Penalty"',  na=False).astype(int)
+df["is_volley"]      = q.str.contains("Volley",     na=False).astype(int)
+df["first_touch"]    = q.str.contains("FirstTouch", na=False).astype(int)
+```
+
+#### Features geométricas derivadas de x, y (Taller2 ML1 — obligatorias)
+```python
+shots["distance_to_goal"] = np.sqrt((100 - shots["x"])**2 + (50 - shots["y"])**2)
+shots["angle_to_goal"]    = np.abs(np.arctan2(50 - shots["y"], 100 - shots["x"]))
+shots["dist_angle"]       = shots["distance_to_goal"] * shots["angle_to_goal"]
+shots["is_in_area"]       = (shots["x"] > 83).astype(int)
+shots["is_central"]       = shots["y"].between(33, 67).astype(int)
+```
+
+
+---
+
+*Documento actualizado con análisis de qualifiers y guía de Feature Engineering & Selection del Taller2 ML1-2026.*
