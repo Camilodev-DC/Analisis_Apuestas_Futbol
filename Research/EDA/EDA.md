@@ -488,5 +488,163 @@ sc = ax.scatter(shots["x"], shots["y"],
 
 ---
 
+## 10. 🚀 Features Creativas y Originales
+
+> Estas features van **más allá del estándar**. Son el tipo de ideas que la literatura académica sí conoce pero rara vez se implementan en proyectos universitarios. Su originalidad y fundamentación es lo que puede hacer la diferencia en la nota.
+
+---
+
+### 🧪 A — "Defensive Pressure Proxy" *(simulando freeze_frame de StatsBomb)*
+**Inspiración:** StatsBomb incluye el `freeze_frame` (posición de todos los jugadores en el momento del tiro). Nosotros no lo tenemos, pero **podemos aproximarlo** contando acciones defensivas rivales en la misma zona y minuto.
+
+**Por qué importa:** Un tiro desde el mismo punto geométrico tiene xG muy diferente si hay 0 vs 3 defensores cerca. Esta variable capture ese contexto que los modelos básicos ignoran.
+
+```python
+def defensive_pressure(row, all_events, radius=10):
+    nearby_rivals = all_events[
+        (all_events["match_id"] == row["match_id"]) &
+        (all_events["minute"] == row["minute"]) &
+        (all_events["team_name"] != row["team_name"]) &
+        (abs(all_events["x"] - row["x"]) < radius) &
+        (abs(all_events["y"] - row["y"]) < radius)
+    ]
+    return len(nearby_rivals)
+shots["defensive_pressure"] = shots.apply(lambda r: defensive_pressure(r, events), axis=1)
+```
+
+---
+
+### 🧪 B — "Buildup Quality Index" *(el contexto antes del tiro)*
+**Inspiración:** Soccermatics muestra que cómo se crea la ocasión importa tanto como dónde ocurre. Un tiro tras 8 pases exitosos tiene diferente xG que uno de primer contacto tras un despeje.
+
+```python
+# ¿Cuántos pases exitosos tuvo el equipo en el minuto previo al tiro?
+shots["buildup_passes"] = shots.apply(lambda row:
+    len(events[(events["match_id"] == row["match_id"]) &
+               (events["minute"].between(row["minute"]-1, row["minute"])) &
+               (events["team_name"] == row["team_name"]) &
+               (events["event_type"] == "Pass") &
+               (events["outcome"] == "Successful")]), axis=1)
+```
+
+---
+
+### 🧪 C — "Portería Zone" *(dónde exactamente fue el tiro)*
+**Inspiración:** Usamos `goal_mouth_y` y `goal_mouth_z` ya disponibles. Dividimos la portería en 9 zonas (3×3) y las codificamos. Los porteros no cubren igual las 9 zonas — los corners altos son los más difíciles.
+
+```python
+def porteria_zone(row):
+    if pd.isna(row["goal_mouth_y"]) or pd.isna(row["goal_mouth_z"]):
+        return "unknown"
+    y_zone = "left" if row["goal_mouth_y"] < 33 else ("right" if row["goal_mouth_y"] > 67 else "center")
+    z_zone = "high" if row["goal_mouth_z"] > 0.6 else "low"
+    return f"{y_zone}_{z_zone}"
+shots["porteria_zone"] = shots.apply(porteria_zone, axis=1)
+```
+
+---
+
+### 🧪 D — "xG Debt" *(ineficiencia del mercado — Tippett)*
+**Inspiración:** James Tippett demostró que los equipos que generan más xG del que convierten están "debiendo goles". Esta regresión a la media **no siempre la precia bien el mercado de apuestas**.
+
+```python
+# Feature para Modelo 2: ¿Cuánto le debe el azar a este equipo?
+matches["home_xg_debt_5"] = (
+    matches.groupby("home_team")["home_xg"].transform(lambda x: x.rolling(5).mean())
+  - matches.groupby("home_team")["fthg"].transform(lambda x: x.rolling(5).mean())
+)
+# > 0 → el equipo genera más xG de lo que marca → regreserá a la media
+```
+
+---
+
+### 🧪 E — "PPDA Proxy" *(pressing intensity desde events)*
+**Inspiración:** Friends of Tracking — el PPDA (Passes Per Defensive Action) es la métrica de pressing más usada en el análisis profesional. **Podemos calcularlo solo con nuestros eventos.** Liverpool de Klopp: PPDA ~7. Equipos defensivos: PPDA >15.
+
+```python
+# PPDA = pases rivales en zona ofensiva / acciones defensivas nuestras allí
+def ppda_by_match(match_events, team):
+    opp_passes = len(match_events[
+        (match_events["team_name"] != team) & (match_events["event_type"] == "Pass") &
+        (match_events["outcome"] == "Successful") & (match_events["x"] > 40)])
+    own_def    = len(match_events[
+        (match_events["team_name"] == team) &
+        (match_events["event_type"].isin(["Tackle","Interception","BlockedPass"])) &
+        (match_events["x"] > 40)])
+    return opp_passes / max(own_def, 1)
+```
+
+---
+
+### 🧪 F — "Passing Decentralization Index" *(Sumpter's key finding)*
+**Inspiración:** David Sumpter demostró que España/Italia ganaron Euro 2012 gracias a redes de pase más descentralizadas — más jugadores distintos tocando el balón = más resistentes tácticamente. **Podemos medir esto en cada partido.**
+
+```python
+decentralization = events[
+    (events["event_type"] == "Pass") & (events["outcome"] == "Successful")
+].groupby(["match_id", "team_name"])["player_id"].nunique().reset_index()
+decentralization.columns = ["match_id", "team_name", "pass_decentralization"]
+```
+
+---
+
+### 🧪 G — "Momentum Oscillator" *(MACD del fútbol — finanzas aplicadas al deporte)*
+**Inspiración 100% original:** El MACD en trading financiero detecta cuándo un activo está acelerando. Aplicado al fútbol: cuando la forma-3 es mayor que la forma-10, el equipo está en punto de inflexión ascendente — correlaciona con victorias inesperadas.
+
+```python
+matches["home_form_3"]  = matches.groupby("home_team")["fthg"].transform(
+    lambda x: x.shift(1).rolling(3, min_periods=1).mean())
+matches["home_form_10"] = matches.groupby("home_team")["fthg"].transform(
+    lambda x: x.shift(1).rolling(10, min_periods=3).mean())
+matches["home_momentum"] = matches["home_form_3"] - matches["home_form_10"]
+# > 0 → equipo ascendente (hot) | < 0 → equipo en declive (cold)
+```
+
+---
+
+### 🧪 H — "Referee Bias Index" *(análisis forense de árbitros)*
+**Por qué es valioso:** Algunos árbitros muestran sesgo estadístico hacia el equipo local (más penaltis, menos tarjetas al local). Esto es **medible** y **el mercado de apuestas no siempre lo captura completamente**.
+
+```python
+ref_stats = matches.groupby("referee").agg(
+    home_win_rate=("ftr", lambda x: (x == "H").mean()),
+    avg_yellow_home=("hy", "mean"),
+    avg_yellow_away=("ay", "mean")
+)
+ref_stats["referee_home_bias"] = ref_stats["avg_yellow_away"] - ref_stats["avg_yellow_home"]
+matches = matches.merge(ref_stats[["referee_home_bias"]], left_on="referee", right_index=True)
+```
+
+---
+
+### 🧪 I — "Altitude of Play" *(dónde vive el balón del equipo)*
+**Idea original:** El promedio de coordenada X de todos los eventos de un equipo en un partido indica si juegan alto (pressing) o bajo (repliegue). Es el "centro de gravedad táctico" del equipo.
+
+```python
+altitude = events.groupby(["match_id","team_name"])["x"].mean().reset_index()
+altitude.columns = ["match_id","team_name","altitude_of_play"]
+# > 60 = juego en campo rival (ofensivo) | < 45 = repliegue defensivo
+```
+
+---
+
+### 🧪 J — "Clutch Factor" *(rendimiento bajo presión real)*
+**Idea:** ¿Cuántos goles marca un equipo en los últimos 15 minutos vs los primeros 75? Teams with `clutch_ratio > 1` son "killers" — marcan cuando más importa. Esto **no está en ninguna cuota de Bet365**.
+
+```python
+late_goals  = events[(events["is_goal"]==True) & (events["minute"]>=75)
+    ].groupby(["match_id","team_name"]).size().rename("late_goals")
+early_goals = events[(events["is_goal"]==True) & (events["minute"]<75)
+    ].groupby(["match_id","team_name"]).size().rename("early_goals")
+clutch = pd.concat([late_goals, early_goals], axis=1).fillna(0)
+clutch["clutch_ratio"] = clutch["late_goals"] / (clutch["early_goals"] + 1)
+```
+
+---
+
+> 📖 **Para implementación completa:** Ver [`hoja_de_ruta_modelamiento.md`](hoja_de_ruta_modelamiento.md) con arquitecturas de modelos, pipelines de entrenamiento, validación temporal y checklist del Taller2.
+
+---
+
 *Documento actualizado con investigación de fuentes Taller2 ML1-2026 (Soccermatics, Friends of Tracking, StatsBomb, xG Philosophy).*
 
