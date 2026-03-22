@@ -1139,6 +1139,7 @@ cv = StratifiedKFold(n_splits=5, shuffle=False)  # temporal order preserved
 | Log Loss | <0.35 | <0.28 |
 
 ### 📋 Tabla Completa de Variables — Modelo 1 (xG)
+**Variable Objetivo (y):** `is_goal` (1 = Gol, 0 = No Gol)
 
 | Variable | Fuente | Tipo | Descripción | Impacto Esperado |
 |---|---|---|---|---|
@@ -1267,48 +1268,40 @@ def simulate_roi(y_true, y_pred_proba, odds_df, stake=1.0):
     return sum(profit) / len(profit)  # ROI promedio por apuesta
 ```
 
-### 📋 Tabla Completa de Variables — Modelo 2 (Match Predictor)
+### 📋 Tabla Variables — Modelo 2A: Regresión Lineal (Total Goles)
+**Variable Respuesta (y):** `total_goals_actual` (Goles Local + Goles Visitante)
 
-| Variable | Fuente | Tipo | Descripción | Impacto Esperado |
+| Variable | Fuente | Tipo | Relación con Total Goles | Impacto |
 |---|---|---|---|---|
-| **── CUOTAS (Baseline oro) ──** | | | | |
-| `implied_prob_h/d/a` | matches | Estándar ✅ | Probabilidad implícita de B365 normalizada | 🔥🔥🔥 Mejor predictor individual |
-| `bookmaker_spread_home` 🧪 | matches | **Original** | Std entre B365, BW, VC para H — desacuerdo del mercado | 🔥🔥🔥 Señal de incertidumbre |
-| **── xG (Modelo 1 → 2) ──** | | | | |
-| `home/away_xg_avg5` | events→M1 | Estándar ✅ | xG rolling de las últimas 5 jornadas | 🔥🔥🔥 Base de predicción de goles |
-| `home_mean_xg_per_shot_roll5` 🧪 | events→M1 | **Original** | Calidad del tiro, no cantidad — estilo de juego real | 🔥🔥🔥 Shot Quality Premium |
-| `home_xg_set_piece_roll5` 🧪 | events→M1 | **Original** | xG proveniente de balón parado | 🔥🔥 Matchup táctico |
-| `home_xg_counter_roll5` 🧪 | events→M1 | **Original** | xG proveniente de contragolpe | 🔥🔥 Estilo de ataque |
-| `poisson_prob_h/d/a` 🧪 | xG→Scipy | **Original** | P(H/D/A) calculada con distribución Poisson propia | 🔥🔥🔥 Modelo profesional interno |
-| `edge_home` 🧪 | xG vs B365 | **Original** | Diferencia entre nuestra P(H) y la implied de B365 | 🔥🔥🔥 Edge real sobre la casa |
-| `home_xg_debt_5` 🧪 | events→M1 | **Original** | Goles debidos: xG acumulado − goles reales últimas 5 jornadas | 🔥🔥 Ineficiencia de mercado Tippett |
-| **── FORMA Y MOMENTUM ──** | | | | |
-| `home/away_goals_avg5` | matches | Estándar ✅ | Media de goles anotados últimas 5 jornadas | 🔥🔥 Forma ofensiva reciente |
-| `home/away_goals_conceded_avg5` | matches | Estándar ✅ | Media de goles recibidos últimas 5 jornadas | 🔥🔥 Forma defensiva reciente |
-| `home/away_momentum` 🧪 | matches | **Original** | MACD del fútbol: form_3 − form_10 | 🔥🔥 Equipo acelerando vs frenando |
-| `home_form_cv5` 🧪 | matches | **Original** | Coeficiente de variación de goles últimas 5 jornadas | 🔥🔥 Equipo impredecible vs consistente |
-| **── TÁCTICA Y PRESSING ──** | | | | |
-| `home/away_ppda_roll5` 🧪 | events | **Original** | PPDA proxy: pressing intensity desde events.csv | 🔥🔥🔥 Liverpool <7, defensivos >15 |
-| `home_decentralization_roll5` 🧪 | events | **Original** | Jugadores únicos en pases exitosos — Sumpter | 🔥🔥 Red de pase descentralizada |
-| `home/away_altitude_roll5` 🧪 | events | **Original** | Posición X media del equipo — "dónde vive el balón" | 🔥🔥 Estilo defensivo vs ofensivo |
-| `tactical_clash` 🧪 | events | **Original** | PPDA_local × Descentralización_visitante | 🔥🔥 Matchup táctico directo |
-| **── CONTEXTO DEL PARTIDO ──** | | | | |
-| `home/away_rest_days` 🧪 | matches | **Original** | Días desde el último partido de cada equipo | 🔥🔥 Fatiga física documentada |
-| `rest_advantage` 🧪 | matches | **Original** | Diferencia de días de descanso (home − away) | 🔥🔥 Ventaja fisiológica |
-| `personalized_home_advantage` 🧪 | matches | **Original** | Ventaja local histórica específica por equipo | 🔥🔥🔥 Anfield ≠ cualquier estadio |
-| `referee_home_bias` 🧪 | matches | **Original** | Sesgo histórico del árbitro hacia el local | 🔥 Corrección estadística del árbitro |
-| `season_temperature` 🧪 | matches | **Original** | Jornada/38 — fase de la temporada como feature continua | 🔥🔥 Dinámica de temporada |
-| `is_crunch_time` 🧪 | matches | **Original** | ¿Es jornada 30+? Zona de relegación y Champions | 🔥🔥 Equipos juegan diferente |
-| **── PLANTILLA (FPL) ──** | | | | |
-| `home/away_attacking_threat` 🧪 | players | **Original** | Suma `threat` FPL de los top-5 disponibles | 🔥🔥🔥 Estado real del ataque con lesiones |
-| **── MODELO PROFESIONAL ──** | | | | |
-| `home_attack_strength` 🧪 | matches→MLE | **Original** | Parámetro de ataque Dixon-Coles estimado con MLE | 🔥🔥🔥 Estándar de la industria |
-| `away_defense_weakness` 🧪 | matches→MLE | **Original** | Parámetro de defensa Dixon-Coles | 🔥🔥🔥 Fuerza defensiva estimada |
-| **── PSICOLOGÍA ──** | | | | |
-| `home_clutch_ratio_roll5` 🧪 | events | **Original** | Goles minuto 75+ / Goles minuto <75 | 🔥🔥 Rendimiento bajo presión |
-| `home_psychological_shock` 🧪 | events | **Original** | Gol dramático en injury time en el partido anterior | 🔥 Efecto behavioral economics |
+| `home/away_xg_avg5` | M1 | Estándar | Suma de xG esperado → más goles | 🔥🔥🔥 |
+| `home/away_goals_avg5` | matches | Estándar | Historial de anotación reciente | 🔥🔥🔥 |
+| `home/away_goals_conceded_avg5` | matches | Estándar | Fragilidad defensiva → más goles | 🔥🔥 |
+| `h2h_total_goals_avg` | historical | **Original** | Tendencia histórica del duelo (Over/Under) | 🔥🔥🔥 |
+| `poisson_expected_goals` | internal | **Original** | Predicción base estadística | 🔥🔥🔥 |
+| `implied_prob_d` | matches | Estándar | Probabilidad de empate (suele ser Over 2.5 bajo) | 🔥🔥 |
+| `home/away_ppda_roll5` | events | **Original** | Intensidad de pressing → errores y goles | 🔥🔥 |
+| `home/away_attacking_threat` | players | **Original** | Calidad de artillería disponible | 🔥🔥🔥 |
+| `home_xg_debt_5` | M1 | **Original** | Regresión a la media (Tippett) | 🔥🔥 |
 
-> 🧪 = Feature original no estándar en proyectos universitarios
+---
+
+### 📋 Tabla Variables — Modelo 2B: Regresión Logística (Winner H/D/A)
+**Variable Respuesta (y):** `ftr` (Resultado: H, D, A)
+
+| Variable | Fuente | Tipo | Relación con el Ganador | Impacto |
+|---|---|---|---|---|
+| `implied_prob_h/d/a` | matches | Estándar | El mercado es eficiente (Baseline) | 🔥🔥🔥 |
+| `elo_diff` | internal | **Original** | Diferencia de calidad estructural | 🔥🔥🔥 |
+| `xg_diff_roll5` | M1 | **Original** | Quién domina el campo pero no anota | 🔥🔥🔥 |
+| `squad_value_ratio` | players | **Original** | Ventaja de talento ($$) | 🔥🔥🔥 |
+| `rest_advantage` | matches | **Original** | Ventaja física por descanso | 🔥🔥 |
+| `personalized_home_advantage` | matches | **Original** | Factor "fortín" específico del equipo | 🔥🔥🔥 |
+| `home_momentum` | matches | **Original** | Equipo en racha (MACD) | 🔥🔥 |
+| `referee_home_bias` | matches | **Original** | Factor arbitral histórico | 🔥 |
+| `is_crunch_time` | matches | **Original** | Presión de final de temporada | 🔥🔥 |
+| `edge_home` | M1 vs B365 | **Original** | Desviación de nuestro xG vs Mercado | 🔥🔥🔥 |
+
+> 🧪 = Feature original no estándar en proyectos universitarios, parte del valor agregado para superar baselines.
 
 ---
 
