@@ -790,6 +790,162 @@ matches["home_xg_avg5"] = matches.groupby("home_team")["home_xg"].transform(
 
 ---
 
+## ⚠️ Fase 1E — Riesgos, Supuestos y Mitigaciones
+
+> Estos problemas pueden **invalidar completamente** los modelos si no se detectan antes del entrenamiento. Leer con cuidado.
+
+---
+
+### 🔴 Tabla de Riesgos: Datos y Pipeline
+
+| Riesgo | Modelos afectados | Impacto | Señal de alerta | Mitigación |
+|---|---|---|---|---|
+| **Data Leakage con cuotas post-partido** | M2 | 🔴 CRÍTICO | AUC>0.99 en train | Solo cuotas de apertura; nunca de cierre |
+| **xG del partido actual como feature** | M2 | 🔴 CRÍTICO | Accuracy irreal | Siempre `shift(1)` antes de rolling |
+| **API degradada: player_history reducido** | M2 | 🟠 ALTO | Solo ~1,500 filas vs 15,000 | Usar `players.csv` como proxy; reejecutar cuando se recupere |
+| **Sobreajuste en rolling features** | M2 | 🟡 MEDIO | Gap CV vs test | `TimeSeriesSplit` — NUNCA KFold aleatorio |
+| **Pocos partidos (291)** | M2 | 🔴 ALTO si usas DL | Overfitting rápido | Priorizar XGBoost/RF; regularización agresiva en DL |
+| **Desbalance de clases (ftr: H=42%)** | M2 | 🟡 MEDIO | Predice siempre "H" | `class_weight='balanced'`, SMOTE, F1 Macro |
+| **Desbalance xG (goles ~11%)** | M1 | 🟡 MEDIO | AUC ok pero Recall bajo | SMOTE, threshold tuning a 0.25-0.35 |
+| **Independencia de tiros del mismo partido** | M1 | 🟡 MEDIO | Errores correlacionados | Cluster por match_id; bootstrap por partido |
+
+```python
+# ✅ CORRECTO — xG histórico SIN leakage
+matches["home_xg_avg5"] = matches.groupby("home_team")["home_xg"].transform(
+    lambda x: x.shift(1).rolling(5, min_periods=2).mean()
+)
+# ❌ INCORRECTO — incluye el partido actual → LEAKAGE
+matches["home_xg_avg5"] = matches.groupby("home_team")["home_xg"].transform(
+    lambda x: x.rolling(5, min_periods=2).mean()
+)
+```
+
+---
+
+### 📐 Supuestos Estadísticos por Modelo
+
+> Los supuestos de los modelos lineales son los más estrictos. Los modelos de árboles (XGBoost, RF) son mucho más relajados. Aquí documentamos ambos.
+
+#### 📊 Modelo 1 — Regresión Logística: Supuestos y Diagnósticos
+
+| Supuesto | ¿Aplica? | Riesgo real | Diagnóstico | Mitigación |
+|---|---|---|---|---|
+| **Linealidad en log-odds** | ✅ Sí | 🟠 ALTO — `distance` y `angle` tienen relación no lineal | Box-Tidwell test; scatter logit vs predictor | Transformar: `log(distance)`, `dist_squared`, bins |
+| **No multicolinealidad perfecta** | ✅ Sí | 🟠 ALTO — `distance`, `dist_squared`, `dist_angle` se solapan | VIF > 10 → problema grave | Eliminar una de cada par correlacionado; usar L2/Ridge |
+| **Independencia de observaciones** | ✅ Sí | 🟡 MEDIO — tiros del mismo partido no son independientes | Durbin-Watson; residuales agrupados por partido | Clusterizar errores estándar por `match_id` |
+| **No outliers influyentes** | ✅ Sí | 🟡 MEDIO — penaltis y grandes chances son outliers extremos | Leverage plots; Cook's distance | Modelo separado para penaltis (xG=0.76 fijo) |
+| **Separación completa** | ✅ Sí | 🟠 ALTO — `is_penalty=1` casi siempre → gol | Convergencia infinita en coefs | Usar `penalty='l2'` o tratarlo como categoría aparte |
+| **Tamaño de muestra suficiente** | ✅ Sí | ✅ BAJO — 444k tiros con ~20 features | Regla empírica: 10+ eventos por feature | Tenemos ~48,000 goles → holgado |
+| **Normalidad de residuos** | ❌ No aplica a Logística | ✅ No requerida | — | No hacer pruebas de normalidad en logística |
+
+```python
+# ── Diagnóstico de Multicolinealidad (VIF) ──────────────────────────────────
+from statsmodels.stats.outliers_influence import variance_inflation_factor
+
+def vif_analysis(X):
+    vif_data = pd.DataFrame()
+    vif_data["Feature"] = X.columns
+    vif_data["VIF"] = [variance_inflation_factor(X.values, i) for i in range(X.shape[1])]
+    print(vif_data.sort_values("VIF", ascending=False))
+    # VIF > 5 → preocupante | VIF > 10 → problema grave → eliminar o combinar
+
+vif_analysis(X_train[["distance_to_goal", "angle_to_goal", "dist_squared", "dist_angle"]])
+# Resultado esperado: dist_squared y dist_angle tendrán VIF alto → considerar eliminar uno
+
+# ── Prueba de Linealidad en Log-Odds (Box-Tidwell) ──────────────────────────
+# Para features numéricas continuas
+shots["log_distance"] = np.log(shots["distance_to_goal"] + 1)
+shots["dist_log_interaction"] = shots["distance_to_goal"] * shots["log_distance"]
+# Si el coeficiente de dist_log_interaction es significativo → relación no lineal → transformar
+
+# ── Detección de Separación Completa ────────────────────────────────────────
+from statsmodels.discrete.discrete_model import Logit
+try:
+    model_sm = Logit(y_train, X_train).fit(maxiter=200)
+    if any(abs(model_sm.params) > 50):  # coeficientes enormes = separación
+        print("⚠️ WARNING: Posible separación completa detectada")
+        print("Solución: LogisticRegression(penalty='l2', C=0.01)")
+except Exception as e:
+    print(f"Error de convergencia: {e}")
+```
+
+---
+
+#### 🌲 Modelo 1 — XGBoost/GBM: Supuestos (mucho más relajados)
+
+| Supuesto | ¿Aplica? | Comentario |
+|---|---|---|
+| **Linealidad** | ❌ No requerida | Los árboles capturan relaciones no lineales automáticamente |
+| **Normalidad de residuos** | ❌ No requerida | XGBoost usa funciones de pérdida, no distribuciones |
+| **Multicolinealidad** | ⚠️ Parcial | No invalida el modelo, pero puede inflar feature importance. Usar SHAP en vez de `feature_importances_` |
+| **Independencia de observaciones** | ⚠️ Parcial | Puede explotar correlaciones, pero no las asume |
+| **Escala de features** | ✅ No requerida | Los árboles son invariantes a escala → no necesita StandardScaler |
+
+> 💡 **Recomendación:** Para el Taller2, usar **LogReg como baseline** (exige justificar supuestos) y **XGBoost como modelo final** (mejor rendimiento, menos supuestos). Esto demuestra profundidad metodológica.
+
+---
+
+#### 🏆 Modelo 2 — Match Predictor: Supuestos específicos
+
+| Supuesto / Riesgo | Impacto | Diagnóstico | Mitigación |
+|---|---|---|---|
+| **Multicolinealidad implied_h/d/a** | 🟠 ALTO | `implied_h + implied_d + implied_a = 1` siempre | Usar solo 2 de las 3 (la tercera es derivable) |
+| **No-estacionariedad temporal** | 🟠 ALTO | El estilo de juego cambia entre temporadas | Validación temporal; no mezclar años en K-Fold |
+| **Distribución de Poisson para goles** | 🟡 MEDIO | Los goles reales están sobredispersos (Var > Media) | Usar **Poisson negativa** o Dixon-Coles con corrección ρ |
+| **Normalidad de features** | ❌ No aplica a RF/XGBoost | No requerida para árboles | No necesita transformación para RF/XGBoost |
+| **Autocorrelación temporal** | 🟡 MEDIO | Partidos consecutivos del mismo equipo están correlacionados | `TimeSeriesSplit`, no KFold; ordenar por fecha |
+| **Non-convergencia si usas LogReg multiclase** | 🟠 ALTO | Con muchas features correlacionadas | Usar `solver='lbfgs'`, `max_iter=1000`, L2 penalty |
+
+```python
+# ── Test de Sobredispersión (Modelo de Poisson) ─────────────────────────────
+from scipy.stats import chi2
+
+def overdispersion_test(observed, predicted):
+    """
+    H0: La varianza = media (Poisson clásico)
+    H1: Varianza > media (sobredispersión → usar Poisson Negativa)
+    """
+    residuals = (observed - predicted) / predicted**0.5
+    chi2_stat = (residuals**2).sum()
+    pvalue = 1 - chi2.cdf(chi2_stat, df=len(observed)-1)
+    print(f"Chi2 sobredispersión: {chi2_stat:.2f}, p-value: {pvalue:.4f}")
+    if pvalue < 0.05:
+        print("⚠️ Sobredispersión detectada → usar statsmodels NegativeBinomial")
+    return pvalue
+
+# ── Multicolinealidad entre cuotas implícitas ───────────────────────────────
+# Las 3 probabilidades suman 1 → SIEMPRE colineales → usar solo 2
+matches["implied_h"] = (1/matches["b365h"]) / (1/matches["b365h"] + 1/matches["b365d"] + 1/matches["b365a"])
+matches["implied_d"] = (1/matches["b365d"]) / (1/matches["b365h"] + 1/matches["b365d"] + 1/matches["b365a"])
+# No agregar implied_a → es 1 - implied_h - implied_d
+
+# ── Validación temporal correcta (no K-Fold clásico) ────────────────────────
+from sklearn.model_selection import TimeSeriesSplit
+
+tscv = TimeSeriesSplit(n_splits=5, gap=5)  # gap=5 partidos entre train y test
+for fold, (train_idx, test_idx) in enumerate(tscv.split(matches)):
+    X_tr, X_te = matches.iloc[train_idx][FEATURES], matches.iloc[test_idx][FEATURES]
+    y_tr, y_te = matches.iloc[train_idx]["ftr"], matches.iloc[test_idx]["ftr"]
+    # → CORRECTO: el modelo nunca ve el futuro durante el entrenamiento
+```
+
+---
+
+### 🔬 ¿Por qué la Normalidad NO se exige en nuestros modelos?
+
+> Este es un malentendido clásico de estadística que los profes suelen preguntar.
+
+| Modelo | Supuesto de normalidad | Explicación |
+|---|---|---|
+| **Regresión Lineal** (no la usamos) | ✅ Sí — de los **residuos** | Necesaria para que los intervalos de confianza sean válidos |
+| **Regresión Logística** (Modelo 1 base) | ❌ No | La distribución de la variable respuesta es Bernoulli, no Normal. Los residuos de devianza no necesitan ser normales |
+| **XGBoost / Random Forest** | ❌ No | Basan sus predicciones en particiones del espacio de features; ninguna distribución es asumida |
+| **Poisson Regression** (Modelo 2 goles) | ❌ No — asume Poisson | La respuesta debe ser conteo no negativo; la varianza debe igual a la media |
+
+> 🎓 **Para el Taller2:** Si el profesor pregunta por normalidad en logística → explicar que la distribución relevante es la de la **variable respuesta** (Bernoulli para xG, Poisson para goles) y que los residuos de devianza no necesitan distribución normal.
+
+---
+
 ## 🔀 Fase 1F — Transformaciones y Feature Selection
 
 ### Tabla de Transformaciones (EDA.md §6.1)
