@@ -1268,40 +1268,58 @@ def simulate_roi(y_true, y_pred_proba, odds_df, stake=1.0):
     return sum(profit) / len(profit)  # ROI promedio por apuesta
 ```
 
-### 📋 Tabla Variables — Modelo 2A: Regresión Lineal (Total Goles)
-**Variable Respuesta (y):** `total_goals_actual` (Goles Local + Goles Visitante)
+### 📋 Tabla Variables — Modelo 2A: Específicas para Goles (Regresión Lineal)
+**Variable Respuesta (y):** `total_goals_actual`
 
-| Variable | Fuente | Tipo | Relación con Total Goles | Impacto |
-|---|---|---|---|---|
-| `home/away_xg_avg5` | M1 | Estándar | Suma de xG esperado → más goles | 🔥🔥🔥 |
-| `home/away_goals_avg5` | matches | Estándar | Historial de anotación reciente | 🔥🔥🔥 |
-| `home/away_goals_conceded_avg5` | matches | Estándar | Fragilidad defensiva → más goles | 🔥🔥 |
-| `h2h_total_goals_avg` | historical | **Original** | Tendencia histórica del duelo (Over/Under) | 🔥🔥🔥 |
-| `poisson_expected_goals` | internal | **Original** | Predicción base estadística | 🔥🔥🔥 |
-| `implied_prob_d` | matches | Estándar | Probabilidad de empate (suele ser Over 2.5 bajo) | 🔥🔥 |
-| `home/away_ppda_roll5` | events | **Original** | Intensidad de pressing → errores y goles | 🔥🔥 |
-| `home/away_attacking_threat` | players | **Original** | Calidad de artillería disponible | 🔥🔥🔥 |
-| `home_xg_debt_5` | M1 | **Original** | Regresión a la media (Tippett) | 🔥🔥 |
+| Variable | Relación con Total Goles | Impacto |
+|---|---|---|
+| `h2h_total_goals_avg` | Historial de goles entre ambos equipos (Over/Under) | 🔥🔥🔥 |
+| `poisson_expected_goals` | Predicción base estadística de media de goles | 🔥🔥🔥 |
+| `implied_prob_d` | Probabilidades altas de empate suelen correlacionar con pocos goles | 🔥🔥 |
+| `home_xg_debt_5` | Regresión a la media: si deben goles, es probable que anoten pronto | 🔥🔥 |
 
 ---
 
-### 📋 Tabla Variables — Modelo 2B: Regresión Logística (Winner H/D/A)
-**Variable Respuesta (y):** `ftr` (Resultado: H, D, A)
+### 📋 Tabla Variables — Modelo 2B: Específicas para Ganador (Regresión Logística)
+**Variable Respuesta (y):** `ftr` (H, D, A)
 
-| Variable | Fuente | Tipo | Relación con el Ganador | Impacto |
-|---|---|---|---|---|
-| `implied_prob_h/d/a` | matches | Estándar | El mercado es eficiente (Baseline) | 🔥🔥🔥 |
-| `elo_diff` | internal | **Original** | Diferencia de calidad estructural | 🔥🔥🔥 |
-| `xg_diff_roll5` | M1 | **Original** | Quién domina el campo pero no anota | 🔥🔥🔥 |
-| `squad_value_ratio` | players | **Original** | Ventaja de talento ($$) | 🔥🔥🔥 |
-| `rest_advantage` | matches | **Original** | Ventaja física por descanso | 🔥🔥 |
-| `personalized_home_advantage` | matches | **Original** | Factor "fortín" específico del equipo | 🔥🔥🔥 |
-| `home_momentum` | matches | **Original** | Equipo en racha (MACD) | 🔥🔥 |
-| `referee_home_bias` | matches | **Original** | Factor arbitral histórico | 🔥 |
-| `is_crunch_time` | matches | **Original** | Presión de final de temporada | 🔥🔥 |
-| `edge_home` | M1 vs B365 | **Original** | Desviación de nuestro xG vs Mercado | 🔥🔥🔥 |
+| Variable | Relación con el Ganador | Impacto |
+|---|---|---|
+| `implied_prob_h/d/a` | Las cuotas de B365 son el benchmark de probabilidad más fuerte | 🔥🔥🔥 |
+| `elo_diff` | La brecha de calidad estructural entre equipos (Arsenal vs Everton) | 🔥🔥🔥 |
+| `xg_diff_roll5` | Quién genera más de lo que recibe (dominio del campo) | 🔥🔥🔥 |
+| `squad_value_ratio` | Diferencia de valor de mercado ($$ = talento) | 🔥🔥🔥 |
+| `rest_advantage` | Ventaja física/fisiológica por días de descanso extra | 🔥🔥 |
+| `personalized_home_advantage` | El factor "fortín" real de un estadio específico | 🔥🔥🔥 |
+| `referee_home_bias` | Sesgo estadístico del árbitro hacia el local | 🔥 |
+| `edge_home` | Valor esperado (EV): donde nosotros vemos más probabilidad que B365 | 🔥🔥🔥 |
 
-> 🧪 = Feature original no estándar en proyectos universitarios, parte del valor agregado para superar baselines.
+---
+
+### 📋 Tabla Variables Predictoras "Todo Terreno": Para ambos modelos
+**Uso:** Estas variables alimentan tanto la predicción de goles totales como la del ganador.
+
+| Variable | Tipo | Por qué sirve para ambos |
+|---|---|---|
+| `home/away_xg_avg5` | xG Base | Indica potencia ofensiva y vulnerabilidad defensiva |
+| `home/away_goals_avg5` | Estándar | Indica racha real de anotación y solidez |
+| `home/away_ppda_roll5` | 🧪 Pressing | El pressing alto genera goles y errores que deciden partidos |
+| `home_mean_xg_per_shot` | 🧪 Calidad | ¿Tiran mucho o tiran bien? Define precisión y volumen |
+| `home_xg_set_piece/counter` | 🧪 Táctica | Define de dónde vendrán los peligros (balón parado o contra) |
+| `home/away_momentum` | 🧪 Momentum | Equipo en racha (MACD) ganando inercia |
+| `home_form_cv5` | 🧪 Varianza | Indica si el equipo es consistente o impredecible |
+| `home_decentralization`| 🧪 Pase | Red de pases resiliente (Sumpter) |
+| `home/away_altitude` | 🧪 Posición | "Dónde vive el balón" define si el equipo asfixia o se encierra |
+| `tactical_clash` | 🧪 Matchup | Cómo choca el estilo local vs el visitante |
+| `attacking_threat` | 🧪 Plantilla | Disponibilidad de artillería pesada (FPL Threat) |
+| `attack/defense_strength`| 🧪 Dixon-Coles| Fuerza intrínseca estimada por MLE |
+| `home_clutch_ratio` | 🧪 Psicología | Rendimiento bajo presión (Goles min 75+) |
+| `psychological_shock` | 🧪 Shock | Efecto emocional del último partido (injury time goals) |
+| `season_temperature` | 🧪 Dinámica | La urgencia de puntos según el momento de la liga |
+| `is_crunch_time` | 🧪 Presión | Partidos finales de temporada (descenso/título) |
+| `bookmaker_spread` | 🧪 Mercado | Desacuerdo entre casas de apuestas = volatilidad |
+
+> 🧪 = Features originales diseñadas para superar baselines estándar y demostrar profundidad en el Taller 2.
 
 ---
 
