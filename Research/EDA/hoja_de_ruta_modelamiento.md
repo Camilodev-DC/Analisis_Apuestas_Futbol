@@ -937,10 +937,10 @@ for fold, (train_idx, test_idx) in enumerate(tscv.split(matches)):
 
 | Modelo | Supuesto de normalidad | Explicación |
 |---|---|---|
-| **Regresión Lineal** (no la usamos) | ✅ Sí — de los **residuos** | Necesaria para que los intervalos de confianza sean válidos |
-| **Regresión Logística** (Modelo 1 base) | ❌ No | La distribución de la variable respuesta es Bernoulli, no Normal. Los residuos de devianza no necesitan ser normales |
-| **XGBoost / Random Forest** | ❌ No | Basan sus predicciones en particiones del espacio de features; ninguna distribución es asumida |
-| **Poisson Regression** (Modelo 2 goles) | ❌ No — asume Poisson | La respuesta debe ser conteo no negativo; la varianza debe igual a la media |
+| **Regresión Lineal** (Modelo 2A) | ✅ Sí — de los **residuos** | Necesaria para que los intervalos de confianza sean válidos |
+| **Regresión Logística** (M1 y M2B) | ❌ No | La distribución de la variable respuesta es Bernoulli/Multinomial, no Normal. Los residuos no necesitan ser normales |
+| **XGBoost / Random Forest** | ❌ No | Basan sus predicciones en particiones del espacio de features; no asumen distribuciones |
+| **Poisson Regression** (Alternativa M2) | ❌ No — asume Poisson | La respuesta debe ser conteo no negativo; la varianza debe ser igual a la media |
 
 > 🎓 **Para el Taller2:** Si el profesor pregunta por normalidad en logística → explicar que la distribución relevante es la de la **variable respuesta** (Bernoulli para xG, Poisson para goles) y que los residuos de devianza no necesitan distribución normal.
 
@@ -1079,23 +1079,32 @@ FEATURES_XG = [
 ]
 ```
 
-### Arquitectura del Modelo
+### Arquitectura del Modelo (Taller 2)
+
+#### ⚖️ Modelo Primario: Regresión Logística
 ```python
 from sklearn.linear_model import LogisticRegression
-from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 
-# Baseline (Taller2 mínimo): Logistic Regression
+# Baseline y principal (Requisito Taller 2)
 pipeline_lr = Pipeline([
     ("scaler", StandardScaler()),
-    ("model", LogisticRegression(class_weight="balanced", max_iter=500, C=0.1))
+    ("classifier", LogisticRegression(
+        class_weight="balanced", 
+        max_iter=500, 
+        C=0.1,
+        solver="liblinear"  # Bueno para dataset pequeño/binario
+    ))
 ])
+```
 
-# Avanzado: Gradient Boosting (XGBoost style)
+#### 🌳 (Opcional) Gradient Boosting / XGBoost
+> Se incluye para comparar el AUC-ROC contra la Regresión Logística.
+```python
+from sklearn.ensemble import GradientBoostingClassifier
 pipeline_gb = GradientBoostingClassifier(
-    n_estimators=200, max_depth=4, learning_rate=0.05,
-    subsample=0.8, min_samples_leaf=10
+    n_estimators=200, max_depth=4, learning_rate=0.05
 )
 ```
 
@@ -1146,10 +1155,17 @@ cv = StratifiedKFold(n_splits=5, shuffle=False)  # temporal order preserved
 
 ## 🏆 Fase 3 — Modelo 2: Match Predictor
 
-### Objetivo
-Predecir: **H** (victoria local), **D** (empate), **A** (victoria visitante).
+> **Estructura obligatoria Taller 2:** El Modelo 2 se divide mecánicamente en dos partes usando características a nivel partido.
 
-### Features de entrada
+### 🔢 Parte A — Regresión Lineal: Total de Goles
+**Objetivo:** Predecir el número total de goles del partido (variable continua).
+**Variable objetivo (y):** `fthg + ftag` (Goles Local + Goles Visitante).
+
+### ⚔️ Parte B — Regresión Logística: Clasificación Multiclase
+**Objetivo:** Predecir el resultado final del partido: **H** (victoria local), **D** (empate), **A** (victoria visitante).
+**Variable objetivo (y):** `ftr`.
+
+### Features de entrada (Comunes para Parte A y B)
 ```python
 FEATURES_MATCH = [
     # Cuotas (mejor predictor único — Tippett)
@@ -1170,37 +1186,55 @@ FEATURES_MATCH = [
 ]
 ```
 
-### Arquitectura
+### Arquitecturas Obligatorias (Taller 2)
+
+#### 📉 Modelo 2A — Regresión Lineal (Total Goles)
 ```python
-from sklearn.ensemble import RandomForestClassifier
-import xgboost as XGBClassifier
+from sklearn.linear_model import LinearRegression, Ridge
+from sklearn.metrics import mean_squared_error, mean_absolute_error
 
-# Opción 1: Random Forest (interpretable, robusto)
-rf = RandomForestClassifier(
-    n_estimators=300, max_depth=6, 
-    class_weight="balanced", min_samples_leaf=5,
-    random_state=42
-)
+# Target: y_train_goles = matches["fthg"] + matches["ftag"]
+model_2a = Pipeline([
+    ("scaler", StandardScaler()),
+    # Ridge es preferible a LinearRegression pura ante tantas features correlacionadas
+    ("regressor", Ridge(alpha=1.0)) 
+])
 
-# Opción 2: XGBoost (más potente, requiere tuning)
-xgb = XGBClassifier(
-    n_estimators=300, max_depth=4, learning_rate=0.05,
-    subsample=0.8, colsample_bytree=0.8,
-    use_label_encoder=False, eval_metric="mlogloss"
-)
-
-# Opción 3 (avanzada): Ensemble con votación ponderada
-from sklearn.ensemble import VotingClassifier
-ensemble = VotingClassifier(
-    estimators=[("lr", pipeline_lr), ("rf", rf), ("xgb", xgb)],
-    voting="soft"  # usa probabilidades, no clases
-)
+# Evaluación: RMSE, MAE
 ```
 
-### 🎯 Benchmarks vs Bet365
+#### ⚖️ Modelo 2B — Regresión Logística Multiclase (Match Winner)
 ```python
-# Bet365 accuracy en esta temporada
-BET365_BENCHMARK = 0.498  # 49.8%
+# Target: y_train_res = matches["ftr"]  (H, D, A)
+model_2b = Pipeline([
+    ("scaler", StandardScaler()),
+    ("classifier", LogisticRegression(
+        multi_class="multinomial",  # Softmax para multiclase
+        solver="lbfgs",             # Solver estándar para multiclass
+        max_iter=1000,              # Mayor convergencia necesaria
+        class_weight="balanced",    # Tratar el 42% H vs 26% D
+        C=0.1                       # Regularización vital por multicolinealidad
+    ))
+])
+
+# Evaluación: Accuracy, F1 Macro
+```
+
+#### 🌳 (Opcional Avanzado) XGBoost / Random Forest
+> El Taller 2 exige Lineal/Logística como base. Una vez superado el benchmark con estos, se puede entrenar un XGBoost/RF como *"plus"* para intentar sacar un ROI real en apuestas superando a Bet365.
+```python
+import xgboost as xgb
+# El modelo XGBoost se alimentaría de las features + la predicción de goles del Modelo 2A
+xgb_model = xgb.XGBClassifier(objective='multi:softprob', num_class=3)
+```
+
+### 🎯 Benchmarks Taller 2 y Apuestas
+```python
+# Benchmark 2A (Goles): Mean Absolute Error (MAE)
+# Un MAE < 1.1 goles de error es decente
+
+# Benchmark 2B (Match Winner): Bet365 accuracy en esta temporada
+BET365_BENCHMARK = 0.498  # 49.8% (Objetivo Taller 2: Superar el baseline de "predecir siempre Local" = 42%)
 
 # Calcular ROI simulado
 def simulate_roi(y_true, y_pred_proba, odds_df, stake=1.0):
