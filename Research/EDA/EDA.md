@@ -333,5 +333,160 @@ events.csv ──────── player_id ──→ players.csv (opcional)
 
 ---
 
-*Documento actualizado con análisis de qualifiers y guía de Feature Engineering & Selection del Taller2 ML1-2026.*
+## 8. 📚 Recursos Técnicos (Taller2 ML1)
+
+> Estos 4 recursos fueron recomendados explícitamente en el Taller2. Los exploramos y extractamos lo más valioso para los modelos.
+
+---
+
+### 📖 1. Soccermatics — David Sumpter
+
+**Libro + Código Python** | Matemáticas del fútbol con implementaciones prácticas.
+
+**Lo más valioso para nuestro proyecto:**
+- **xG con Regresión Logística**: Sumpter implementa xG usando distancia y ángulo al gol como features. Exactamente el Taller2 pide. El modelo base es:
+  ```python
+  # Logistic Regression para xG (Sumpter style)
+  from sklearn.linear_model import LogisticRegression
+  X = shots[["distance", "angle", "dist_squared"]]
+  y = shots["is_goal"]
+  model = LogisticRegression().fit(X, y)
+  shots["xg_predicted"] = model.predict_proba(X)[:, 1]
+  ```
+- **Passing Networks**: Visualizar quién pasa a quién con GraƒX de nodos (posición promedio) y aristas (frecuencia de pase). Muy útil para el EDA de events.
+- **Simulación Poisson**: Modelo de Dixon-Coles para predecir goles: λ_home = α_home × β_away × γ. Base del Modelo 2.
+- **Pitch Control**: Modelo de cuánto campo controla cada equipo instante a instante (requiere datos de tracking, no de eventos).
+
+**📌 Clave:** Sumpter demuestra que las **redes de pase descentralizadas** (donde el balón circula entre más jugadores) correlacionan con mejor rendimiento. España e Italia en Eurocopa 2012 son sus ejemplos estrella.
+
+**Recursos:** [GitHub del libro](https://github.com/Friends-of-Tracking-Data-FoTD/SoccermaticsForPython)
+
+---
+
+### 🎥 2. Friends of Tracking — Canal de YouTube
+
+**Académicos de fútbol analytics** | David Sumpter (Uppsala), Javier Fernandez (Barcelona), Laurie Shaw (Harvard).
+
+[youtube.com/@friendsoftracking755](https://www.youtube.com/@friendsoftracking755) | [Código GitHub](https://github.com/Friends-of-Tracking-Data-FoTD/)
+
+**Tutoriales más relevantes para nuestro proyecto:**
+
+| Tema | Aplicación directa |
+|---|---|
+| **Implementación de xG** | Modelo 1 — paso a paso con datos Statsbomb |
+| **Expected Threat (xT)** | Feature avanzada: cuánto aumenta la prob. de gol cada acción |
+| **Pitch Control** | Visualizar dominio táctico (requiere tracking data) |
+| **Passing Networks** | Grafo de conexiones por partido — EDA de events |
+| **Poisson Regression** | Predecir goles por partido — base Modelo 2 |
+| **Pressing Metrics** | PPDA (Passes Per Defensive Action) — intensidad del pressing |
+
+**💡 Concepto destacado — xT (Expected Threat):**
+A diferencia del xG (solo tiros), el xT asigna un **valor a cada acción con balón** dependiendo de cuánto aumenta la probabilidad de gol en los siguientes ~5 acciones. Es la métrica más moderna para evaluar a jugadores que no marcan ni asisten.
+```
+xT(x, y) = probabilidad de marcar en los próximos 5 eventos si el balón está en (x,y)
+```
+
+**💡 Concepto destacado — PPDA:**
+```
+PPDA = Pases permitidos al rival / Acciones defensivas propias (en campo contrario)
+```
+Liverpool bajo Klopp tenía PPDA ~7 (pressing intensísimo). Equipos defensivos tienen PPDA >15.
+
+---
+
+### 📊 3. StatsBomb Open Data
+
+**Datos event-level gratuitos** | Formato similar a nuestros datos de WhoScored/Opta.
+
+[github.com/statsbomb/open-data](https://github.com/statsbomb/open-data)
+
+**¿Por qué es valioso?**
+- Incluye datos de **La Liga, Champions League, Copa Mundial, NWSL** con +22,000 partidos.
+- El formato JSON incluye campos como `freeze_frame` (posiciones de todos los jugadores en el momento del tiro) — esto permite calcular si había portero fuera de posición, número de defensores en la línea, etc.
+- **Librería oficial:** `statsbombpy` — permite cargar datos directamente con `from statsbombpy import sb`.
+
+**Campos exclusivos de StatsBomb vs nuestros datos:**
+
+| Campo StatsBomb | Equivalente nuestro | Diferencia |
+|---|---|---|
+| `shot.freeze_frame` | No disponible | Posiciones de todos los jugadores en el tiro 🔥 |
+| `shot.xg` | Lo calculamos | StatsBomb calcula xG propio más preciso |
+| `ball_receipt.outcome` | `outcome` | Similar |
+| `pass.recipient` | No disponible | Quién recibió el pase |
+| `carry` | No disponible | Conducciones de balón |
+
+**💡 Tip:** Podemos usar StatsBomb Open Data para **comparar y validar** nuestro modelo de xG propio. Si nuestro AUC-ROC es similar al de sus datos, sabemos que la metodología es correcta.
+
+```python
+# Instalar en el entorno
+pip install statsbombpy
+
+# Cargar datos gratuitos de Premier League
+from statsbombpy import sb
+matches = sb.matches(competition_id=2, season_id=27)  # PL 2015/16
+events = sb.events(match_id=3764453)
+shots  = events[events["type"] == "Shot"]
+```
+
+---
+
+### 📗 4. Expected Goals Philosophy — James Tippett
+
+**Libro accesible** | Tippett trabajó en Smartodds, la consultora de apuestas que popularizó el xG en la industria.
+
+**Insights clave para nuestro proyecto:**
+
+1. **xG para apuestas**: Tippett demuestra que los equipos que consistentemente superan su xG (efficiency) **revertan a la media** en el largo plazo. Un equipo que tiene xG_against < goles_recibidos está siendo "afortunado" defensivamente.
+
+2. **El caso Brentford**: Usaron xG para fichar jugadores infravalorados en ligas menores con alta conversión pero estadísticas brutas mediocres — similar a Moneyball en béisbol.
+
+3. **xG ≠ suerte**: La diferencia entre xG y goles reales a lo largo de una temporada mide la habilidad de finalización (shooting skill) y la suerte del portero. Esto es una **feature poderosa para el Modelo 2**:
+   ```python
+   # Underperformance / Overperformance de xG
+   matches["home_xg_diff"] = matches["home_goals"] - matches["home_xg"]
+   matches["away_xg_diff"] = matches["away_goals"] - matches["away_xg"]
+   # Si un equipo hace home_xg_diff < 0 consistentemente, tienen un mal portero o mala suerte
+   ```
+
+4. **Las cuotas ya incorporan xG**: La industria de apuestas lleva +15 años usando xG en sus modelos. Por eso es tan difícil superarlos — nuestro modelo necesita capturar algo que ellos no tengan (información local, estado del vestuario, rotaciones).
+
+---
+
+## 9. 🗺️ Hoja de Ruta de Visualizaciones (Football Analytics Avanzado)
+
+Visualizaciones que elevarían este proyecto al nivel de dashboards profesionales como FotMob o Sofascore:
+
+| Visualización | Dataset | Librería | Dificultad | Impacto |
+|---|---|---|---|---|
+| **xG Shot Map** (burbujas escaladas) | events | mplsoccer | ⭐⭐ | 🔥🔥🔥 |
+| **Pass Network** (grafo por partido) | events | networkx + mplsoccer | ⭐⭐⭐ | 🔥🔥🔥 |
+| **Radar Chart** (8 métricas por jugador) | players | matplotlib | ⭐⭐⭐ | 🔥🔥🔥 |
+| **xG Timeline por partido** | events + matches | matplotlib | ⭐⭐ | 🔥🔥🔥 |
+| **xG vs Goals scatter** (over/underperformers) | matches | seaborn | ⭐ | 🔥🔥 |
+| **Progressive Pass Map** (flechas) | events | mplsoccer | ⭐⭐⭐ | 🔥🔥 |
+| **Carry Map** (conducciones) | events | mplsoccer | ⭐⭐⭐⭐ | 🔥🔥 |
+| **Shot Placement Heatmap** (portería) | events | seaborn | ⭐⭐ | 🔥🔥 |
+| **Betting Calibration Curve** | matches | sklearn | ⭐⭐ | 🔥🔥🔥 |
+| **Expected Threat (xT) Heatmap** | events | custom model | ⭐⭐⭐⭐⭐ | 🔥🔥🔥🔥 |
+
+> 💡 **Recomendación**: Para el **dashboard del Taller2**, implementar mínimo los primeros 3 (xG Shot Map + xG Timeline + Radar Chart). Son los más impactantes visualmente y los más directamente relacionados con los modelos.
+
+```python
+# Instalar mplsoccer para visualizaciones pro
+pip install mplsoccer
+
+# Ejemplo Shot Map básico
+from mplsoccer import Pitch
+pitch = Pitch(pitch_color='grass', line_color='white')
+fig, ax = pitch.draw()
+# Escalar burbuja por xG predicho
+sc = ax.scatter(shots["x"], shots["y"],
+                s=shots["xg_predicted"] * 500,
+                c=shots["is_goal"].map({1: "gold", 0: "grey"}),
+                alpha=0.6)
+```
+
+---
+
+*Documento actualizado con investigación de fuentes Taller2 ML1-2026 (Soccermatics, Friends of Tracking, StatsBomb, xG Philosophy).*
 

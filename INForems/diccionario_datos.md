@@ -206,7 +206,7 @@ Este documento describe cada archivo en `data/raw/` y el detalle de cada columna
 ### Campo `qualifiers` — Metadata Rica (columna nueva ✨)
 | Columna | Tipo | Descripción |
 |---------|------|-------------|
-| `qualifiers` | JSON string | Array JSON con ~110 tipos de metadata por evento |
+| `qualifiers` | JSON string | Array JSON con **~110 tipos únicos** de metadata por evento. Contiene campos como `BigChance`, `Head`, `RightFoot`, `FastBreak`, `FromCorner`, `Zone`, `Angle`, `Length` y muchos más. |
 
 Estructura de cada elemento del array:
 ```json
