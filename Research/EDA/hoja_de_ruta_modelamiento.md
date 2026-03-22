@@ -276,6 +276,320 @@ early_goals = events[
 
 ---
 
+## ⚙️ Fase 1C — Feature Engineering Creativo para Modelo 2 (Match Predictor) 🏆
+
+> Estas features se construyen a nivel de **partido** cruzando `matches.csv`, `events.csv`, `players.csv` y `player_history.csv`. El objetivo: capturar lo que las cuotas de Bet365 **no ven** o **capturan tarde**.
+
+---
+
+### 🏦 M1 — "xG Breakdown por Tipo de Jugada"
+> **Idea:** Las cuotas saben cuántos goles marca un equipo, pero ¿saben si vienen de jugada corrida, set-pieces o contras? Equipos con xG alto desde corners son vulnerables cuando el rival es alto. Es un **matchup táctico** que el mercado no siempre prica.
+
+```python
+# Agregar xG por tipo de situación desde events.csv (usando qualifiers)
+q = events["qualifiers"].astype(str)
+events["from_set_piece"] = q.str.contains("SetPiece|FromCorner|Penalty", na=False).astype(int)
+events["from_counter"]   = q.str.contains("FastBreak", na=False).astype(int)
+events["from_open_play"] = (~events["from_set_piece"].astype(bool)).astype(int)
+
+xg_breakdown = events[events["is_shot"]==True].groupby(["match_id","team_name"]).agg(
+    xg_total=("xg_predicted", "sum"),          # Del Modelo 1
+    xg_open_play=("xg_open_play_flag", "sum"),  # xG de jugada abierta
+    xg_set_piece=("xg_set_piece_flag", "sum"),  # xG de balón parado
+    xg_counter=("xg_counter_flag", "sum"),      # xG de contra
+    big_chances=("is_big_chance","sum")
+).reset_index()
+```
+
+---
+
+### 📊 M2 — "Shot Quality Premium" *(el verdadero estilo de juego)*
+> **Idea:** Dos equipos pueden marcar 2 goles por partido, pero uno lo hace con 12 tiros de alta calidad y el otro con 20 tiros mediocres. El `mean_xg_per_shot` mide eficiencia táctica — y predice sostenibilidad.
+
+```python
+# xG medio por tiro (calidad del tiro, no cantidad)
+shot_quality = events[events["is_shot"]==True].groupby(["match_id","team_name"]).agg(
+    shots=("is_shot", "count"),
+    xg_total=("xg_predicted", "sum"),
+    mean_xg_per_shot=("xg_predicted", "mean"),   # ← THE FEATURE
+    shots_on_target=("outcome", lambda x: (x=="SavedShot").sum())
+).reset_index()
+shot_quality["shot_on_target_rate"] = shot_quality["shots_on_target"] / shot_quality["shots"]
+
+# Rolling: media de las últimas 5 jornadas
+shot_quality_roll = shot_quality.groupby("team_name")["mean_xg_per_shot"].transform(
+    lambda x: x.shift(1).rolling(5, min_periods=2).mean())
+```
+
+---
+
+### ⏳ M3 — "Fatigue & Rest Days Proxy" *(fisiología del deporte)*
+> **Inspiración:** Estudios de medicina deportiva muestran caída del rendimiento con <4 días de recuperación entre partidos. En el calendario de PL, esto ocurre regularmente en diciembre y enero. **Bet365 sí lo modela parcialmente, pero mal a nivel granular.**
+
+```python
+# Días desde el último partido (proxy de fatiga)
+matches["date"] = pd.to_datetime(matches["date"])
+matches = matches.sort_values("date")
+
+def days_since_last_match(team, current_date, all_matches):
+    prev = all_matches[
+        ((all_matches["home_team"] == team) | (all_matches["away_team"] == team)) &
+        (all_matches["date"] < current_date)
+    ]["date"].max()
+    return (current_date - prev).days if pd.notna(prev) else 7
+
+matches["home_rest_days"] = matches.apply(
+    lambda r: days_since_last_match(r["home_team"], r["date"], matches), axis=1)
+matches["away_rest_days"] = matches.apply(
+    lambda r: days_since_last_match(r["away_team"], r["date"], matches), axis=1)
+matches["rest_advantage"] = matches["home_rest_days"] - matches["away_rest_days"]
+# > 0 → local más descansado; < 0 → visitante más descansado
+```
+
+---
+
+### 📉 M4 — "Form Volatility" *(el equipo impredecible)*
+> **Idea radical:** No es solo la forma en sí, sino la **varianza** de esa forma. Un equipo con media 1.5 goles últimos 5 partidos pero std=1.8 es MUCHO más impredecible que uno con media 1.5 y std=0.3. La volatilidad es información pura que el mercado subestima.
+
+```python
+for team_col, goal_col, prefix in [("home_team","fthg","home"), ("away_team","ftag","away")]:
+    matches[f"{prefix}_form_mean5"] = matches.groupby(team_col)[goal_col].transform(
+        lambda x: x.shift(1).rolling(5, min_periods=2).mean())
+    matches[f"{prefix}_form_std5"]  = matches.groupby(team_col)[goal_col].transform(
+        lambda x: x.shift(1).rolling(5, min_periods=2).std())
+    matches[f"{prefix}_form_cv5"]   = (
+        matches[f"{prefix}_form_std5"] / (matches[f"{prefix}_form_mean5"] + 0.01))
+    # CV alto → muy volátil (difícil de predecir) | CV bajo → consistente
+```
+
+---
+
+### 🏡 M5 — "Personalised Home Advantage" *(no todos los estadios son iguales)*
+> **Crushed fact:** La ventaja local promedio en la Premier League es +0.26 goles. Pero **Liverpool en Anfield** tiene +0.65 goles de ventaja local, mientras equipos como el Brighton tienen +0.10. Modelar esto por equipo es más preciso que usar un valor global.
+
+```python
+# Ventaja local histórica por equipo (diferencia de goles home vs away)
+home_adv = matches.groupby("home_team").agg(
+    home_goals_avg=("fthg", "mean"),
+    home_conceded_avg=("ftag", "mean")
+).reset_index()
+
+away_adv = matches.groupby("away_team").agg(
+    away_goals_avg=("ftag", "mean"),
+    away_conceded_avg=("fthg", "mean")
+).reset_index().rename(columns={"away_team": "home_team"})
+
+home_adv = home_adv.merge(away_adv, on="home_team")
+home_adv["personalized_home_advantage"] = (
+    home_adv["home_goals_avg"] - home_adv["away_goals_avg"])  # ¿Cuánto más marca en casa?
+
+matches = matches.merge(home_adv[["home_team","personalized_home_advantage"]], on="home_team")
+```
+
+---
+
+### 🎰 M6 — "Bookmaker Disagreement Index" *(dónde el mercado duda)*
+> **Idea de hedge funds aplicada al fútbol:** En los mercados financieros, el spread bid-ask mide cuánto desacuerdo hay. En apuestas, si B365h=2.5 y BWhh=2.9, el mercado está dividido — alta incertidumbre. La **divergencia entre bookmakers es una feature de información**. Cuando hay mucho acuerdo, el modelo debe confiar más en las cuotas. Cuando hay poco acuerdo, hay oportunidad.
+
+```python
+# Divergencia entre bookmakers para el resultado local
+# Tenemos B365, BW, VContes, PSW en matches.csv
+matches["bookmaker_spread_home"] = matches[["b365h", "bwh", "vch"]].std(axis=1)
+matches["bookmaker_spread_draw"] = matches[["b365d", "bwd", "vcd"]].std(axis=1)
+matches["bookmaker_spread_away"] = matches[["b365a", "bwa", "vca"]].std(axis=1)
+# ALTA std → mercado incierto → el modelo tiene más margen para divergir
+# BAJA std → mercado convencido → cuotas implícitas son muy fiables
+```
+
+---
+
+### 🧬 M7 — "Tactical Matchup Matrix" *(quién le gana a quién tácticamente)*
+> **Idea:** Cruza el estilo de juego de los dos equipos. Un equipo con PPDA bajo (pressing intenso) vs uno con **alta descentralización** de pases crea un matchup específico. ¿El pressing rompe las redes descentralizadas, o estas fluyen alrededor? Los datos lo dirán.
+
+```python
+# Interacción entre PPDA del local y descentralización del visitante
+matches["tactical_clash"] = (
+    matches["home_ppda_roll5"] * matches["away_decentralization_roll5"])
+# Si home_ppda es BAJO (pressing intenso) y away_decentralization es Alto → "táctico" 
+# Si ambos son medios → partido abierto
+# Crear bins para categorizarlo
+matches["matchup_type"] = pd.cut(
+    matches["tactical_clash"],
+    bins=3, labels=["defensive_duel", "open_game", "possession_battle"])
+```
+
+---
+
+### 💰 M8 — "FPL Attacking Threat Score" *(el estado del ataque con datos de jugadores)*
+> **Idea disruptiva:** Usa `players.csv` + `player_history.csv` para calcular el **potencial ofensivo disponible** del equipo en ese partido. Un equipo sin sus 3 mejores atacantes (injured/status≠Available) tiene menos xG esperado — y este dato **es público pero Bet365 tarda en procesarlo comprando lineups.**
+
+```python
+# Calcular "threat score" del once disponible por jornada
+import json
+
+# Filtrar jugadores disponibles en esa jornada (status = Available)
+available = players[players["status"] == "a"]  # 'a' = available en FPL
+
+# Sumar el threat (ataque) de los top-5 jugadores disponibles por equipo
+team_threat = available.groupby("team").agg(
+    attacking_threat=("threat", lambda x: x.nlargest(5).sum()),
+    top_form=("form", lambda x: x.nlargest(5).mean()),
+    avg_xg_player=("expected_goals", lambda x: x.nlargest(5).mean())
+).reset_index()
+
+matches = matches.merge(team_threat.rename(columns={"team":"home_team", 
+                                                      "attacking_threat":"home_attacking_threat"}),
+                        on="home_team", how="left")
+```
+
+---
+
+### 📈 M9 — "Poisson-Expected Points" *(convertir xG en distribución de resultado)*
+> **La feature más sofisticada y más usada en la industria.** En vez de usar xG directamente, simulamos 10,000 partidos con distribución Poisson y calculamos la probabilidad real de H/D/A. Esto es la base del modelo Dixon-Coles.
+
+```python
+from scipy.stats import poisson
+
+def poisson_match_probs(xg_home, xg_away, max_goals=8):
+    """Calcula P(H), P(D), P(A) dado xG de cada equipo usando Poisson"""
+    prob_home, prob_draw, prob_away = 0, 0, 0
+    for gh in range(max_goals):
+        for ga in range(max_goals):
+            p = poisson.pmf(gh, xg_home) * poisson.pmf(ga, xg_away)
+            if gh > ga:   prob_home += p
+            elif gh == ga: prob_draw += p
+            else:          prob_away += p
+    return prob_home, prob_draw, prob_away
+
+# Aplicar con el xG rolling de últimas 5 jornadas
+matches[["poisson_prob_h","poisson_prob_d","poisson_prob_a"]] = matches.apply(
+    lambda r: pd.Series(poisson_match_probs(r["home_xg_avg5"], r["away_xg_avg5"])), axis=1)
+
+# Diferencia entre nuestra Poisson-prob y la implied de Bet365 = "EDGE"
+matches["edge_home"] = matches["poisson_prob_h"] - matches["implied_prob_h"]
+# Edge positivo: nuestro modelo cree que el local tiene MÁS probabilidad de la que B365 paga
+```
+
+---
+
+### 🎭 M10 — "Psychological Momentum" *(goles en injury time y su efecto)*
+> **Idea behavioral economics:** Un gol en el minuto 90+3 que empata un partido tiene un efecto psicológico desproporcionado en el siguiente partido de AMBOS equipos. El equipo que recibe ese gol llega "roto". El que lo marca llega "invicto". Esto **no está en ninguna estadística de cuotas** porque requiere leer los datos evento por evento.
+
+```python
+# ¿El último gol del partido fue en injury time?
+last_goals = events[events["is_goal"]==True].groupby("match_id").apply(
+    lambda g: g.loc[g["minute"].idxmax()])
+
+late_drama = last_goals[last_goals["minute"] >= 88].copy()
+late_drama["was_equalizer"]  = late_drama.apply(lambda r:
+    abs(r["home_score"] - r["away_score"]) <= 1, axis=1)
+late_drama["psychological_shock"] = (
+    late_drama["minute"] >= 90) & late_drama["was_equalizer"]
+
+# Unir al siguiente partido de cada equipo
+# Si fue un gol de impacto psicológico → efecto en el rendimiento siguiente partido
+```
+
+---
+
+### 🔮 M11 — "Dixon-Coles Strength Parameters" *(el modelo profesional)*
+> **Inspiración:** El modelo Dixon-Coles (1997) estima parámetros de ataque `α` y defensa `β` para cada equipo. Un equipo con α_home=1.5 y defendiendo contra un equipo con β_away=0.7 da `λ_goals = 1.5 × 0.7 × γ_home`. Es el estándar de la industria de apuestas. Podemos estimarlo con MLE (Maximum Likelihood Estimation).
+
+```python
+from scipy.optimize import minimize
+
+def dixon_coles_log_likelihood(params, home_teams, away_teams, home_goals, away_goals, teams):
+    n = len(teams)
+    attack  = dict(zip(teams, params[:n]))
+    defense = dict(zip(teams, params[n:2*n]))
+    gamma   = params[2*n]  # home advantage
+    
+    ll = 0
+    for h, a, gh, ga in zip(home_teams, away_teams, home_goals, away_goals):
+        lambda_h = np.exp(attack[h] + defense[a] + gamma)
+        lambda_a = np.exp(attack[a] + defense[h])
+        ll += poisson.logpmf(gh, lambda_h) + poisson.logpmf(ga, lambda_a)
+    return -ll  # minimizar negativo = maximizar
+
+# Los parámetros estimados son features directas para el Modelo 2
+matches["home_attack_strength"]  = matches["home_team"].map(attack_params)
+matches["away_defense_weakness"] = matches["away_team"].map(defense_params)
+matches["expected_goals_poisson_home"] = np.exp(
+    matches["home_attack_strength"] + matches["away_defense_weakness"] + gamma)
+```
+
+---
+
+### 🌡️ M12 — "Temperature of the Season" *(cuándo más importa un partido)*
+> **Insight:** Los partidos en las últimas 10 jornadas de la temporada tienen dinámicas completamente diferentes: equipos en relegación pelean más, equipos en Champions League rotation differently. El **matchday relativo a la temporada** es un feature de contexto poderoso.
+
+```python
+# Semana de la temporada (1 = agosto, 38 = mayo)
+matches["matchday"] = matches.groupby("season").cumcount() + 1
+
+# ¿Partido en la fase crítica de la temporada?
+matches["is_crunch_time"]     = (matches["matchday"] >= 30).astype(int)  # Top 6 y relegación
+matches["is_early_season"]    = (matches["matchday"] <= 8).astype(int)   # Volatilidad alta
+matches["season_temperature"] = matches["matchday"] / 38  # 0→1 a lo largo de la temporada
+
+# Estadios de la temporada donde los equipos se comportan diferente
+# → feature continua que el modelo puede aprender no linealmente
+```
+
+---
+
+### 🎯 Feature Set Completo Modelo 2
+
+```python
+FEATURES_MATCH_V2 = [
+    # ── Probabilidades implícitas (baseline fuerte) ──
+    "implied_prob_h", "implied_prob_d", "implied_prob_a",
+    "bookmaker_spread_home",           # M6: incertidumbre del mercado
+    
+    # ── xG y calidad de ataque (Modelo 1 → Modelo 2) ──
+    "home_xg_avg5", "away_xg_avg5",
+    "home_mean_xg_per_shot_roll5",     # M2: calidad del tiro
+    "home_xg_set_piece_roll5",         # M1: dependencia de set pieces
+    "home_xg_counter_roll5",           # M1: xG de contras
+    "poisson_prob_h", "poisson_prob_d",# M9: distribución Poisson propia
+    "edge_home",                       # M9: ventaja vs Bet365
+    
+    # ── Forma y momentum ──
+    "home_momentum", "away_momentum",  # G: MACD del fútbol
+    "home_form_cv5",                   # M4: volatilidad de forma
+    "home_xg_debt_5",                  # D: deuda de xG (Tippett)
+    
+    # ── Táctica y pressing ──
+    "home_ppda_roll5", "away_ppda_roll5",           # E: pressing
+    "home_decentralization_roll5",                  # F: Sumpter
+    "home_altitude_roll5", "away_altitude_roll5",   # I: centro de gravedad
+    "tactical_clash",                               # M7: matchup táctico
+    
+    # ── Contexto partido ──
+    "home_rest_days", "away_rest_days",             # M3: fatiga
+    "rest_advantage",                               # M3: diferencial descanso
+    "personalized_home_advantage",                  # M5: ventaja local ajustada
+    "referee_home_bias",                            # H: sesgo árbitro
+    
+    # ── Calidad de plantilla (FPL) ──
+    "home_attacking_threat", "away_attacking_threat",# M8: FPL threat
+    
+    # ── Parámetros Dixon-Coles ──
+    "home_attack_strength", "away_defense_weakness", # M11: modelo profesional
+    "expected_goals_poisson_home",
+    
+    # ── Contexto de temporada ──
+    "season_temperature",                            # M12: fase del año
+    "is_crunch_time",
+    
+    # ── Clutch y psicología ──
+    "home_clutch_ratio_roll5",                       # J: rendimiento final
+    "home_psychological_shock",                      # M10: gol injury time anterior
+]
+```
+
+---
+
 ## 🤖 Fase 2 — Modelo 1: Expected Goals (xG)
 
 ### Objetivo
@@ -333,6 +647,32 @@ cv = StratifiedKFold(n_splits=5, shuffle=False)  # temporal order preserved
 | AUC-ROC | **0.78** | >0.85 |
 | Brier Score | <0.10 | <0.08 |
 | Log Loss | <0.35 | <0.28 |
+
+### 📋 Tabla Completa de Variables — Modelo 1 (xG)
+
+| Variable | Fuente | Tipo | Descripción | Impacto Esperado |
+|---|---|---|---|---|
+| `distance_to_goal` | events | Estándar ✅ | Distancia euclidiana al centro de portería | 🔥🔥🔥 Más alta correlación con gol |
+| `angle_to_goal` | events | Estándar ✅ | Ángulo de apertura hacia portería | 🔥🔥🔥 Feature Taller2 obligatoria |
+| `dist_squared` | events | Estándar ✅ | Cuadrado de la distancia — relación no lineal | 🔥🔥 Captura asimetría |
+| `dist_angle` | events | Estándar ✅ | Interacción distancia × ángulo | 🔥🔥 Interacción geométrica |
+| `is_in_area` | events | Estándar ✅ | ¿Está dentro del área grande? (x>83) | 🔥🔥🔥 Zona de máximo peligro |
+| `is_central` | events | Estándar ✅ | ¿Está en carril central? (33<y<67) | 🔥🔥 Frente al arco |
+| `is_big_chance` | qualifiers | Estándar ✅ | Oportunidad clara de gol (BigChance) | 🔥🔥🔥 xG implícito ~38% |
+| `is_penalty` | qualifiers | Estándar ✅ | Penalti — categoría especial | 🔥🔥🔥 xG fijo ~76% |
+| `is_header` | qualifiers | Estándar ✅ | Remate de cabeza | 🔥🔥 -30% efectividad vs pie |
+| `is_right_foot` | qualifiers | Estándar ✅ | Pie dominante derecho | 🔥 Referencia base |
+| `is_left_foot` | qualifiers | Estándar ✅ | Pie no dominante izquierdo | 🔥 Menor precisión media |
+| `is_counter` | qualifiers | Estándar ✅ | Contraataque (FastBreak) | 🔥🔥 Defensa desorganizada |
+| `from_corner` | qualifiers | Estándar ✅ | Balón viene de saque de esquina | 🔥 Situación de balón parado |
+| `is_volley` | qualifiers | Estándar ✅ | Volea — alta dificultad técnica | 🔥 Menor conversión |
+| `first_touch` | qualifiers | Estándar ✅ | Disparo a primer toque | 🔥🔥 Mayor varianza |
+| `is_set_piece` | qualifiers | Estándar ✅ | Balón parado genérico | 🔥 Defensa en bloque |
+| `minute` | events | Estándar ✅ | Minuto del partido | 🔥 Efecto tiempo/presión |
+| `defensive_pressure` 🧪 | events | **Original** | Nº acciones rivales en radio del tirador | 🔥🔥🔥 Simula freeze_frame StatsBomb |
+| `buildup_passes` 🧪 | events | **Original** | Pases exitosos del equipo en el min previo | 🔥🔥 Calidad de la jugada previa |
+| `buildup_decentralized` 🧪 | events | **Original** | ¿Participaron >3 jugadores distintos? | 🔥🔥 Sumpter-validated |
+| `porteria_zone` 🧪 | events | **Original** | Zona de portería donde fue el tiro (9 zonas) | 🔥🔥 Cobertura del portero |
 
 ---
 
@@ -411,6 +751,49 @@ def simulate_roi(y_true, y_pred_proba, odds_df, stake=1.0):
             profit.append(odd * stake - stake if true == predicted_class else -stake)
     return sum(profit) / len(profit)  # ROI promedio por apuesta
 ```
+
+### 📋 Tabla Completa de Variables — Modelo 2 (Match Predictor)
+
+| Variable | Fuente | Tipo | Descripción | Impacto Esperado |
+|---|---|---|---|---|
+| **── CUOTAS (Baseline oro) ──** | | | | |
+| `implied_prob_h/d/a` | matches | Estándar ✅ | Probabilidad implícita de B365 normalizada | 🔥🔥🔥 Mejor predictor individual |
+| `bookmaker_spread_home` 🧪 | matches | **Original** | Std entre B365, BW, VC para H — desacuerdo del mercado | 🔥🔥🔥 Señal de incertidumbre |
+| **── xG (Modelo 1 → 2) ──** | | | | |
+| `home/away_xg_avg5` | events→M1 | Estándar ✅ | xG rolling de las últimas 5 jornadas | 🔥🔥🔥 Base de predicción de goles |
+| `home_mean_xg_per_shot_roll5` 🧪 | events→M1 | **Original** | Calidad del tiro, no cantidad — estilo de juego real | 🔥🔥🔥 Shot Quality Premium |
+| `home_xg_set_piece_roll5` 🧪 | events→M1 | **Original** | xG proveniente de balón parado | 🔥🔥 Matchup táctico |
+| `home_xg_counter_roll5` 🧪 | events→M1 | **Original** | xG proveniente de contragolpe | 🔥🔥 Estilo de ataque |
+| `poisson_prob_h/d/a` 🧪 | xG→Scipy | **Original** | P(H/D/A) calculada con distribución Poisson propia | 🔥🔥🔥 Modelo profesional interno |
+| `edge_home` 🧪 | xG vs B365 | **Original** | Diferencia entre nuestra P(H) y la implied de B365 | 🔥🔥🔥 Edge real sobre la casa |
+| `home_xg_debt_5` 🧪 | events→M1 | **Original** | Goles debidos: xG acumulado − goles reales últimas 5 jornadas | 🔥🔥 Ineficiencia de mercado Tippett |
+| **── FORMA Y MOMENTUM ──** | | | | |
+| `home/away_goals_avg5` | matches | Estándar ✅ | Media de goles anotados últimas 5 jornadas | 🔥🔥 Forma ofensiva reciente |
+| `home/away_goals_conceded_avg5` | matches | Estándar ✅ | Media de goles recibidos últimas 5 jornadas | 🔥🔥 Forma defensiva reciente |
+| `home/away_momentum` 🧪 | matches | **Original** | MACD del fútbol: form_3 − form_10 | 🔥🔥 Equipo acelerando vs frenando |
+| `home_form_cv5` 🧪 | matches | **Original** | Coeficiente de variación de goles últimas 5 jornadas | 🔥🔥 Equipo impredecible vs consistente |
+| **── TÁCTICA Y PRESSING ──** | | | | |
+| `home/away_ppda_roll5` 🧪 | events | **Original** | PPDA proxy: pressing intensity desde events.csv | 🔥🔥🔥 Liverpool <7, defensivos >15 |
+| `home_decentralization_roll5` 🧪 | events | **Original** | Jugadores únicos en pases exitosos — Sumpter | 🔥🔥 Red de pase descentralizada |
+| `home/away_altitude_roll5` 🧪 | events | **Original** | Posición X media del equipo — "dónde vive el balón" | 🔥🔥 Estilo defensivo vs ofensivo |
+| `tactical_clash` 🧪 | events | **Original** | PPDA_local × Descentralización_visitante | 🔥🔥 Matchup táctico directo |
+| **── CONTEXTO DEL PARTIDO ──** | | | | |
+| `home/away_rest_days` 🧪 | matches | **Original** | Días desde el último partido de cada equipo | 🔥🔥 Fatiga física documentada |
+| `rest_advantage` 🧪 | matches | **Original** | Diferencia de días de descanso (home − away) | 🔥🔥 Ventaja fisiológica |
+| `personalized_home_advantage` 🧪 | matches | **Original** | Ventaja local histórica específica por equipo | 🔥🔥🔥 Anfield ≠ cualquier estadio |
+| `referee_home_bias` 🧪 | matches | **Original** | Sesgo histórico del árbitro hacia el local | 🔥 Corrección estadística del árbitro |
+| `season_temperature` 🧪 | matches | **Original** | Jornada/38 — fase de la temporada como feature continua | 🔥🔥 Dinámica de temporada |
+| `is_crunch_time` 🧪 | matches | **Original** | ¿Es jornada 30+? Zona de relegación y Champions | 🔥🔥 Equipos juegan diferente |
+| **── PLANTILLA (FPL) ──** | | | | |
+| `home/away_attacking_threat` 🧪 | players | **Original** | Suma `threat` FPL de los top-5 disponibles | 🔥🔥🔥 Estado real del ataque con lesiones |
+| **── MODELO PROFESIONAL ──** | | | | |
+| `home_attack_strength` 🧪 | matches→MLE | **Original** | Parámetro de ataque Dixon-Coles estimado con MLE | 🔥🔥🔥 Estándar de la industria |
+| `away_defense_weakness` 🧪 | matches→MLE | **Original** | Parámetro de defensa Dixon-Coles | 🔥🔥🔥 Fuerza defensiva estimada |
+| **── PSICOLOGÍA ──** | | | | |
+| `home_clutch_ratio_roll5` 🧪 | events | **Original** | Goles minuto 75+ / Goles minuto <75 | 🔥🔥 Rendimiento bajo presión |
+| `home_psychological_shock` 🧪 | events | **Original** | Gol dramático en injury time en el partido anterior | 🔥 Efecto behavioral economics |
+
+> 🧪 = Feature original no estándar en proyectos universitarios
 
 ---
 
