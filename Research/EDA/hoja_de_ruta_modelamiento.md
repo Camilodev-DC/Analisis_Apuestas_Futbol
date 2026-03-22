@@ -590,6 +590,318 @@ FEATURES_MATCH_V2 = [
 
 ---
 
+## 🔗 Fase 1D — Features Faltantes del EDA Maestro (incorporación)
+
+> Estas features aparecen en `EDA.md` con ⭐⭐⭐⭐⭐ de importancia y **no estaban en la hoja de ruta**. Se incorporan aquí para que no se pierdan.
+
+---
+
+### 🏅 M13 — "Elo Rating" *(el predictor #1 en la literatura académica)*
+> **EDA.md §3**: `elo_diff` tiene **⭐⭐⭐⭐⭐** — el predictor más fuerte no derivado de cuotas. Refleja la fortaleza histórica relativa de los equipos, actualizado partido a partido.
+
+```python
+def update_elo(home_elo, away_elo, result, k=32):
+    """
+    result: 1 = victoria local, 0.5 = empate, 0 = victoria visitante
+    k = 32 (FIFA standard); usar k=20 para Premier League (menor varianza)
+    """
+    expected_home = 1 / (1 + 10 ** ((away_elo - home_elo) / 400))
+    expected_away = 1 - expected_home
+    new_home = home_elo + k * (result - expected_home)
+    new_away = away_elo + k * ((1 - result) - expected_away)
+    return new_home, new_away
+
+# Inicializar todos los equipos en 1500, actualizar jornada a jornada
+elo_ratings = {team: 1500 for team in matches["home_team"].unique()}
+
+for _, row in matches.sort_values("date").iterrows():
+    h, a = row["home_team"], row["away_team"]
+    result = 1 if row["ftr"] == "H" else (0.5 if row["ftr"] == "D" else 0)
+    elo_ratings[h], elo_ratings[a] = update_elo(elo_ratings[h], elo_ratings[a], result)
+    matches.loc[_, "elo_home"] = elo_ratings[h]  # guardar ANTES de actualizar
+    matches.loc[_, "elo_away"] = elo_ratings[a]
+
+matches["elo_diff"] = matches["elo_home"] - matches["elo_away"]
+# elo_diff / 400 normalizado es directamente convertible a probabilidad de victoria
+matches["elo_win_prob"] = 1 / (1 + 10 ** (-matches["elo_diff"] / 400))
+```
+
+---
+
+### 🎮 M14 — "Game State" *(el contexto táctico más importante a nivel de tiro)*
+> **EDA.md §3**: `game_state` tiene **⭐⭐⭐** — cambia radicalmente el contexto del tiro. Un equipo perdiendo 0-2 al minuto 80 abre espacios; un equipo ganando 1-0 se cierra. El xG del mismo tiro geométrico es diferente en cada game state.
+
+```python
+# Calcular el marcador EN EL MOMENTO de cada tiro (pre-tiro)
+events_sorted = events.sort_values(["match_id", "minute", "second"])
+events_sorted["cumulative_home_goals"] = events_sorted.groupby("match_id")["is_goal"].transform(
+    lambda x: x.cumsum().shift(1, fill_value=0))
+
+shots["game_state"] = shots.apply(lambda r: (
+    "winning"  if (r["team_is_home"] and r["cumulative_home_goals"] > r["cumulative_away_goals"]) or
+                  (not r["team_is_home"] and r["cumulative_away_goals"] > r["cumulative_home_goals"])
+    else "drawing" if r["cumulative_home_goals"] == r["cumulative_away_goals"]
+    else "losing"
+), axis=1)
+# One-hot: game_state_winning, game_state_drawing, game_state_losing
+shots = pd.get_dummies(shots, columns=["game_state"], prefix="gs")
+```
+
+---
+
+### 💎 M15 — "Shot Quality Index" *(feature compuesta ponderada)*
+> **EDA.md §3**: `shot_quality_idx` con **⭐⭐⭐** — combina múltiples señales en un único índice. Más interpretable que variables separadas y reduce dimensionalidad.
+
+```python
+# Shot Quality Index = ponderación de los mejores predictores de xG
+# Pesos basados en su contribución media al xG real
+shots["shot_quality_index"] = (
+    shots["is_big_chance"]  * 0.38 +   # xG implícito BigChance
+    shots["is_in_area"]     * 0.18 +   # Dentro del área
+    shots["is_counter"]     * 0.12 +   # Contra (defensa desorganizada)
+    shots["is_central"]     * 0.10 +   # Carril central
+    (1 - shots["distance_to_goal"] / shots["distance_to_goal"].max()) * 0.22
+)
+# Útil como feature única Y como variable de resumen para el Modelo 2
+```
+
+---
+
+### 📋 M16 — "Head-to-Head Win Rate" *(la maldición de ciertos duelos)*
+> **EDA.md §3**: `head_to_head_h_win_rate` con **⭐⭐⭐** — algunos equipos históricamente superan a rivales específicos independientemente de la forma reciente. Es información que el mercado no siempre pondera correctamente.
+
+```python
+# Historial directo entre equipos (últimas N temporadas)
+h2h = matches.groupby(["home_team", "away_team"]).agg(
+    h2h_total=("ftr", "count"),
+    h2h_home_wins=("ftr", lambda x: (x == "H").sum()),
+    h2h_draws=("ftr", lambda x: (x == "D").sum()),
+    h2h_away_wins=("ftr", lambda x: (x == "A").sum()),
+    h2h_home_goals_avg=("fthg", "mean"),
+    h2h_away_goals_avg=("ftag", "mean")
+).reset_index()
+
+h2h["h2h_home_win_rate"]  = h2h["h2h_home_wins"] / h2h["h2h_total"]
+h2h["h2h_total_goals_avg"]= h2h["h2h_home_goals_avg"] + h2h["h2h_away_goals_avg"]
+# Total de goles históricos H2H predice Over/Under del partido
+```
+
+---
+
+### 📈 M17 — "xG Overperformance per Player" *(corrección de finishing skill)*
+> **EDA.md §2.4**: El xG subestima a los grandes rematadores (Haaland, Isak). Incluir la diferencia histórica `goles_reales - xG` por jugador corrige este sesgo sistemático.
+
+```python
+# Por jugador: ¿cuánto sobre/subanota vs su xG acumulado?
+player_xg_stats = player_history.groupby("player_id").agg(
+    total_goals=("goals_scored", "sum"),
+    total_xg=("expected_goals", "sum"),
+    total_assists=("assists", "sum"),
+    total_xa=("expected_assists", "sum")
+).reset_index()
+
+player_xg_stats["finishing_skill"] = (
+    player_xg_stats["total_goals"] - player_xg_stats["total_xg"])
+player_xg_stats["creation_skill"]  = (
+    player_xg_stats["total_assists"] - player_xg_stats["total_xa"])
+# Haaland: finishing_skill ≈ +8 (convierte mucho más de lo esperado)
+# Jugador ineficiente: finishing_skill ≈ -3
+```
+
+---
+
+### 🏃 M18 — "Exponential Decay Form" *(más peso a los juegos recientes)*
+> **EDA.md §3 Feature Engineering Avanzado**: La forma simple (rolling mean) da igual peso a todos los partidos. El decay exponencial pondera más los resultados recientes — más realista.
+
+```python
+import numpy as np
+
+def exp_decay_form(results, lambda_decay=0.3):
+    """
+    Promedio ponderado de resultados con decay exponencial.
+    Resultado: 1=victoria, 0.5=empate, 0=derrota
+    lambda_decay: mayor λ = más peso a partidos recientes
+    """
+    n = len(results)
+    weights = np.exp(-lambda_decay * np.arange(n - 1, -1, -1))
+    weights /= weights.sum()
+    return np.dot(weights, results)
+
+# Aplicar por equipo: últimos 10 partidos con decay
+matches["home_exp_form"] = matches.groupby("home_team").apply(
+    lambda g: g["fthg"].rolling(10).apply(
+        lambda x: exp_decay_form([1 if v > 0 else 0.5 if v == 0 else 0 for v in x])
+    )
+).reset_index(level=0, drop=True)
+```
+
+---
+
+### 💰 M19 — "Squad Value Ratio" *(proxy de calidad de plantilla)*
+> **EDA.md §3**: `squad_value_ratio` con **⭐⭐⭐** — el precio medio en FPL es proxy del valor de mercado. El cociente entre los precios medios de los onces titulares captura la diferencia de calidad de plantillas.
+
+```python
+# Precio FPL como proxy de valor de mercado
+team_values = players.groupby("team").agg(
+    squad_value_mean=("now_cost", "mean"),
+    top11_value=("now_cost", lambda x: x.nlargest(11).mean()),
+    squad_depth_value=("now_cost", lambda x: x.nlargest(15).mean())
+).reset_index()
+
+matches = matches.merge(
+    team_values.rename(columns={"team": "home_team", "top11_value": "home_squad_value"}),
+    on="home_team", how="left"
+)
+matches = matches.merge(
+    team_values.rename(columns={"team": "away_team", "top11_value": "away_squad_value"}),
+    on="away_team", how="left"
+)
+matches["squad_value_ratio"] = matches["home_squad_value"] / matches["away_squad_value"]
+# > 1 → local tiene plantilla más valiosa en papel | < 1 → visitante más valioso
+```
+
+---
+
+## ⚠️ Fase 1E — Riesgos y Mitigaciones (EDA.md §4)
+
+> **Crítico:** Estos riesgos pueden invalidar los modelos si no se atienden desde el inicio.
+
+| Riesgo | Impacto | Señal de alerta | Mitigación |
+|---|---|---|---|
+| **Data Leakage con cuotas post-partido** | 🔴 MUY ALTO | AUC irrealmente alto en train (>0.99) | Usar **SOLO cuotas de apertura**, NUNCA de cierre |
+| **API degradada: player_history reducido** | 🟠 ALTO para M2 | Solo ~1,500 filas vs ~15,000 esperadas | Usar features de players.csv como proxy; re-descargar cuando API se recupere |
+| **Desbalance de clases en `ftr`** | 🟡 MEDIO | Modelo siempre predice "H" | Usar `class_weight='balanced'`, SMOTE, o calibración |
+| **Sobreajuste en rolling features** | 🟡 MEDIO | Gap grande entre CV y test | **TimeSeriesSplit**, NUNCA KFold aleatorio |
+| **Pocos partidos (291) para DL** | 🔴 ALTO si usas redes neuronales | Overfitting en validación | Priorizar XGBoost/RF; DL solo con regularización fuerte |
+| **Multicolinealidad entre cuotas** | 🟡 MEDIO | VIF alto entre implied_h/d/a | Solo usar 2 de las 3 (la tercera es implícita: suma=1) |
+| **xG de partidos futuros como feature** | 🔴 MUY ALTO | Usar xG del partido a predecir | Solo usar xG **rolling histórico** (shift(1) antes de calcular medias) |
+
+```python
+# ✅ CORRECTO — xG histórico con shift para evitar leakage
+matches["home_xg_avg5"] = matches.groupby("home_team")["home_xg"].transform(
+    lambda x: x.shift(1).rolling(5, min_periods=2).mean()
+)
+
+# ❌ INCORRECTO — incluye el partido actual
+matches["home_xg_avg5"] = matches.groupby("home_team")["home_xg"].transform(
+    lambda x: x.rolling(5, min_periods=2).mean()  # ← LEAKAGE
+)
+```
+
+---
+
+## 🔀 Fase 1F — Transformaciones y Feature Selection
+
+### Tabla de Transformaciones (EDA.md §6.1)
+
+| Transformación | Feature | Razón | Código |
+|---|---|---|---|
+| **Log** | `distance_to_goal` | Distribución sesgada a la derecha | `np.log1p(distance)` |
+| **StandardScaler** | Todas las features numéricas | Regresión Logística es sensible a escala | `StandardScaler().fit_transform(X)` |
+| **MinMax** | `distance`, `angle` | Si hay outliers severos | `MinMaxScaler()` |
+| **One-Hot Encoding** | `event_type`, `position`, `zone` | Categóricas de baja cardinalidad | `pd.get_dummies()` |
+| **Binary** | Todos los qualifiers | Ya binarios por diseño | Sin transformación |
+| **Binning** | `minute` | Efectos no lineales del tiempo | `pd.cut(minute, bins=[0,15,30,45,60,75,90])` |
+
+### Feature Selection — Métodos (EDA.md §6.3)
+
+```python
+# 1. Eliminar multicolinealidad primero
+correlation_matrix = X_train.corr()
+high_corr = (correlation_matrix.abs() > 0.90).any()  # eliminar una de cada par
+
+# 2. RFE (Recursive Feature Elimination)
+from sklearn.feature_selection import RFE
+from sklearn.linear_model import LogisticRegression
+
+model = LogisticRegression(class_weight='balanced', max_iter=500)
+rfe = RFE(model, n_features_to_select=10)
+rfe.fit(X_train, y_train)
+selected = X_train.columns[rfe.support_].tolist()
+
+# 3. L1 Regularization (Lasso elimina features irrelevantes automáticamente)
+model_lasso = LogisticRegression(penalty='l1', solver='liblinear', C=0.1)
+model_lasso.fit(X_train, y_train)
+active_features = X_train.columns[model_lasso.coef_[0] != 0].tolist()
+
+# 4. SHAP para interpretabilidad post-hoc (mejor que feature_importance)
+import shap
+explainer = shap.TreeExplainer(rf_model)
+shap_values = explainer.shap_values(X_test)
+shap.summary_plot(shap_values, X_test)  # 🔥 el gráfico más impresionante del proyecto
+```
+
+### Manejo del Desbalanceo de Clases (EDA.md §6.4)
+
+**Modelo 1 (xG):** tasa de goles ~11% → fuertemente desbalanceado.
+
+```python
+# Opción A: class_weight automático (recomendada como baseline)
+model = LogisticRegression(class_weight='balanced')
+
+# Opción B: SMOTE oversampling (solo sobre training set, NUNCA sobre test)
+from imblearn.over_sampling import SMOTE
+X_res, y_res = SMOTE(random_state=42).fit_resample(X_train, y_train)
+
+# Opción C: Threshold tuning (sin alterar el dataset)
+probs = model.predict_proba(X_test)[:, 1]
+threshold = 0.3   # Bajamos de 0.5 a 0.3 para detectar más goles reales
+preds = (probs >= threshold).astype(int)
+```
+
+**Modelo 2 (Match Predictor):** H=42%, D=26%, A=32% — desbalanceo leve.
+
+```python
+# Para multiclase: solo class_weight en XGBoost/RF, no SMOTE
+rf = RandomForestClassifier(class_weight="balanced_subsample")
+# Evaluar F1 Macro (no accuracy) para detectar sesgo hacia la clase mayoritaria
+from sklearn.metrics import f1_score
+f1_macro = f1_score(y_test, y_pred, average="macro")
+```
+
+---
+
+## 🔗 Dataset Linking — Cómo unir las 4 fuentes (EDA.md §7)
+
+```
+events.csv ─────────── match_id ──────→ matches.csv (partidos)
+                                              ↑
+player_history.csv ─── player_id ──→ players.csv
+player_history.csv ─── gameweek  ──→ (fecha implícita de jornada FPL)
+events.csv ──────────── player_id ──→ players.csv  (opcional — enriquece tiros con stats del jugador)
+```
+
+**Join principal para el Feature Engineering:**
+```python
+# 1. Agregar xG por partido desde events
+xg_per_match = events[events["is_shot"]==True].groupby(["match_id","team_name"]).agg(
+    xg_total=("xg_predicted", "sum"),
+    big_chances=("is_big_chance", "sum"),
+    shots=("is_shot", "count")
+).reset_index()
+
+# 2. Unir a matches
+matches_enriched = matches.merge(
+    xg_per_match.rename(columns={"team_name":"home_team","xg_total":"home_xg"}),
+    on=["match_id","home_team"], how="left"
+)
+
+# 3. Unir estado de plantilla desde players
+squad_status = players.groupby("team").agg(
+    injured_count=("status", lambda x: (x != "a").sum()),
+    attacking_threat=("threat", lambda x: x.nlargest(5).sum())
+).reset_index()
+
+matches_enriched = matches_enriched.merge(
+    squad_status.rename(columns={"team":"home_team",
+                                  "injured_count":"home_injured",
+                                  "attacking_threat":"home_threat"}),
+    on="home_team", how="left"
+)
+```
+
+---
+
 ## 🤖 Fase 2 — Modelo 1: Expected Goals (xG)
 
 ### Objetivo
