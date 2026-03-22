@@ -885,48 +885,61 @@ except Exception as e:
 
 ---
 
-#### 🏆 Modelo 2 — Match Predictor: Supuestos específicos
+#### 📈 Modelo 2A — Regresión Lineal (Total Goles): Supuestos
 
-| Supuesto / Riesgo | Impacto | Diagnóstico | Mitigación |
-|---|---|---|---|
-| **Multicolinealidad implied_h/d/a** | 🟠 ALTO | `implied_h + implied_d + implied_a = 1` siempre | Usar solo 2 de las 3 (la tercera es derivable) |
-| **No-estacionariedad temporal** | 🟠 ALTO | El estilo de juego cambia entre temporadas | Validación temporal; no mezclar años en K-Fold |
-| **Distribución de Poisson para goles** | 🟡 MEDIO | Los goles reales están sobredispersos (Var > Media) | Usar **Poisson negativa** o Dixon-Coles con corrección ρ |
-| **Normalidad de features** | ❌ No aplica a RF/XGBoost | No requerida para árboles | No necesita transformación para RF/XGBoost |
-| **Autocorrelación temporal** | 🟡 MEDIO | Partidos consecutivos del mismo equipo están correlacionados | `TimeSeriesSplit`, no KFold; ordenar por fecha |
-| **Non-convergencia si usas LogReg multiclase** | 🟠 ALTO | Con muchas features correlacionadas | Usar `solver='lbfgs'`, `max_iter=1000`, L2 penalty |
+| Supuesto | ¿Aplica? | Riesgo | Diagnóstico | Mitigación |
+|---|---|---|---|---|
+| **Linealidad** | ✅ Sí | 🟡 MEDIO | Scatter plot (Predicho vs Real) | Transformaciones no lineales; interacciones |
+| **Independencia de residuos** | ✅ Sí | 🟠 ALTO | Durbin-Watson (cercano a 2.0) | Incluir variables de tiempo/calendario |
+| **Homocedasticidad** | ✅ Sí | 🟠 ALTO | Breusch-Pagan test; Plot de Residuos | Regresión Weighted Least Squares (WLS); Robust errors |
+| **Normalidad de residuos** | ✅ Sí | 🟡 MEDIO | Jarque-Bera test; Q-Q Plot | Seguir con Ridge; usar Log(Goles) si es muy sesgado |
+| **No multicolinealidad** | ✅ Sí | 🟠 ALTO | VIF > 10 | Regularización Ridge (L2); eliminar features redundantes |
 
 ```python
-# ── Test de Sobredispersión (Modelo de Poisson) ─────────────────────────────
-from scipy.stats import chi2
+# ── Diagnóstico Modelo 2A (Lineal) ──────────────────────────────────────────
+import statsmodels.api as sm
+from statsmodels.stats.stattools import durbin_watson
+from statsmodels.stats.diagnostic import het_breuschpagan
 
-def overdispersion_test(observed, predicted):
-    """
-    H0: La varianza = media (Poisson clásico)
-    H1: Varianza > media (sobredispersión → usar Poisson Negativa)
-    """
-    residuals = (observed - predicted) / predicted**0.5
-    chi2_stat = (residuals**2).sum()
-    pvalue = 1 - chi2.cdf(chi2_stat, df=len(observed)-1)
-    print(f"Chi2 sobredispersión: {chi2_stat:.2f}, p-value: {pvalue:.4f}")
-    if pvalue < 0.05:
-        print("⚠️ Sobredispersión detectada → usar statsmodels NegativeBinomial")
-    return pvalue
+# Añadir constante para statsmodels
+X_ols = sm.add_constant(X_train_2a)
+reg_model = sm.OLS(y_train_2a, X_ols).fit()
 
-# ── Multicolinealidad entre cuotas implícitas ───────────────────────────────
-# Las 3 probabilidades suman 1 → SIEMPRE colineales → usar solo 2
-matches["implied_h"] = (1/matches["b365h"]) / (1/matches["b365h"] + 1/matches["b365d"] + 1/matches["b365a"])
-matches["implied_d"] = (1/matches["b365d"]) / (1/matches["b365h"] + 1/matches["b365d"] + 1/matches["b365a"])
-# No agregar implied_a → es 1 - implied_h - implied_d
+# 1. Independencia (Durbin-Watson)
+dw = durbin_watson(reg_model.resid)
+print(f"Durbin-Watson: {dw:.2f}") # Idealmente ~2.0
 
-# ── Validación temporal correcta (no K-Fold clásico) ────────────────────────
-from sklearn.model_selection import TimeSeriesSplit
+# 2. Homocedasticidad (Breusch-Pagan)
+_, p_bp, _, _ = het_breuschpagan(reg_model.resid, X_ols)
+print(f"P-value Breusch-Pagan: {p_bp:.4f}") # p < 0.05 → Heterocedasticidad
 
-tscv = TimeSeriesSplit(n_splits=5, gap=5)  # gap=5 partidos entre train y test
-for fold, (train_idx, test_idx) in enumerate(tscv.split(matches)):
-    X_tr, X_te = matches.iloc[train_idx][FEATURES], matches.iloc[test_idx][FEATURES]
-    y_tr, y_te = matches.iloc[train_idx]["ftr"], matches.iloc[test_idx]["ftr"]
-    # → CORRECTO: el modelo nunca ve el futuro durante el entrenamiento
+# 3. Normalidad (Jarque-Bera)
+from scipy.stats import jarque_bera
+jb_stat, p_jb = jarque_bera(reg_model.resid)
+print(f"P-value Jarque-Bera: {p_jb:.4f}") # p < 0.05 → No normal
+```
+
+#### ⚖️ Modelo 2B — Regresión Logística Multiclase (Match Winner): Supuestos
+
+| Supuesto | ¿Aplica? | Riesgo | Diagnóstico | Mitigación |
+|---|---|---|---|---|
+| **Independencia de observaciones** | ✅ Sí | 🟠 ALTO | Cluster por equipo/jornada | Bootstrap o validación cruzada temporal |
+| **No multicolinealidad** | ✅ Sí | 🔴 CRÍTICO | Corr matrix; VIF | **Eliminar una de las cuotas implícitas** (H+D+A=1) |
+| **Linealidad en log-odds** | ✅ Sí | 🟡 MEDIO | Box-Tidwell multiclase | Usar splines o binning en variables continuas |
+| **No separación completa** | ✅ Sí | 🟠 ALTO | Coeficientes muy grandes | Regularización L2 (Ridge) en LogisticRegression |
+
+```python
+# ── Diagnóstico Modelo 2B (Multiclase) ──────────────────────────────────────
+# Validación de redundancia en cuotas implícitas
+target_cols = ["implied_h", "implied_d", "implied_a"]
+corrs = matches[target_cols].corr()
+print("Correlación entre cuotas:")
+print(corrs)
+# Si corr(h, a) es muy alta → Riesgo de inestabilidad → Usar solo h y d
+
+# Verificación de convergencia
+# LogisticRegression(multi_class='multinomial', solver='lbfgs', C=0.1)
+# El parámetro C bajo (0.1) mitiga la separación y la colinealidad.
 ```
 
 ---
