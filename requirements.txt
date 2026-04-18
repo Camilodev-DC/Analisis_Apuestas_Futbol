@@ -1,0 +1,10 @@
+requests
+pandas
+numpy
+matplotlib
+scikit-learn
+seaborn
+jupyter
+mplsoccer
+scipy
+tabulate
