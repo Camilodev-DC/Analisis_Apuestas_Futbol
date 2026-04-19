@@ -1,10 +1,21 @@
-requests
+# Data Handling & API
 pandas
-numpy
-matplotlib
+requests
+requests-cache
+
+# Machine Learning
 scikit-learn
-seaborn
-jupyter
-mplsoccer
+numpy
 scipy
+
+# Visualization
+matplotlib
+seaborn
+mplsoccer
+
+# Environment & Testing
+python-dotenv
+pytest
+pytest-cov
+jupyter
 tabulate

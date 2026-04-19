@@ -1,31 +1,70 @@
-# Proyecto: Predicción de Resultados Premier League 2025-26
+# Machine Learning I: Modelo de Apuestas Premier League (Taller 2)
 
-Este proyecto forma parte del Taller 2 del curso de **Machine Learning I**. El objetivo es utilizar modelos de regresión lineal y logística para predecir el desempeño y los resultados de los partidos de la Premier League utilizando datos en tiempo real de una API personalizada.
+## Descripción
+Este proyecto implementa una arquitectura modular para predecir resultados de la Premier League utilizando modelos de Regresión Lineal y Logística. Forma parte del **Taller 2 del curso de Machine Learning I** (2026I) en la Universidad Externado de Colombia.
 
-## Estructura del Proyecto
+El objetivo es utilizar modelos de regresión para predecir:
+1. **Regresión Lineal:** Goles anotados por el equipo local (`fthg`).
+2. **Regresión Logística:** Resultado final (`ftr`: Home, Draw, Away).
 
-- `GUIA_ASISTENTE.md`: Documentación interna con detalles técnicos de la API y modelos.
-- `requirements.txt`: Dependencias de Python necesarias.
-- `Taller_2_Premier_League.ipynb`: Cuaderno principal de experimentación y modelado.
-- `data/`: Directorio reservado para históricos de extracción (ignorado por git).
+## Configuración del Entorno
 
-## Instalación
+Sigue estos pasos para configurar tu entorno de desarrollo:
 
-Para preparar el entorno local:
+1. **Crear Entorno Virtual:**
+   ```bash
+   python3 -m venv .venv
+   ```
 
-```bash
-# Crear un entorno virtual
-python3 -m venv .venv
-source .venv/bin/activate
+2. **Activar Entorno Virtual:**
+   - Linux/macOS: `source .venv/bin/activate`
+   - Windows: `.venv\Scripts\activate`
 
-# Instalar dependencias
-pip install -r requirements.txt
+3. **Instalar Dependencias:**
+   ```bash
+   pip install --upgrade pip
+   pip install -r requirements.txt
+   ```
+
+4. **Variables de Envorno:**
+   Configura tu `API_BASE_URL` en el archivo `scripts/config.py` o mediante variables de entorno si están habilitadas.
+
+## Estructura
+```text
+.
+├── analysis/           # Reportes y visualizaciones locales
+├── artifacts/          # Documentos complementarios
+├── data/               # Directorio de datos (ignorado por Git en su mayoría)
+│   ├── raw/            # Datos originales (CSV/JSON)
+│   └── processed/      # Datos transformados y player_id_map.json
+├── INForems/           # Reportes de auditoría, EDA y Diccionarios
+├── pdf/                # Guías oficiales del taller
+├── scripts/            # Scripts de descarga, modelado y utilidad
+├── src/                # Lógica central modular
+│   ├── data_loader/    # Extracción de datos desde APIs
+│   ├── processing/     # Limpieza de datos y feature engineering
+│   ├── models/         # Entrenamiento, validación y predicción
+│   └── utils/          # Funciones auxiliares
+├── tests/              # Pruebas unitarias
+├── main.py             # Pipeline principal de ejecución
+├── requirements.txt    # Librerías necesarias
+└── Taller_2_Premier_League.ipynb  # Cuaderno principal de experimentación
 ```
 
-## Modelos a Implementar
+## Guía de Ejecución
 
-1. **Regresión Lineal:** Predicción de goles anotados por el equipo local (`fthg`).
-2. **Regresión Logística:** Clasificación multiclase del resultado final (`ftr`: Home, Draw, Away).
+1. **Descargar Datos:**
+   ```bash
+   python3 scripts/download_bulk_data.py
+   ```
+
+2. **Entrenamiento de Modelos:**
+   Puedes usar los scripts en la carpeta `scripts/` o el cuaderno `Taller_2_Premier_League.ipynb` para ver el flujo completo de experimentación.
+
+## Novedades del Proyecto (Abril 2026)
+- **Integración con GitHub:** Sincronización con el repositorio central de `Analisis_Apuestas_Futbol`.
+- **Análisis de Roles:** Implementación de Clustering (K-Means) para identificar perfiles de jugadores.
+- **Visualización PCA:** Mapas de rendimiento de jugadores per 90 minutos.
 
 ---
 **Curso:** Machine Learning I (ML1-2026I)  
