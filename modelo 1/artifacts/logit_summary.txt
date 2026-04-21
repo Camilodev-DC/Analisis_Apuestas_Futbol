@@ -4,7 +4,7 @@ Dep. Variable:                is_goal   No. Observations:                 5758
 Model:                          Logit   Df Residuals:                     5749
 Method:                           MLE   Df Model:                            8
 Date:                Sat, 18 Apr 2026   Pseudo R-squ.:                  0.1852
-Time:                        20:31:58   Log-Likelihood:                -1660.5
+Time:                        21:11:48   Log-Likelihood:                -1660.5
 converged:                       True   LL-Null:                       -2038.0
 Covariance Type:            nonrobust   LLR p-value:                1.082e-157
 ==========================================================================================

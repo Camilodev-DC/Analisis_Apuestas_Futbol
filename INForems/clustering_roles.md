@@ -1,3 +1,4 @@
+# **FALTA INFORMACIÓN**
 # Visualización Avanzada de Roles (PCA & K-Means)
 
 Una vez entrenado el algoritmo **K-Means con K=5**, hemos utilizado Análisis de Componentes Principales (PCA) para reducir nuestras estadísticas a 2 dimensiones, permitiéndonos visualizar qué tan bien separados están los roles.

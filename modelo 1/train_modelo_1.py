@@ -2,6 +2,7 @@ import json
 from pathlib import Path
 
 import joblib
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import statsmodels.api as sm
@@ -10,7 +11,11 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import (
     accuracy_score,
     brier_score_loss,
+    confusion_matrix,
+    f1_score,
     log_loss,
+    precision_score,
+    recall_score,
     roc_auc_score,
 )
 from sklearn.pipeline import Pipeline
@@ -39,6 +44,23 @@ ADVANCED_FEATURES = [
 
 FINAL_FEATURES = MANDATORY_FEATURES + ADVANCED_FEATURES
 TARGET = "is_goal"
+
+
+def save_confusion_matrix(metrics):
+    matrix = np.array([[metrics["tn"], metrics["fp"]], [metrics["fn"], metrics["tp"]]])
+    fig, ax = plt.subplots(figsize=(5, 4))
+    im = ax.imshow(matrix, cmap="Blues")
+    for (i, j), value in np.ndenumerate(matrix):
+        ax.text(j, i, str(value), ha="center", va="center", fontsize=12, fontweight="bold")
+    ax.set_xticks([0, 1], labels=["No gol", "Gol"])
+    ax.set_yticks([0, 1], labels=["No gol", "Gol"])
+    ax.set_xlabel("Prediccion")
+    ax.set_ylabel("Real")
+    ax.set_title("Matriz de confusion - Modelo 1")
+    fig.colorbar(im, ax=ax, fraction=0.046, pad=0.04)
+    plt.tight_layout()
+    plt.savefig(ARTIFACTS_DIR / "confusion_matrix.png", dpi=180, bbox_inches="tight")
+    plt.close()
 
 
 def load_dataset():
@@ -82,7 +104,7 @@ def train_model(train_df, test_df):
         steps=[
             ("imputer", SimpleImputer(strategy="median")),
             ("scaler", StandardScaler()),
-            ("model", LogisticRegression(max_iter=2000, class_weight="balanced")),
+            ("model", LogisticRegression(max_iter=2000, class_weight=None)),
         ]
     )
 
@@ -95,6 +117,8 @@ def train_model(train_df, test_df):
 
     probabilities = pipeline.predict_proba(X_test)[:, 1]
     labels = (probabilities >= 0.5).astype(int)
+    naive_labels = np.zeros_like(y_test)
+    tn, fp, fn, tp = confusion_matrix(y_test, labels).ravel()
 
     metrics = {
         "train_rows": int(len(train_df)),
@@ -104,6 +128,18 @@ def train_model(train_df, test_df):
         "log_loss": float(log_loss(y_test, probabilities, labels=[0, 1])),
         "brier_score": float(brier_score_loss(y_test, probabilities)),
         "accuracy_05": float(accuracy_score(y_test, labels)),
+        "precision_05": float(precision_score(y_test, labels, zero_division=0)),
+        "recall_05": float(recall_score(y_test, labels, zero_division=0)),
+        "f1_05": float(f1_score(y_test, labels, zero_division=0)),
+        "baseline_accuracy_naive_no_goal": float(accuracy_score(y_test, naive_labels)),
+        "mean_pred_xg": float(probabilities.mean()),
+        "predicted_goals_sum": float(probabilities.sum()),
+        "actual_goals_sum": float(y_test.sum()),
+        "overestimate_ratio": float(probabilities.sum() / max(float(y_test.sum()), 1.0)),
+        "tn": int(tn),
+        "fp": int(fp),
+        "fn": int(fn),
+        "tp": int(tp),
     }
 
     coefficients = pd.DataFrame(
@@ -163,6 +199,12 @@ Modelo de Regresion Logistica para estimar `xG` a nivel de tiro. El target es bi
 - Log Loss: {metrics["log_loss"]:.4f}
 - Brier Score: {metrics["brier_score"]:.4f}
 - Accuracy @ 0.5: {metrics["accuracy_05"]:.4f}
+- Precision @ 0.5: {metrics["precision_05"]:.4f}
+- Recall @ 0.5: {metrics["recall_05"]:.4f}
+- F1 @ 0.5: {metrics["f1_05"]:.4f}
+- Baseline naive accuracy: {metrics["baseline_accuracy_naive_no_goal"]:.4f}
+- xG medio predicho: {metrics["mean_pred_xg"]:.4f}
+- Tasa real de gol: {metrics["goal_rate_test"]:.4f}
 
 ## VIF
 
@@ -189,12 +231,35 @@ Modelo de Regresion Logistica para estimar `xG` a nivel de tiro. El target es bi
 - Las features de `buildup` ayudan a separar tiros creados en secuencias mas limpias frente a posesiones donde la defensa ya alcanzo a cerrar lineas.
 - `first_touch` agrega una capa biomecanica y temporal de ejecucion del remate.
 
+## Matriz de confusion @ 0.5
+
+| Real \\ Pred | No gol | Gol |
+| --- | ---: | ---: |
+| No gol | {metrics["tn"]} | {metrics["fp"]} |
+| Gol | {metrics["fn"]} | {metrics["tp"]} |
+
+Interpretacion:
+
+- el baseline naive gana mucha `accuracy` porque casi todos los tiros son `no gol`
+- aun asi, el modelo es mucho mas util porque entrega probabilidades y separa mejor los tiros de alta calidad
+
+## Por que no dejamos `RightFoot`, `LeftFoot`, `Head` y zonas de disparo como features finales independientes
+
+- `RightFoot`, `LeftFoot` y `Head` si se construyeron en el feature engineering y existen en la tabla procesada.
+- No quedaron en el set final porque entre si forman un bloque muy redundante: casi todos los tiros pertenecen a una de esas categorias y eso introduce colinealidad estructural.
+- En pruebas de VIF previas, estas variables elevaban inestabilidad e inflaban la interpretacion lineal del modelo.
+- Su informacion no se perdio del todo: parte del contexto del remate queda absorbido por `is_big_chance`, `first_touch`, `defensive_pressure` y la propia geometria del tiro.
+
+- Las zonas de disparo tipo `BoxCentre`, `OutOfBoxCentre` o `SmallBoxCentre` tambien aparecen dentro de los `qualifiers` y conceptualmente ya estaban representadas por las variables geometricas.
+- En el feature engineering, esa idea de zona se resume principalmente en `distance_to_goal`, `angle_to_goal` y, en exploracion interna, en variables como `is_in_area` e `is_central`.
+- No se dejaron como bloque final separado porque duplicaban la informacion espacial ya contenida en la geometria y empeoraban la parsimonia del modelo.
+
 ## Nota metodologica
 
 - Se uso split temporal por `match_date`.
 - Se excluyeron features con riesgo de leakage post-shot como `porteria_zone_*`.
 - Se excluyeron derivadas geometricas como `dist_squared` y `dist_angle` para no inflar multicolinealidad.
-- Se usa `class_weight="balanced"` por el desbalance natural entre goles y no goles.
+- Se dejo la variante `unweighted` como modelo oficial porque la version `balanced` sobreestimaba fuertemente la probabilidad de gol.
 
 ## Logit
 
@@ -228,6 +293,7 @@ def main():
         logit_model.summary().as_text(), encoding="utf-8"
     )
     (ARTIFACTS_DIR / "reporte_modelo_1.md").write_text(report, encoding="utf-8")
+    save_confusion_matrix(metrics)
     joblib.dump(model, ARTIFACTS_DIR / "modelo_1_xg_logistic.joblib")
 
     print("Modelo 1 logistico entrenado")

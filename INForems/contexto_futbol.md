@@ -1,3 +1,4 @@
+# **FUNCIONAL**
 # Contexto de Fútbol para Ciencia de Datos
 
 Este documento explica los conceptos clave del fútbol que necesitas comprender para trabajar con los datos de la Premier League.

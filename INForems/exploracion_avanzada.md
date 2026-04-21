@@ -1,3 +1,4 @@
+# **DESACTUALIZADO**
 # Exploración Avanzada de Datos (EDA)
 
 Este informe detalla el análisis exploratorio realizado sobre los datos de la Premier League 2025-26.
